@@ -18,9 +18,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventDriven.Arch.Driving.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventDriven.Arch.Driven.Infra.Data.Unit.Test", "test\EventDriven.Arch.Driven.Infra.Data.Unit.Test\EventDriven.Arch.Driven.Infra.Data.Unit.Test.csproj", "{7EC83388-F175-4A85-B35E-0E719B801877}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventDriven.Arch.Driving.NegotiateServer", "src\EventDriven.Arch.Driving.NegotiateServer\EventDriven.Arch.Driving.NegotiateServer.csproj", "{7D8698D1-7569-4177-ABEA-032010E97898}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NegotiationServer", "src\EventDriven.Arch.Driving.NegotiateServer\NegotiationServer.csproj", "{082C0B6A-668A-4D3E-8887-75F391A72534}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventDriven.Arch.Driving.MvcClient", "EventDriven.Arch.Driving.MvcClient\EventDriven.Arch.Driving.MvcClient.csproj", "{06E09518-D3CE-47F2-A663-14EA68D0EB39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventDriven.Arch.Driving.MvcClient", "src\EventDriven.Arch.Driving.MvcClient\EventDriven.Arch.Driving.MvcClient.csproj", "{2C4D4F47-B75E-4A7E-8C27-F4AB7950F830}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,8 +33,8 @@ Global
 		{FA33EBD5-6E9E-4EB6-AAA0-2ABAEADD0D9B} = {F3553D96-6EE2-4F54-8299-8B166DA4FE0D}
 		{19514FBE-CABE-4E86-83D1-499EE1A86444} = {71A4C664-2972-4143-95A8-FDF25D631A48}
 		{7EC83388-F175-4A85-B35E-0E719B801877} = {4311E281-DC20-400C-BD0A-B582D711B873}
-		{7D8698D1-7569-4177-ABEA-032010E97898} = {71A4C664-2972-4143-95A8-FDF25D631A48}
-		{06E09518-D3CE-47F2-A663-14EA68D0EB39} = {71A4C664-2972-4143-95A8-FDF25D631A48}
+		{082C0B6A-668A-4D3E-8887-75F391A72534} = {71A4C664-2972-4143-95A8-FDF25D631A48}
+		{2C4D4F47-B75E-4A7E-8C27-F4AB7950F830} = {71A4C664-2972-4143-95A8-FDF25D631A48}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{EF2A7119-EA1F-41C9-814F-46811E76D761}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -57,13 +57,13 @@ Global
 		{7EC83388-F175-4A85-B35E-0E719B801877}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EC83388-F175-4A85-B35E-0E719B801877}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EC83388-F175-4A85-B35E-0E719B801877}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D8698D1-7569-4177-ABEA-032010E97898}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D8698D1-7569-4177-ABEA-032010E97898}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D8698D1-7569-4177-ABEA-032010E97898}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D8698D1-7569-4177-ABEA-032010E97898}.Release|Any CPU.Build.0 = Release|Any CPU
-		{06E09518-D3CE-47F2-A663-14EA68D0EB39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{06E09518-D3CE-47F2-A663-14EA68D0EB39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{06E09518-D3CE-47F2-A663-14EA68D0EB39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{06E09518-D3CE-47F2-A663-14EA68D0EB39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{082C0B6A-668A-4D3E-8887-75F391A72534}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{082C0B6A-668A-4D3E-8887-75F391A72534}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{082C0B6A-668A-4D3E-8887-75F391A72534}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{082C0B6A-668A-4D3E-8887-75F391A72534}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C4D4F47-B75E-4A7E-8C27-F4AB7950F830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C4D4F47-B75E-4A7E-8C27-F4AB7950F830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C4D4F47-B75E-4A7E-8C27-F4AB7950F830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C4D4F47-B75E-4A7E-8C27-F4AB7950F830}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

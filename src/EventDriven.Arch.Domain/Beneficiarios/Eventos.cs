@@ -29,6 +29,6 @@ public interface IIntegrationFailureEvent : IIntegrationEvent
     //Erros
 }
 
-public record BeneficiarioCriadoComSucesso(Guid IntegrationId, Guid Id) : IIntegrationSucessEvent;
+public record BeneficiarioCriadoComSucesso(Guid Id) : IIntegrationSucessEvent;
 
 public record BeneficiarioNaoCriado(Guid IntegrationId) : IIntegrationFailureEvent;

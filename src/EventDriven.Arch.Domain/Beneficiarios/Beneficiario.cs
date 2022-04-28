@@ -42,6 +42,7 @@ public class Beneficiario
     public Beneficiario(string primeiroNome, string segundoNome)
     {
         RaiseEvent(new BeneficiarioCriado(primeiroNome, segundoNome));
+        _pendingIntegrationEvents.Enqueue(new BeneficiarioCriadoComSucesso(Id));
     }
 
     public Beneficiario(IEnumerable<IEvent> persistedEvents)
@@ -99,3 +100,4 @@ public class Beneficiario
         RaiseEvent(new BeneficiarioAlterado(Id, NextVersion, primeiroNome, segundoNome));
     }
 }
+

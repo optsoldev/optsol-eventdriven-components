@@ -20,13 +20,13 @@ public class DomainHub : Hub, IDomainHub
             .WithLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
             .BuildServiceManager();
         
-        _hubContext = serviceManager.CreateHubContextAsync("DomainHub", default).Result;
+        _hubContext = serviceManager.CreateHubContextAsync("message", default).Result;
     }
     public Task BroadcastSuccess(Guid integrationId, IIntegrationSucessEvent @event)  =>
-        _hubContext.Clients.All.SendAsync(nameof(BroadcastSuccess), integrationId, @event);
+        _hubContext.Clients.All.SendAsync("sucesso", @event);
 
     public Task BroadcastFailure(Guid integrationId, IIntegrationFailureEvent @event)  =>
-        _hubContext.Clients.All.SendAsync(nameof(BroadcastFailure),integrationId, @event);
+        _hubContext.Clients.All.SendAsync(nameof(BroadcastFailure), @event);
 }
 
 public interface IDomainHub
