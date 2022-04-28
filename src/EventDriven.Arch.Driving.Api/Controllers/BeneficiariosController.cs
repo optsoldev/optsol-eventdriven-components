@@ -8,7 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EventDrive.Arch.Driving.Api.Controllers
+namespace EventDriven.Arch.Driving.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
