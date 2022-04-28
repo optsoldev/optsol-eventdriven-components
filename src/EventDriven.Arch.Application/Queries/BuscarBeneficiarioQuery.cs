@@ -1,6 +1,3 @@
 namespace EventDriven.Arch.Application.Queries;
 
-public class BuscarBeneficiarioQuery
-{
-    
-}
+public record BuscarBeneficiarioQuery(Guid Id);

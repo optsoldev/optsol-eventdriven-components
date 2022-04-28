@@ -4,12 +4,23 @@ public class Beneficiario
 {
     #region EventSourcing
     public readonly Queue<IEvent> _pendingEvents = new();
-
+    public readonly Queue<IIntegrationSucessEvent> _pendingIntegrationEvents = new();
+    public readonly Queue<IIntegrationFailureEvent> _pedingIntegrationFailureEvents = new();
     public IEnumerable<IEvent> PendingEvents
     {
         get => _pendingEvents.AsEnumerable();
     }
+
+    public IEnumerable<IIntegrationFailureEvent> PedingIntegrationFailureEvents
+    {
+        get => _pedingIntegrationFailureEvents.AsEnumerable();
+    }
     
+    public IEnumerable<IIntegrationSucessEvent> PendingIntegrationSuccessEvents
+    {
+        get => _pendingIntegrationEvents.AsEnumerable();
+    }
+
     #endregion
     
     public Guid Id { get; private set; }
@@ -27,12 +38,26 @@ public class Beneficiario
 
     public IReadOnlyCollection<Endereco> Enderecos => _enderecos.ToList();
     public bool IsInvalid { get; set; }
-    public IList<IEvent> Errors { get; set; }
-
 
     public Beneficiario(string primeiroNome, string segundoNome)
     {
         RaiseEvent(new BeneficiarioCriado(primeiroNome, segundoNome));
+    }
+
+    public Beneficiario(IEnumerable<IEvent> persistedEvents)
+    {
+        if (persistedEvents.Any())
+        {
+            ApplyPersistedEvents(persistedEvents);
+        }
+    }
+    private void ApplyPersistedEvents(IEnumerable<IEvent> events)
+    {
+        foreach (var e in events)
+        {
+            Apply(e);
+            Version = e.ModelVersion;
+        }
     }
 
     private void RaiseEvent<TEvent>(TEvent pendingEvent) where TEvent : IEvent
@@ -49,6 +74,9 @@ public class Beneficiario
             case BeneficiarioCriado criado:
                 Apply(criado);
                 break;
+            case BeneficiarioAlterado alterado:
+                Apply(alterado);
+                break;
             default:
                 throw new NotImplementedException();
         }
@@ -56,22 +84,18 @@ public class Beneficiario
 
     private void Apply(BeneficiarioCriado criado) => (Id, Version, PrimeiroNome, SegundoNome) =
         (criado.ModelId, criado.ModelVersion, criado.PrimeiroNome, criado.SegundoNome);
-}
 
-public class Endereco
-{
+    private void Apply(BeneficiarioAlterado alterado) => (Version, PrimeiroNome, SegundoNome) =
+        (alterado.ModelVersion, alterado.PrimeiroNome, alterado.SegundoNome);
     
+    public void Commit()
+    {
+        _pendingEvents.Clear();
+        _pendingIntegrationEvents.Clear();
+    }
+
+    public void AlterarNome(string primeiroNome, string segundoNome)
+    {
+        RaiseEvent(new BeneficiarioAlterado(Id, NextVersion, primeiroNome, segundoNome));
+    }
 }
-
-public record BeneficiarioCriado(string PrimeiroNome, string SegundoNome)
-    : DomainEvent(Guid.NewGuid(), 1, DateTime.UtcNow);
-
-public abstract record DomainEvent(Guid ModelId, int ModelVersion, DateTime When) : IEvent;
-
-public interface IEvent
-{
-    public Guid ModelId { get; }
-    public int ModelVersion { get; }
-    public DateTime When { get; }
-}
-

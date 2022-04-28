@@ -6,10 +6,12 @@ namespace EventDriven.Arch.Application.Commands.CriarBeneficiarios;
 
 public class CriarBeneficiarioCommandHandler : IRequestHandler<CriarBeneficiarioCommand, Unit>
 {
+    private readonly IMessageBus _messageBus;
     private readonly IBeneficiarioWriteRepository _beneficiarioRepository;
 
-    public CriarBeneficiarioCommandHandler(IBeneficiarioWriteRepository beneficiarioRepository)
+    public CriarBeneficiarioCommandHandler(IMessageBus messageBus, IBeneficiarioWriteRepository beneficiarioRepository)
     {
+        _messageBus = messageBus;
         _beneficiarioRepository = beneficiarioRepository;
     }
     
@@ -19,23 +21,15 @@ public class CriarBeneficiarioCommandHandler : IRequestHandler<CriarBeneficiario
 
         if (beneficiario.IsInvalid)
         {
-            Publish(beneficiario.Errors);
+            _beneficiarioRepository.Rollback(request.IntegrationId, beneficiario);
         }
         else
         {
-            _beneficiarioRepository.Commit(beneficiario);
+            _beneficiarioRepository.Commit(request.IntegrationId, beneficiario);
         }
-        
+
         return Task.FromResult(new Unit());
     }
-
-    private void Publish(IList<IEvent> beneficiarioErrors)
-    {
-        throw new NotImplementedException();
-    }
+    
 }
 
-public interface IMessageBus
-{
-    Task Publish(IEnumerable<IEvent> events);
-}
