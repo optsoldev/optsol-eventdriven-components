@@ -26,7 +26,7 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
         var events = model.PendingEvents.Select(e => PersistentEvent.Create(model.Id,
             ((DomainEvent)e).ModelVersion,
             ((DomainEvent)e).When,
-            e.GetType().AssemblyQualifiedName,
+            e.GetType().AssemblyQualifiedName ?? throw new InvalidOperationException(),
             JsonConvert.SerializeObject(e)));
         
         _eventStoreContext.Beneficiarios?.AddRange(events);

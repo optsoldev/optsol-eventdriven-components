@@ -1,4 +1,3 @@
-using Optsol.EventDriven.Components.Core.Domain;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
 
 namespace EventDriven.Arch.Domain.Beneficiarios;

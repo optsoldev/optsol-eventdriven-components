@@ -11,7 +11,7 @@ public class BeneficiarioReadRepository : IBeneficiarioReadRepository
 {
     private readonly EventStoreDbContext _eventStoreContext;
 
-    public BeneficiarioReadRepository(EventStoreDbContext eventStoreContext, IMessageBus messageBus)
+    public BeneficiarioReadRepository(EventStoreDbContext eventStoreContext)
     {
         _eventStoreContext = eventStoreContext;
     }
@@ -29,7 +29,7 @@ public class BeneficiarioReadRepository : IBeneficiarioReadRepository
         GetEvents(e => e.ModelId == id && e.ModelVersion > version);
 
     private IEnumerable<IEvent> GetEvents(Expression<Func<PersistentEvent, bool>> expression) =>
-        _eventStoreContext.Beneficiarios.Where(expression)
+        (_eventStoreContext.Beneficiarios ?? throw new InvalidOperationException()).Where(expression)
             .OrderBy(e => e.ModelVersion)
             .Select(e => JsonConvert.DeserializeObject(e.Data, Type.GetType(e.EventType)))
             .Cast<DomainEvent>();
