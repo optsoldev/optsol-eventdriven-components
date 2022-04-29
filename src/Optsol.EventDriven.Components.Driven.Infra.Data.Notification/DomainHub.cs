@@ -24,8 +24,8 @@ public class DomainHub : Hub, IDomainHub
         _hubContext = serviceManager.CreateHubContextAsync("message", default).Result;
     }
     public Task BroadcastSuccess(Guid integrationId, IEvent @event)  =>
-        _hubContext.Clients.All.SendAsync("sucesso", @event);
+        _hubContext.Clients.All.SendAsync("sucesso", integrationId, @event);
 
     public Task BroadcastFailure(Guid integrationId, IFailureEvent @event)  =>
-        _hubContext.Clients.All.SendAsync(nameof(BroadcastFailure), @event);
+        _hubContext.Clients.All.SendAsync(nameof(BroadcastFailure), integrationId, @event);
 }

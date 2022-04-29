@@ -7,8 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EventDriven.Arch.Domain\EventDriven.Arch.Domain.csproj" />
-      <ProjectReference Include="..\Optsol.EventDriven.Components.Core.Application\Optsol.EventDriven.Components.Core.Application.csproj" />
+      <PackageReference Include="MediatR" Version="10.0.1" />
     </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 using EventDriven.Arch.Application;
-using EventDriven.Arch.Domain;
 using EventDriven.Arch.Driven.Infra.Data;
 using MediatR;
+using Optsol.EventDriven.Components.Driven.Infra.Data.Notification;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(typeof(ApplicationMediatREntryPoint).Assembly);
-
+builder.Services.RegisterNotification();
 builder.Services.RegisterInfraData();
 
 var app = builder.Build();

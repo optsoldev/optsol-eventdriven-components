@@ -17,6 +17,7 @@
     <ItemGroup>
       <ProjectReference Include="..\EventDriven.Arch.Application\EventDriven.Arch.Application.csproj" />
       <ProjectReference Include="..\EventDriven.Arch.Driven.Infra.Data\EventDriven.Arch.Driven.Infra.Data.csproj" />
+      <ProjectReference Include="..\Optsol.EventDriven.Components.Driven.Infra.Data.Notification\Optsol.EventDriven.Components.Driven.Infra.Data.Notification.csproj" />
     </ItemGroup>
 
     <ItemGroup>
