@@ -1,4 +1,3 @@
-using EventDriven.Arch.Driven.Infra.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Optsol.EventDriven.Components.Core.Domain;
 

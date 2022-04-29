@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using Optsol.EventDriven.Components.Core.Domain;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
 
-namespace EventDriven.Arch.Driven.Infra.Data;
+namespace Optsol.EventDriven.Components.Driven.Infra.Data.Notification;
 
 public class DomainHub : Hub, IDomainHub
 {
