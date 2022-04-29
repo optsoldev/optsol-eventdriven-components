@@ -1,3 +1,4 @@
+using EventDriven.Arch.Domain;
 using EventDriven.Arch.Domain.Beneficiarios;
 
 namespace EventDriven.Arch.Driven.Infra.Data;

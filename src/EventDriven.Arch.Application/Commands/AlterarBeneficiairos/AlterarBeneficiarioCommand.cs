@@ -1,5 +1,6 @@
-using MediatR;
-
 namespace EventDriven.Arch.Application.Commands.AlterarBeneficiairos;
 
-public record AlterarBeneficiarioCommand(Guid IntegrationId, Guid beneficiarioId, string PrimeiroNome, string SegundoNome) : IRequest<Unit>;
+public record AlterarBeneficiarioCommand(Guid BeneficiarioId, string PrimeiroNome, string SegundoNome) : ICommand
+{
+    public Guid IntegrationId { get; init; } = Guid.NewGuid();
+}

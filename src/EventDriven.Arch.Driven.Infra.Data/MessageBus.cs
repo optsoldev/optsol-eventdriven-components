@@ -12,7 +12,7 @@ public class MessageBus : IMessageBus
         _hub = hub;
     }
     
-    public async Task Publish(Guid integrationId, IEnumerable<IIntegrationFailureEvent> events)
+    public async Task Publish(Guid integrationId, IEnumerable<IFailureEvent> events)
     {
         //Sobe para o event hub
         
@@ -22,7 +22,7 @@ public class MessageBus : IMessageBus
         }
     }
 
-    public async Task Publish(Guid integrationId, IEnumerable<IIntegrationSucessEvent> events)
+    public async Task Publish(Guid integrationId, IEnumerable<IEvent> events)
     {
         //Sobe para o event hub
         

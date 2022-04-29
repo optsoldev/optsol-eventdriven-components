@@ -18,7 +18,7 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
 
     public void Rollback(Guid integrationId, Beneficiario model)
     {
-        _messageBus.Publish(integrationId, model._pedingIntegrationFailureEvents); 
+        _messageBus.Publish(integrationId, model.FailureEvents); 
     }
     
     public void Commit(Guid integrationId, Beneficiario model)
@@ -31,7 +31,7 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
         
         _eventStoreContext.Beneficiarios?.AddRange(events);
         _eventStoreContext.SaveChanges();
-        _messageBus.Publish(integrationId, model._pendingIntegrationEvents);
+        _messageBus.Publish(integrationId, model.PendingEvents);
         model.Commit();
 
     }

@@ -1,16 +1,15 @@
-using EventDriven.Arch.Application.Commands.CriarBeneficiarios;
 using EventDriven.Arch.Domain;
 using EventDriven.Arch.Domain.Beneficiarios;
 using MediatR;
 
 namespace EventDriven.Arch.Application.Commands.AlterarBeneficiairos;
 
-public class AlterarBeneficiarioCommandHanlder : IRequestHandler<AlterarBeneficiarioCommand, Unit>
+public class AlterarBeneficiarioCommandHandler : IRequestHandler<AlterarBeneficiarioCommand, Unit>
 {
     private readonly IBeneficiarioWriteRepository _beneficiarioWriteRepository;
     private readonly IBeneficiarioReadRepository _beneficiarioReadRepository;
     
-    public AlterarBeneficiarioCommandHanlder(IBeneficiarioWriteRepository beneficiarioRepository, IBeneficiarioReadRepository beneficiarioReadRepository)
+    public AlterarBeneficiarioCommandHandler(IBeneficiarioWriteRepository beneficiarioRepository, IBeneficiarioReadRepository beneficiarioReadRepository)
     {
         _beneficiarioWriteRepository = beneficiarioRepository;
         _beneficiarioReadRepository = beneficiarioReadRepository;
@@ -18,7 +17,7 @@ public class AlterarBeneficiarioCommandHanlder : IRequestHandler<AlterarBenefici
     
     public Task<Unit> Handle(AlterarBeneficiarioCommand request, CancellationToken cancellationToken)
     {
-        var beneficiario = new Beneficiario(_beneficiarioReadRepository.GetById(request.beneficiarioId));
+        var beneficiario = new Beneficiario(_beneficiarioReadRepository.GetById(request.BeneficiarioId));
 
         beneficiario.AlterarNome(request.PrimeiroNome, request.SegundoNome);
         

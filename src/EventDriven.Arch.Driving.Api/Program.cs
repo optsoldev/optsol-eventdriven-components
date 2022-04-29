@@ -2,7 +2,6 @@ using EventDriven.Arch.Application;
 using EventDriven.Arch.Domain;
 using EventDriven.Arch.Driven.Infra.Data;
 using MediatR;
-using EventDriven.Arch.Driven.Infra.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +11,6 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IDomainHub, DomainHub>();
-builder.Services.AddScoped<IMessageBus, MessageBus>();
 builder.Services.AddMediatR(typeof(ApplicationMediatREntryPoint).Assembly);
 
 builder.Services.RegisterInfraData();

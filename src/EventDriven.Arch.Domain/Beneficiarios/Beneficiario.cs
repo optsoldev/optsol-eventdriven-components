@@ -3,22 +3,16 @@ namespace EventDriven.Arch.Domain.Beneficiarios;
 public class Beneficiario
 {
     #region EventSourcing
-    public readonly Queue<IEvent> _pendingEvents = new();
-    public readonly Queue<IIntegrationSucessEvent> _pendingIntegrationEvents = new();
-    public readonly Queue<IIntegrationFailureEvent> _pedingIntegrationFailureEvents = new();
+    private readonly Queue<IEvent> _pendingEvents = new();
+    private readonly Queue<IFailureEvent> _failureEvents = new();
     public IEnumerable<IEvent> PendingEvents
     {
         get => _pendingEvents.AsEnumerable();
     }
 
-    public IEnumerable<IIntegrationFailureEvent> PedingIntegrationFailureEvents
+    public IEnumerable<IFailureEvent> FailureEvents
     {
-        get => _pedingIntegrationFailureEvents.AsEnumerable();
-    }
-    
-    public IEnumerable<IIntegrationSucessEvent> PendingIntegrationSuccessEvents
-    {
-        get => _pendingIntegrationEvents.AsEnumerable();
+        get => _failureEvents.AsEnumerable();
     }
 
     #endregion
@@ -35,14 +29,14 @@ public class Beneficiario
     public string SegundoNome { get; private set; }
 
     private readonly IEnumerable<Endereco> _enderecos = new List<Endereco>();
-
+    
     public IReadOnlyCollection<Endereco> Enderecos => _enderecos.ToList();
     public bool IsInvalid { get; set; }
 
     public Beneficiario(string primeiroNome, string segundoNome)
     {
         RaiseEvent(new BeneficiarioCriado(primeiroNome, segundoNome));
-        _pendingIntegrationEvents.Enqueue(new BeneficiarioCriadoComSucesso(Id));
+        
     }
 
     public Beneficiario(IEnumerable<IEvent> persistedEvents)
@@ -92,7 +86,6 @@ public class Beneficiario
     public void Commit()
     {
         _pendingEvents.Clear();
-        _pendingIntegrationEvents.Clear();
     }
 
     public void AlterarNome(string primeiroNome, string segundoNome)

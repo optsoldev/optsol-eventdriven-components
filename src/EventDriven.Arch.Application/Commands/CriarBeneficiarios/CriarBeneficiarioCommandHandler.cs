@@ -6,12 +6,10 @@ namespace EventDriven.Arch.Application.Commands.CriarBeneficiarios;
 
 public class CriarBeneficiarioCommandHandler : IRequestHandler<CriarBeneficiarioCommand, Unit>
 {
-    private readonly IMessageBus _messageBus;
     private readonly IBeneficiarioWriteRepository _beneficiarioRepository;
 
-    public CriarBeneficiarioCommandHandler(IMessageBus messageBus, IBeneficiarioWriteRepository beneficiarioRepository)
+    public CriarBeneficiarioCommandHandler(IBeneficiarioWriteRepository beneficiarioRepository)
     {
-        _messageBus = messageBus;
         _beneficiarioRepository = beneficiarioRepository;
     }
     

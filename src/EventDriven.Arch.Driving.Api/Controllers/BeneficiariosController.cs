@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using EventDriven.Arch.Application.Commands.AlterarBeneficiairos;
 using EventDriven.Arch.Application.Commands.CriarBeneficiarios;
+using EventDriven.Arch.Application.Queries.BuscarBeneficiario;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventDriven.Arch.Driving.Api.Controllers
@@ -22,32 +18,26 @@ namespace EventDriven.Arch.Driving.Api.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> CriarBeneficiario(CriarBeneficiarioViewModel viewModel)
+        public async Task<IActionResult> CriarBeneficiario(CriarBeneficiarioCommand command)
         {
-            var command = new CriarBeneficiarioCommand(Guid.NewGuid(), viewModel.PrimeiroNome, viewModel.SegundoNome);
-
             await _mediator.Send(command);
 
             return Ok(command.IntegrationId.ToString());
         }
 
         [HttpPost("id")]
-        public async Task<IActionResult> AlterarBeneficiario(AlterarBeneficiarioViewModel viewModel)
+        public async Task<IActionResult> AlterarBeneficiario(AlterarBeneficiarioCommand command)
         {
-            var command = new AlterarBeneficiarioCommand(Guid.NewGuid(), Guid.Parse(viewModel.Id), viewModel.PrimeiroNome,
-                viewModel.SegundoNome);
-
             await _mediator.Send(command);
 
             return Ok(command.IntegrationId.ToString());
         }
 
         [HttpGet("id")]
-        public async Task<IActionResult> BuscarBeneficiario(string id)
+        public async Task<IActionResult> BuscarBeneficiario(BuscarBeneficiarioQuery query)
         {
-            var beneficiarioId = Guid.Parse(id);
-
-            return Ok();
+            var beneficiario = await _mediator.Send(query);
+            return Ok(beneficiario);
         }
     }
 }

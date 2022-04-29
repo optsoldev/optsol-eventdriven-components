@@ -1,3 +1,4 @@
+using EventDriven.Arch.Domain;
 using EventDriven.Arch.Domain.Beneficiarios;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Azure.SignalR.Management;
@@ -22,16 +23,16 @@ public class DomainHub : Hub, IDomainHub
         
         _hubContext = serviceManager.CreateHubContextAsync("message", default).Result;
     }
-    public Task BroadcastSuccess(Guid integrationId, IIntegrationSucessEvent @event)  =>
+    public Task BroadcastSuccess(Guid integrationId, IEvent @event)  =>
         _hubContext.Clients.All.SendAsync("sucesso", @event);
 
-    public Task BroadcastFailure(Guid integrationId, IIntegrationFailureEvent @event)  =>
+    public Task BroadcastFailure(Guid integrationId, IFailureEvent @event)  =>
         _hubContext.Clients.All.SendAsync(nameof(BroadcastFailure), @event);
 }
 
 public interface IDomainHub
 {
-    public Task BroadcastSuccess(Guid integrationId, IIntegrationSucessEvent @event);
+    public Task BroadcastSuccess(Guid integrationId, IEvent @event);
 
-    public Task BroadcastFailure(Guid integrationId, IIntegrationFailureEvent @event);
+    public Task BroadcastFailure(Guid integrationId, IFailureEvent @event);
 }
