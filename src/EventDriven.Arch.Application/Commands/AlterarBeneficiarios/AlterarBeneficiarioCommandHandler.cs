@@ -21,7 +21,7 @@ public class AlterarBeneficiarioCommandHandler : IRequestHandler<AlterarBenefici
 
         beneficiario.AlterarNome(request.PrimeiroNome, request.SegundoNome);
         
-        if (beneficiario.IsInvalid)
+        if (beneficiario.Invalid)
         {
             _beneficiarioWriteRepository.Rollback(request.IntegrationId, beneficiario);
         }

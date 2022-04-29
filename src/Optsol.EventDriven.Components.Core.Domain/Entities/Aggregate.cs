@@ -1,4 +1,6 @@
-namespace Optsol.EventDriven.Components.Core.Domain;
+using FluentValidation.Results;
+
+namespace Optsol.EventDriven.Components.Core.Domain.Entities;
 
 public abstract class Aggregate : IAggregate 
 {
@@ -52,4 +54,12 @@ public abstract class Aggregate : IAggregate
         _pendingEvents.Clear();
         _failureEvents.Clear();
     }
+    
+    public bool Valid => ValidationResult.IsValid;
+    
+    public bool Invalid => Valid is false;
+    
+    public ValidationResult ValidationResult { get;} = new();
+
+    public abstract void Validate();
 }

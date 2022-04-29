@@ -17,7 +17,7 @@ public class CriarBeneficiarioCommandHandler : IRequestHandler<CriarBeneficiario
     {
         var beneficiario = new Beneficiario(request.PrimeiroNome, request.SegundoNome);
 
-        if (beneficiario.IsInvalid)
+        if (beneficiario.Invalid)
         {
             _beneficiarioRepository.Rollback(request.IntegrationId, beneficiario);
         }

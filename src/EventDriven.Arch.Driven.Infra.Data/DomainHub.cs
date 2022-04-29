@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Extensions.Logging;
 using Optsol.EventDriven.Components.Core.Domain;
+using Optsol.EventDriven.Components.Core.Domain.Entities;
 
 namespace EventDriven.Arch.Driven.Infra.Data;
 

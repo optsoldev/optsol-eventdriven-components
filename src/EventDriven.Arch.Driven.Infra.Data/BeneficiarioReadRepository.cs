@@ -3,6 +3,7 @@ using EventDriven.Arch.Domain;
 using EventDriven.Arch.Domain.Beneficiarios;
 using Newtonsoft.Json;
 using Optsol.EventDriven.Components.Core.Domain;
+using Optsol.EventDriven.Components.Core.Domain.Entities;
 
 namespace EventDriven.Arch.Driven.Infra.Data;
 

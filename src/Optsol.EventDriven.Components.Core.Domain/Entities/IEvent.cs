@@ -1,4 +1,4 @@
-namespace Optsol.EventDriven.Components.Core.Domain;
+namespace Optsol.EventDriven.Components.Core.Domain.Entities;
 
 public interface IEvent
 {
