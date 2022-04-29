@@ -1,6 +1,7 @@
 using EventDriven.Arch.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Optsol.EventDriven.Components.Core.Domain;
 
 namespace EventDriven.Arch.Driven.Infra.Data;
 

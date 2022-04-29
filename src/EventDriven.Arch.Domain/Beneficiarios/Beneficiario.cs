@@ -1,32 +1,11 @@
+using Optsol.EventDriven.Components.Core.Domain;
+
 namespace EventDriven.Arch.Domain.Beneficiarios;
 
-public class Beneficiario
+public class Beneficiario : Aggregate
 {
-    #region EventSourcing
-    private readonly Queue<IEvent> _pendingEvents = new();
-    private readonly Queue<IFailureEvent> _failureEvents = new();
-    public IEnumerable<IEvent> PendingEvents
-    {
-        get => _pendingEvents.AsEnumerable();
-    }
-
-    public IEnumerable<IFailureEvent> FailureEvents
-    {
-        get => _failureEvents.AsEnumerable();
-    }
-
-    #endregion
-    
-    public Guid Id { get; private set; }
-    public int Version { get; private set; } = 0;
-
-    private int NextVersion
-    {
-        get => Version + 1;
-    }
-    
-    public string PrimeiroNome { get; private set; }
-    public string SegundoNome { get; private set; }
+    public string? PrimeiroNome { get; private set; }
+    public string? SegundoNome { get; private set; }
 
     private readonly IEnumerable<Endereco> _enderecos = new List<Endereco>();
     
@@ -38,31 +17,10 @@ public class Beneficiario
         RaiseEvent(new BeneficiarioCriado(primeiroNome, segundoNome));
         
     }
-
-    public Beneficiario(IEnumerable<IEvent> persistedEvents)
-    {
-        if (persistedEvents.Any())
-        {
-            ApplyPersistedEvents(persistedEvents);
-        }
-    }
-    private void ApplyPersistedEvents(IEnumerable<IEvent> events)
-    {
-        foreach (var e in events)
-        {
-            Apply(e);
-            Version = e.ModelVersion;
-        }
-    }
-
-    private void RaiseEvent<TEvent>(TEvent pendingEvent) where TEvent : IEvent
-    {
-        _pendingEvents.Enqueue(pendingEvent);
-        Apply(pendingEvent);
-        Version = pendingEvent.ModelVersion;
-    }
-
-    private void Apply(IEvent pendingEvent)
+    
+    public Beneficiario(IEnumerable<IEvent> persistentEvents) :base(persistentEvents) {}
+    
+    protected override void Apply(IEvent pendingEvent)
     {
         switch (pendingEvent)
         {
@@ -83,11 +41,6 @@ public class Beneficiario
     private void Apply(BeneficiarioAlterado alterado) => (Version, PrimeiroNome, SegundoNome) =
         (alterado.ModelVersion, alterado.PrimeiroNome, alterado.SegundoNome);
     
-    public void Commit()
-    {
-        _pendingEvents.Clear();
-    }
-
     public void AlterarNome(string primeiroNome, string segundoNome)
     {
         RaiseEvent(new BeneficiarioAlterado(Id, NextVersion, primeiroNome, segundoNome));

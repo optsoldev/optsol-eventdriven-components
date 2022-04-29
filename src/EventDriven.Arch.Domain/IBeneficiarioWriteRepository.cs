@@ -1,9 +1,7 @@
 using EventDriven.Arch.Domain.Beneficiarios;
+using Optsol.EventDriven.Components.Core.Domain;
+using Optsol.EventDriven.Components.Core.Domain.Repositories;
 
 namespace EventDriven.Arch.Domain;
 
-public interface IBeneficiarioWriteRepository
-{
-    public void Commit(Guid integrationId, Beneficiario beneficiario);
-    public void Rollback(Guid integrationId, Beneficiario beneficiario);
-}
+public interface IBeneficiarioWriteRepository : IWriteRepository<Beneficiario> { }

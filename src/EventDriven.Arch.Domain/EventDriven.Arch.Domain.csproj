@@ -10,4 +10,8 @@
       <Compile Remove="Beneficiarios.cs" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Optsol.EventDriven.Components.Core.Domain\Optsol.EventDriven.Components.Core.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using EventDriven.Arch.Domain;
 using EventDriven.Arch.Domain.Beneficiarios;
 using Newtonsoft.Json;
+using Optsol.EventDriven.Components.Core.Domain;
 
 namespace EventDriven.Arch.Driven.Infra.Data;
 
@@ -14,19 +15,19 @@ public class BeneficiarioReadRepository : IBeneficiarioReadRepository
         _eventStoreContext = eventStoreContext;
     }
     
-    public IEnumerable<DomainEvent> GetById(Guid id) =>
+    public IEnumerable<IEvent> GetById(Guid id) =>
         GetEvents(e => e.ModelId == id);
 
-    public IEnumerable<DomainEvent> GetByVersion(Guid id, int version) =>
+    public IEnumerable<IEvent> GetByVersion(Guid id, int version) =>
         GetEvents(e => e.ModelId == id && e.ModelVersion <= version);
 
-    public IEnumerable<DomainEvent> GetByTime(Guid id, DateTime until) =>
+    public IEnumerable<IEvent> GetByTime(Guid id, DateTime until) =>
         GetEvents(e => e.ModelId == id && e.When <= until);
 
-    public IEnumerable<DomainEvent> GetFromVersion(Guid id, int version) =>
+    public IEnumerable<IEvent> GetFromVersion(Guid id, int version) =>
         GetEvents(e => e.ModelId == id && e.ModelVersion > version);
 
-    private IEnumerable<DomainEvent> GetEvents(Expression<Func<PersistentEvent, bool>> expression) =>
+    private IEnumerable<IEvent> GetEvents(Expression<Func<PersistentEvent, bool>> expression) =>
         _eventStoreContext.Beneficiarios.Where(expression)
             .OrderBy(e => e.ModelVersion)
             .Select(e => JsonConvert.DeserializeObject(e.Data, Type.GetType(e.EventType)))

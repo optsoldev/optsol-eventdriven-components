@@ -1,4 +1,4 @@
-using EventDriven.Arch.Application.Commands.AlterarBeneficiairos;
+using EventDriven.Arch.Application.Commands.AlterarBeneficiarios;
 using EventDriven.Arch.Application.Commands.CriarBeneficiarios;
 using EventDriven.Arch.Application.Queries.BuscarBeneficiario;
 using MediatR;

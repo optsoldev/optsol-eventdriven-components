@@ -1,7 +1,7 @@
 using EventDriven.Arch.Domain;
 using EventDriven.Arch.Domain.Beneficiarios;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Optsol.EventDriven.Components.Core.Domain;
 
 namespace EventDriven.Arch.Driven.Infra.Data;
 

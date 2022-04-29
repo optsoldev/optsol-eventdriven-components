@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NegotiationServer", "src\Ev
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventDriven.Arch.Driving.MvcClient", "src\EventDriven.Arch.Driving.MvcClient\EventDriven.Arch.Driving.MvcClient.csproj", "{2C4D4F47-B75E-4A7E-8C27-F4AB7950F830}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Optsol.EventDriven.Components.Core.Domain", "src\Optsol.EventDriven.Components.Core.Domain\Optsol.EventDriven.Components.Core.Domain.csproj", "{AF570556-715D-4DA0-9758-3834100520FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,7 @@ Global
 		{7EC83388-F175-4A85-B35E-0E719B801877} = {4311E281-DC20-400C-BD0A-B582D711B873}
 		{082C0B6A-668A-4D3E-8887-75F391A72534} = {71A4C664-2972-4143-95A8-FDF25D631A48}
 		{2C4D4F47-B75E-4A7E-8C27-F4AB7950F830} = {71A4C664-2972-4143-95A8-FDF25D631A48}
+		{AF570556-715D-4DA0-9758-3834100520FA} = {A9A243F4-C14F-4B2B-9459-C93454A8CDA9}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{EF2A7119-EA1F-41C9-814F-46811E76D761}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -65,5 +68,9 @@ Global
 		{2C4D4F47-B75E-4A7E-8C27-F4AB7950F830}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C4D4F47-B75E-4A7E-8C27-F4AB7950F830}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C4D4F47-B75E-4A7E-8C27-F4AB7950F830}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF570556-715D-4DA0-9758-3834100520FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF570556-715D-4DA0-9758-3834100520FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF570556-715D-4DA0-9758-3834100520FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF570556-715D-4DA0-9758-3834100520FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

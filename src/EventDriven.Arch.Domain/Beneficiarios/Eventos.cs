@@ -1,3 +1,5 @@
+using Optsol.EventDriven.Components.Core.Domain;
+
 namespace EventDriven.Arch.Domain.Beneficiarios;
 
 public abstract record DomainEvent(Guid ModelId, int ModelVersion, DateTime When) : IEvent;

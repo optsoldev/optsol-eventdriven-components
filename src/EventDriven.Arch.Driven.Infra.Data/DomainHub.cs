@@ -1,8 +1,7 @@
-using EventDriven.Arch.Domain;
-using EventDriven.Arch.Domain.Beneficiarios;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Extensions.Logging;
+using Optsol.EventDriven.Components.Core.Domain;
 
 namespace EventDriven.Arch.Driven.Infra.Data;
 
@@ -28,11 +27,4 @@ public class DomainHub : Hub, IDomainHub
 
     public Task BroadcastFailure(Guid integrationId, IFailureEvent @event)  =>
         _hubContext.Clients.All.SendAsync(nameof(BroadcastFailure), @event);
-}
-
-public interface IDomainHub
-{
-    public Task BroadcastSuccess(Guid integrationId, IEvent @event);
-
-    public Task BroadcastFailure(Guid integrationId, IFailureEvent @event);
 }

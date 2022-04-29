@@ -1,4 +1,4 @@
-namespace EventDriven.Arch.Application.Commands.AlterarBeneficiairos;
+namespace EventDriven.Arch.Application.Commands.AlterarBeneficiarios;
 
 public record AlterarBeneficiarioCommand(Guid BeneficiarioId, string PrimeiroNome, string SegundoNome) : ICommand
 {

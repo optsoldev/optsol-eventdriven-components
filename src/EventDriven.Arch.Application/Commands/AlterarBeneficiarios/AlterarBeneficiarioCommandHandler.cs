@@ -2,7 +2,7 @@ using EventDriven.Arch.Domain;
 using EventDriven.Arch.Domain.Beneficiarios;
 using MediatR;
 
-namespace EventDriven.Arch.Application.Commands.AlterarBeneficiairos;
+namespace EventDriven.Arch.Application.Commands.AlterarBeneficiarios;
 
 public class AlterarBeneficiarioCommandHandler : IRequestHandler<AlterarBeneficiarioCommand, Unit>
 {
