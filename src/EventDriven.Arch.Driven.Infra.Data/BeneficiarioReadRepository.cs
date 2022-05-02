@@ -3,6 +3,7 @@ using EventDriven.Arch.Domain;
 using EventDriven.Arch.Domain.Beneficiarios;
 using Newtonsoft.Json;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
+using Optsol.EventDriven.Components.Driven.Infra.Data;
 
 namespace EventDriven.Arch.Driven.Infra.Data;
 
@@ -27,7 +28,7 @@ public class BeneficiarioReadRepository : IBeneficiarioReadRepository
     public IEnumerable<IEvent> GetFromVersion(Guid id, int version) =>
         GetEvents(e => e.ModelId == id && e.ModelVersion > version);
 
-    private IEnumerable<IEvent> GetEvents(Expression<Func<PersistentEvent, bool>> expression) =>
+    private IEnumerable<IEvent> GetEvents(Expression<Func<PersistentEvent<string>, bool>> expression) =>
         (_eventStoreContext.Beneficiarios ?? throw new InvalidOperationException()).Where(expression)
             .OrderBy(e => e.ModelVersion)
             .Select(e => JsonConvert.DeserializeObject(e.Data, Type.GetType(e.EventType)))
