@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Optsol.EventDriven.Components.Core.Domain;
 
-namespace Optsol.EventDriven.Components.Driven.Infra.Data.Notification;
+namespace Optsol.EventDriven.Components.Driven.Infra.Notification;
 
 public static class DependencyInjectionNotification
 {

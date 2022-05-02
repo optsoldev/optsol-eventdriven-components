@@ -1,8 +1,8 @@
-using Optsol.EventDriven.Components.Core.Domain.Entities;
+using Optsol.EventDriven.Components.Driven.Infra.Data;
 
 namespace EventDriven.Arch.Driven.Infra.Data;
 
-public class PersistentEvent : IEvent
+public class PersistentEvent : PersistentEvent<string>
 {
     public Guid ModelId { get; private init; }
     public int ModelVersion { get; private init; }

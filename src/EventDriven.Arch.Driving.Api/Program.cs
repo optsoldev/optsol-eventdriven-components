@@ -1,7 +1,7 @@
 using EventDriven.Arch.Application;
 using EventDriven.Arch.Driven.Infra.Data;
 using MediatR;
-using Optsol.EventDriven.Components.Driven.Infra.Data.Notification;
+using Optsol.EventDriven.Components.Driven.Infra.Notification;
 
 var builder = WebApplication.CreateBuilder(args);
 

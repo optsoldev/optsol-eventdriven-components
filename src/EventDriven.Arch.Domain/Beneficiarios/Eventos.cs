@@ -8,4 +8,4 @@ public record BeneficiarioAlterado(Guid ModelId, int ModelVersion, string Primei
     : DomainEvent(ModelId, ModelVersion, DateTime.UtcNow);
 public record BeneficiarioCriado(string PrimeiroNome, string SegundoNome)
     : DomainEvent(Guid.NewGuid(), 1, DateTime.UtcNow);
-public record BeneficiarioNaoCriado(Guid IntegrationId) : IFailureEvent;
+public record BeneficiarioNaoCriado(string Reason) : IFailureEvent;

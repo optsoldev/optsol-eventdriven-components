@@ -26,7 +26,7 @@ public class Beneficiario : Aggregate
     
     public override void Validate()
     {
-        throw new NotImplementedException();
+        _failureEvents.Enqueue(new BeneficiarioNaoCriado(""));
     }
 
     

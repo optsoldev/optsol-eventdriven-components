@@ -1,7 +1,7 @@
 using Optsol.EventDriven.Components.Core.Domain;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
 
-namespace Optsol.EventDriven.Components.Driven.Infra.Data.Notification;
+namespace Optsol.EventDriven.Components.Driven.Infra.Notification;
 
 public class MessageBus : IMessageBus
 {

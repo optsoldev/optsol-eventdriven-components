@@ -5,7 +5,7 @@ namespace Optsol.EventDriven.Components.Core.Domain.Entities;
 public abstract class Aggregate : IAggregate 
 {
     private readonly Queue<IEvent> _pendingEvents = new();
-    private readonly Queue<IFailureEvent> _failureEvents = new();
+    protected readonly Queue<IFailureEvent> _failureEvents = new();
     protected int Version { get; set; } = 0;
     protected int NextVersion
     {

@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\EventDriven.Arch.Domain\EventDriven.Arch.Domain.csproj" />
+      <ProjectReference Include="..\Optsol.EventDriven.Components.Driven.Infra.Data\Optsol.EventDriven.Components.Driven.Infra.Data.csproj" />
     </ItemGroup>
 
     <ItemGroup>
