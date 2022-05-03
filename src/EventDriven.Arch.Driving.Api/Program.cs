@@ -1,5 +1,6 @@
 using EventDriven.Arch.Application;
 using EventDriven.Arch.Driven.Infra.Data;
+using EventDriven.Arch.Driven.Infra.Data.MongoDb;
 using MediatR;
 using Optsol.EventDriven.Components.Driven.Infra.Notification;
 
@@ -13,7 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(typeof(ApplicationMediatREntryPoint).Assembly);
 builder.Services.RegisterNotification();
-builder.Services.RegisterInfraData();
+builder.Services.AddDataMongoModule(builder.Configuration);
 
 var app = builder.Build();
 

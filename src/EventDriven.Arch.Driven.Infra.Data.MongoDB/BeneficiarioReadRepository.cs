@@ -23,10 +23,8 @@ public class BeneficiarioReadRepository : IBeneficiarioReadRepository
         _set = context.GetCollection<PersistentEvent>(nameof(Beneficiario));
     }
 
-    public IEnumerable<IEvent> GetById(Guid id)
-    {
-        throw new NotImplementedException();
-    }
+    public IEnumerable<IEvent> GetById(Guid id) => GetEvents(e => e.ModelId == id);
+    
 
     public IEnumerable<IEvent> GetByVersion(Guid id, int version)
     {
