@@ -11,25 +11,31 @@ public class Beneficiario : Aggregate
     
     public IReadOnlyCollection<Endereco> Enderecos => _enderecos.ToList();
 
-    public Beneficiario(string primeiroNome, string segundoNome)
+    public Beneficiario(Guid integrationId, string primeiroNome, string segundoNome)
     {
-        RaiseEvent(new BeneficiarioCriado(primeiroNome, segundoNome));
+        RaiseEvent(new BeneficiarioCriado(integrationId, primeiroNome, segundoNome));
         
     }
     
     public Beneficiario(IEnumerable<IEvent> persistentEvents) :base(persistentEvents) {}
     
-    public void AlterarNome(string primeiroNome, string segundoNome)
+    public void AlterarNome(Guid integrationId, string primeiroNome, string segundoNome)
     {
-        RaiseEvent(new BeneficiarioAlterado(Id, NextVersion, primeiroNome, segundoNome));
+        RaiseEvent(new BeneficiarioAlterado(integrationId,Id, NextVersion, primeiroNome, segundoNome));
     }
     
-    public override void Validate()
+    public override void Validate(Guid integrationId)
     {
-        _failureEvents.Enqueue(new BeneficiarioNaoCriado(""));
+        Validate();
+        if(this.Invalid)
+            _failureEvents.Enqueue(new BeneficiarioNaoCriado(integrationId, ""));
     }
 
-    
+    public override void Validate()
+    {
+        throw new NotImplementedException();
+    }
+
     protected override void Apply(IEvent pendingEvent)
     {
         switch (pendingEvent)

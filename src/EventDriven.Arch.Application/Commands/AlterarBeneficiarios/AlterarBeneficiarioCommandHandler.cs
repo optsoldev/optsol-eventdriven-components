@@ -19,7 +19,7 @@ public class AlterarBeneficiarioCommandHandler : IRequestHandler<AlterarBenefici
     {
         var beneficiario = new Beneficiario(_beneficiarioReadRepository.GetById(request.BeneficiarioId));
 
-        beneficiario.AlterarNome(request.PrimeiroNome, request.SegundoNome);
+        beneficiario.AlterarNome(request.IntegrationId, request.PrimeiroNome, request.SegundoNome);
         
         if (beneficiario.Invalid)
         {

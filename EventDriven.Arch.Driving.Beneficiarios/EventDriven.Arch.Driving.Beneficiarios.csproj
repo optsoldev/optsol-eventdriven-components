@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <AzureFunctionsVersion>V4</AzureFunctionsVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\net6.0\EventDriven.Arch.Driving.Beneficiarios.xml</DocumentationFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+        <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
+        <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.EventHubs" Version="5.0.0" />
+        <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.ServiceBus" Version="5.2.0" />
+        <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.0.1" />
+        <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.OpenApi" Version="1.1.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Update="host.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="local.settings.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\src\EventDriven.Arch.Application\EventDriven.Arch.Application.csproj" />
+      <ProjectReference Include="..\src\EventDriven.Arch.Driven.Infra.Data.MongoDb\EventDriven.Arch.Driven.Infra.Data.MongoDb.csproj" />
+      <ProjectReference Include="..\src\Optsol.EventDriven.Components.Driven.Infra.Notification\Optsol.EventDriven.Components.Driven.Infra.Notification.csproj" />
+    </ItemGroup>
+</Project>

@@ -18,14 +18,44 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
 
     public void Rollback(Guid integrationId, Beneficiario model)
     {
-        _messageBus.Publish(integrationId, model.FailureEvents); 
+        _eventStoreContext.Beneficiarios?.RemoveRange();
     }
     
+    public void Undo(Guid integrationId, Beneficiario model)
+    {
+        _messageBus.Publish(integrationId, model.FailureEvents); 
+    }
+
+    public void RollbackIntegration(Guid integrationId)
+    {
+        var events = _eventStoreContext.Beneficiarios?.Where(b => b.IntegrationId == integrationId);
+        _eventStoreContext.Beneficiarios?.RemoveRange(events);
+        _eventStoreContext.SaveChanges();
+    }
+
+    public void CommitIntegration(Guid integrationId)
+    {
+        var events = _eventStoreContext.Beneficiarios.Where(b => b.IntegrationId == integrationId);
+
+        var updatedEvents = events.Select(e => PersistentEvent.Create(integrationId,
+            e.ModelId,
+            e.ModelVersion,
+            e.When,
+            true,
+            e.GetType().AssemblyQualifiedName,
+            JsonConvert.SerializeObject(e)));
+        
+        _eventStoreContext.Beneficiarios.UpdateRange(updatedEvents);
+        _eventStoreContext.SaveChanges();
+    }
+
     public void Commit(Guid integrationId, Beneficiario model)
     {
-        var events = model.PendingEvents.Select(e => PersistentEvent.Create(model.Id,
+        var events = model.PendingEvents.Select(e => PersistentEvent.Create(integrationId,
+            model.Id,
             ((DomainEvent)e).ModelVersion,
             ((DomainEvent)e).When,
+            false,
             e.GetType().AssemblyQualifiedName ?? throw new InvalidOperationException(),
             JsonConvert.SerializeObject(e)));
         

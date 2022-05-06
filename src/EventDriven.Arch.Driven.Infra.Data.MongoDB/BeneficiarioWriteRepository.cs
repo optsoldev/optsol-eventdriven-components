@@ -20,11 +20,28 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
         _set = context.GetCollection<PersistentEvent<IEvent>>(nameof(Beneficiario));
     }
 
+    public void RollbackIntegration(Guid integrationId)
+    {
+        _context.AddTransaction(() => _set.DeleteManyAsync(f => f.IntegrationId == integrationId));
+        _context.SaveChanges();
+    }
+
+    public void CommitIntegration(Guid integrationId)
+    {
+        _context.AddTransaction(() =>  _set.UpdateManyAsync(
+            f => f.IntegrationId == integrationId,
+            Builders<PersistentEvent<IEvent>>.Update.Set(p => p.Status, true)));
+        _context.SaveChanges();
+    }
+    
     public void Commit(Guid integrationId, Beneficiario model)
     {
-        var events = model.PendingEvents.Select(e => PersistentEvent.Create(model.Id,
+        var events = model.PendingEvents.Select(e => PersistentEvent.Create(
+            integrationId,
+            model.Id,
             ((DomainEvent)e).ModelVersion,
             ((DomainEvent)e).When,
+            false,
             e.GetType().AssemblyQualifiedName,
             e));
         

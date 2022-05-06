@@ -15,7 +15,7 @@ public class CriarBeneficiarioCommandHandler : IRequestHandler<CriarBeneficiario
     
     public Task<Unit> Handle(CriarBeneficiarioCommand request, CancellationToken cancellationToken)
     {
-        var beneficiario = new Beneficiario(request.PrimeiroNome, request.SegundoNome);
+        var beneficiario = new Beneficiario(request.IntegrationId, request.PrimeiroNome, request.SegundoNome);
 
         if (beneficiario.Invalid)
         {
