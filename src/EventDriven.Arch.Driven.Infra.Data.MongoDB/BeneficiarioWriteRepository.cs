@@ -30,6 +30,7 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
         
         _context.AddTransaction(() => _set.InsertManyAsync(events));
         _context.SaveChanges();
+        _messageBus.Publish(integrationId, model.PendingEvents);
     }
 
     public void Rollback(Guid integrationId, Beneficiario model)

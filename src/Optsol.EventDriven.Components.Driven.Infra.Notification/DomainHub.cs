@@ -8,6 +8,7 @@ namespace Optsol.EventDriven.Components.Driven.Infra.Notification;
 
 public class DomainHub : Hub, IDomainHub
 {
+    private const string testUser = "TestUser";
     private ServiceHubContext _hubContext;
 
     public DomainHub()
@@ -24,8 +25,8 @@ public class DomainHub : Hub, IDomainHub
         _hubContext = serviceManager.CreateHubContextAsync("message", default).Result;
     }
     public Task BroadcastSuccess(Guid integrationId, IEvent @event)  =>
-        _hubContext.Clients.All.SendAsync("sucesso", integrationId, @event);
+        _hubContext.Clients.User(testUser).SendAsync("sucesso", integrationId, @event);
 
     public Task BroadcastFailure(Guid integrationId, IFailureEvent @event)  =>
-        _hubContext.Clients.All.SendAsync(nameof(BroadcastFailure), integrationId, @event);
+        _hubContext.Clients.User(testUser).SendAsync("falha", integrationId, @event);
 }

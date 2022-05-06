@@ -100,7 +100,7 @@
             modal.style = 'display: block;';
         }
         
-        const hubEndpoint = "http://localhost:5000/Message?user=" + username;
+        const hubEndpoint = "http://localhost:5000/Message?user=TestUser";
         const connection = new signalR.HubConnectionBuilder()
             .withUrl(hubEndpoint)
             .build();
