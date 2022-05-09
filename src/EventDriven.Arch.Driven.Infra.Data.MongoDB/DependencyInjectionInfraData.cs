@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb;
+using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
 
 namespace EventDriven.Arch.Driven.Infra.Data.MongoDb;
 

@@ -1,6 +1,6 @@
 using MongoDB.Driver;
 
-namespace Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb;
+namespace Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
 
 public abstract class Context : IDisposable
 {

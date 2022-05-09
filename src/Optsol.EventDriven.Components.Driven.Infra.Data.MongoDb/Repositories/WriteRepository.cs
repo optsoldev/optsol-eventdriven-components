@@ -2,8 +2,9 @@ using MongoDB.Driver;
 using Optsol.EventDriven.Components.Core.Domain;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
 using Optsol.EventDriven.Components.Core.Domain.Repositories;
+using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
 
-namespace Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb;
+namespace Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Repositories;
 
 public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggregate
 {
