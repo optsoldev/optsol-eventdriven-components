@@ -2,6 +2,7 @@ using EventDriven.Arch.Domain;
 using EventDriven.Arch.Domain.Beneficiarios;
 using Newtonsoft.Json;
 using Optsol.EventDriven.Components.Core.Domain;
+using Optsol.EventDriven.Components.Driven.Infra.Data;
 
 namespace EventDriven.Arch.Driven.Infra.Data;
 
@@ -28,38 +29,33 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
 
     public void RollbackIntegration(Guid integrationId)
     {
-        var events = _eventStoreContext.Beneficiarios?.Where(b => b.IntegrationId == integrationId);
-        _eventStoreContext.Beneficiarios?.RemoveRange(events);
+        var events = _eventStoreContext.BeneficiariosStaging?
+            .Where(b => b.IntegrationId == integrationId);
+        
+        _eventStoreContext.BeneficiariosStaging?.RemoveRange(events);
         _eventStoreContext.SaveChanges();
     }
 
     public void CommitIntegration(Guid integrationId)
     {
-        var events = _eventStoreContext.Beneficiarios.Where(b => b.IntegrationId == integrationId);
-
-        var updatedEvents = events.Select(e => PersistentEvent.Create(integrationId,
-            e.ModelId,
-            e.ModelVersion,
-            e.When,
-            true,
-            e.GetType().AssemblyQualifiedName,
-            JsonConvert.SerializeObject(e)));
+        var events = _eventStoreContext.BeneficiariosStaging?
+            .Where(b => b.IntegrationId == integrationId)
+            .Select(s => (PersistentEvent<string?>)s);
         
-        _eventStoreContext.Beneficiarios.UpdateRange(updatedEvents);
+        _eventStoreContext.Beneficiarios.UpdateRange(events);
         _eventStoreContext.SaveChanges();
     }
 
     public void Commit(Guid integrationId, Beneficiario model)
     {
-        var events = model.PendingEvents.Select(e => PersistentEvent.Create(integrationId,
+        var events = model.PendingEvents.Select(e => new StagingEvent<string>(integrationId,
             model.Id,
             ((DomainEvent)e).ModelVersion,
             ((DomainEvent)e).When,
-            false,
             e.GetType().AssemblyQualifiedName ?? throw new InvalidOperationException(),
             JsonConvert.SerializeObject(e)));
         
-        _eventStoreContext.Beneficiarios?.AddRange(events);
+        _eventStoreContext.BeneficiariosStaging?.AddRange(events);
         _eventStoreContext.SaveChanges();
         _messageBus.Publish(integrationId, model.PendingEvents);
         model.Commit();
