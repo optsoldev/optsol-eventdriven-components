@@ -1,7 +1,6 @@
 using MongoDB.Driver;
-using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb;
 
-namespace EventDriven.Arch.Driven.Infra.Data.MongoDb;
+namespace Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb;
 
 public class MongoContext : Context
 {

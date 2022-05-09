@@ -7,6 +7,7 @@ using MongoDB.Driver;
 using Optsol.EventDriven.Components.Core.Domain;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
 using Optsol.EventDriven.Components.Driven.Infra.Data;
+using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb;
 
 namespace EventDriven.Arch.Driven.Infra.Data.MongoDb;
 
