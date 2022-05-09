@@ -68,7 +68,7 @@ public class Functions
     
     [FunctionName("Commit")]
     public async Task Commit(
-        [ServiceBusTrigger("%Topic%", "S1", Connection = "ServiceBusConnection")] Guid integrationId,
+        [ServiceBusTrigger("%flight-success%", "S1", Connection = "ServiceBusConnection")] Guid integrationId,
         ILogger log)
     {
         log.LogInformation($@"Commit Triggered IntegrationId: {integrationId} ");

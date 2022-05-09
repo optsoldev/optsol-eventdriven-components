@@ -42,7 +42,7 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
             .Where(b => b.IntegrationId == integrationId)
             .Select(s => (PersistentEvent<string?>)s);
         
-        _eventStoreContext.Beneficiarios.UpdateRange(events);
+        _eventStoreContext.Beneficiarios?.UpdateRange(events);
         _eventStoreContext.SaveChanges();
     }
 
