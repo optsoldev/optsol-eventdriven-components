@@ -3,7 +3,7 @@ using MediatR;
 
 namespace EventDriven.Arch.Application.Commands.Commits;
 
-public class CommitCommandHandler :IRequestHandler<CommitCommand, Unit>
+public class CommitCommandHandler : IRequestHandler<CommitCommand>
 {
     private readonly IBeneficiarioWriteRepository _repository;
 

@@ -1,4 +1,5 @@
 using EventDriven.Arch.Application;
+using EventDriven.Arch.Driven.Infra.Data.MongoDb;
 using MediatR;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Optsol.EventDriven.Components.Driven.Infra.Notification;
@@ -13,7 +14,7 @@ namespace EventDriven.Arch.Driving.Beneficiarios
         {
             builder.Services.AddMediatR(typeof(ApplicationMediatREntryPoint).Assembly);
             builder.Services.RegisterNotification();
-            //builder.Services.AddDataMongoModule(builder.GetContext().Configuration);
+            builder.Services.AddDataMongoModule(builder.GetContext().Configuration);
         }
     }
 }

@@ -31,14 +31,14 @@ public class Functions : BaseFunction
     /// <exception cref="InvalidCastException"></exception>
     [FunctionName("CriarBeneficiario")]
     [OpenApiOperation(operationId: "CriarBeneficiario", tags: new[] {""}, Description = "Função acionada para criar benefeciário")]
-    public async Task CriarBeneficiario([HttpTrigger(AuthorizationLevel.Function, "post", Route = "v1/beneficiarios/criar")] HttpRequest req,
+    public async Task CriarBeneficiarioAsync([HttpTrigger(AuthorizationLevel.Function, "post", Route = "v1/beneficiarios/criar")] HttpRequest req,
         ILogger log)
     {
-        log.LogInformation("Enviar Envelope Triggered");
+        log.LogInformation("Criar Beneficiário Triggered");
         
         var data = await JsonSerializer.DeserializeAsync<CriarBeneficiarioCommand>(req.Body, JsonSerializerOptions);
 
-        if (data == null) throw new InvalidCastException("Não foi possível converter para Envelope");
+        if (data == null) throw new InvalidCastException($"Não foi possível converter para {nameof(CriarBeneficiarioCommand)}");
 
         await Mediator.Send(data);
     }

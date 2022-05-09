@@ -12,7 +12,7 @@ namespace EventDriven.Arch.Driving.Beneficiarios;
 /// <summary>
 /// 
 /// </summary>
-public abstract class BaseFunction
+public class BaseFunction
 {
     /// <summary>
     /// 
@@ -36,10 +36,10 @@ public abstract class BaseFunction
     } 
     
     /// <summary>
-    /// 
+    /// Função criada para realizar o commit de todos os eventos daquela transação.
     /// </summary>
-    /// <param name="integrationId"></param>
-    /// <param name="log"></param>
+    /// <param name="integrationId">Guid do Id de integração.</param>
+    /// <param name="log">Instancia do <see cref="ILogger"/></param>
     [FunctionName("Commit")]
     public async Task CommitAsync(
         [ServiceBusTrigger("%TopicNameSuccess%", "%SubscriptionSuccess%", Connection = "ServiceBusConnection")] string integrationId,
@@ -49,14 +49,13 @@ public abstract class BaseFunction
         var command = new CommitCommand(Guid.Parse(integrationId));
 
         await Mediator.Send(command);
-        
     }
     
     /// <summary>
-    /// 
+    /// Função criada para realizar o rollback de todos os eventos daquela transação. 
     /// </summary>
-    /// <param name="integrationId"></param>
-    /// <param name="log"></param>
+    /// <param name="integrationId">Guid do Id de integração.</param>
+    /// <param name="log">Instância do <see cref="ILogger"/></param>
     [FunctionName("Rollback")]
     public async Task RollbackAsync(
         [ServiceBusTrigger("%TopicNameFailed%", "%SubscriptionFailed%", Connection = "ServiceBusConnection")] Guid integrationId,
