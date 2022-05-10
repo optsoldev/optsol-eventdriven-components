@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
 using Optsol.EventDriven.Components.Driven.Infra.Data;
 
-namespace EventDriven.Arch.Driven.Infra.Data;
+namespace EventDriven.Arch.Driven.Infra.Data.InMemory;
 
 public class EventStoreDbContext : DbContext
 {

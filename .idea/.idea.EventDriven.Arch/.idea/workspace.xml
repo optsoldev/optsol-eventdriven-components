@@ -212,7 +212,11 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/de1dc94e26de2eb8cdb9b19e9451c6a0738025b875978dc863de7ba87ee78c4/ServiceCollectionServiceExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e94594d245cb7014b895943e79f971a4a44f173ff85ca6e21cd5049a0493dfc/Span.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/playground/EventDriven.Arch.Application/Commands/AlterarBeneficiarios/AlterarBeneficiarioCommand.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/playground/EventDriven.Arch.Driven.Infra.Data.InMemory/BeneficiarioReadRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/playground/EventDriven.Arch.Driven.Infra.Data.InMemory/BeneficiarioWriteRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/playground/EventDriven.Arch.Driven.Infra.Data.Unit.Test/DomainHubSpec.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Optsol.EventDriven.Components.Driven.Infra.Data/PersistentEvent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Optsol.EventDriven.Components.Driven.Infra.Data/StagingEvent.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -235,7 +239,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Azure Functions host.Commit (Driving\EventDriven.Arch.Driving.Beneficiarios)">
+  <component name="RunManager" selected="Azure Functions host.EventDriven.Arch.Driving.Beneficiarios">
     <configuration name="Commit (Driving\EventDriven.Arch.Driving.Beneficiarios)" type="AzureFunctionsHost" factoryName="Azure Functions host" temporary="true">
       <option name="EXE_PATH" value="$PROJECT_DIR$/EventDriven.Arch.Driving.Beneficiarios/bin/Debug/net6.0/EventDriven.Arch.Driving.Beneficiarios.dll" />
       <option name="PROGRAM_PARAMETERS" value="host start --pause-on-error" />
@@ -277,14 +281,14 @@
       </method>
     </configuration>
     <configuration name="EventDriven.Arch.Driven.DomainEventHandlers" type="AzureFunctionsHost" factoryName="Azure Functions host">
-      <option name="EXE_PATH" value="$PROJECT_DIR$/src/EventDriven.Arch.Driven.DomainEventHandlers/bin/Debug/net6.0/EventDriven.Arch.Driven.DomainEventHandlers.dll" />
+      <option name="EXE_PATH" value="$PROJECT_DIR$/playground/EventDriven.Arch.Driving.Beneficiarios/bin/Debug/net6.0/EventDriven.Arch.Driving.Beneficiarios.dll" />
       <option name="PROGRAM_PARAMETERS" value="host start --pause-on-error" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/EventDriven.Arch.Driven.DomainEventHandlers/bin/Debug/net6.0" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/playground/EventDriven.Arch.Driving.Beneficiarios/bin/Debug/net6.0" />
       <option name="PASS_PARENT_ENVS" value="1" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="USE_MONO" value="0" />
       <option name="RUNTIME_ARGUMENTS" value="" />
-      <option name="PROJECT_PATH" value="$PROJECT_DIR$/src/EventDriven.Arch.Driven.DomainEventHandlers/EventDriven.Arch.Driven.DomainEventHandlers.csproj" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/playground/EventDriven.Arch.Driving.Beneficiarios/EventDriven.Arch.Driving.Beneficiarios.csproj" />
       <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
       <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
       <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
@@ -297,14 +301,14 @@
       </method>
     </configuration>
     <configuration name="EventDriven.Arch.Driving.AzFunction" type="AzureFunctionsHost" factoryName="Azure Functions host">
-      <option name="EXE_PATH" value="$PROJECT_DIR$/EventDriven.Arch.Driving.Beneficiarios/bin/Debug/net6.0/EventDriven.Arch.Driving.Beneficiarios.dll" />
+      <option name="EXE_PATH" value="$PROJECT_DIR$/playground/EventDriven.Arch.Driving.Beneficiarios/bin/Debug/net6.0/EventDriven.Arch.Driving.Beneficiarios.dll" />
       <option name="PROGRAM_PARAMETERS" value="host start --pause-on-error" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/EventDriven.Arch.Driving.Beneficiarios/bin/Debug/net6.0" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/playground/EventDriven.Arch.Driving.Beneficiarios/bin/Debug/net6.0" />
       <option name="PASS_PARENT_ENVS" value="1" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="USE_MONO" value="0" />
       <option name="RUNTIME_ARGUMENTS" value="" />
-      <option name="PROJECT_PATH" value="$PROJECT_DIR$/EventDriven.Arch.Driving.Beneficiarios/EventDriven.Arch.Driving.Beneficiarios.csproj" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/playground/EventDriven.Arch.Driving.Beneficiarios/EventDriven.Arch.Driving.Beneficiarios.csproj" />
       <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
       <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
       <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
@@ -317,9 +321,9 @@
       </method>
     </configuration>
     <configuration name="EventDriven.Arch.Driving.Beneficiarios" type="AzureFunctionsHost" factoryName="Azure Functions host">
-      <option name="EXE_PATH" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
+      <option name="EXE_PATH" value="$PROJECT_DIR$/playground/EventDriven.Arch.Driving.Beneficiarios/bin/Debug/net6.0/EventDriven.Arch.Driving.Beneficiarios.dll" />
+      <option name="PROGRAM_PARAMETERS" value="host start --pause-on-error" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/playground/EventDriven.Arch.Driving.Beneficiarios/bin/Debug/net6.0" />
       <option name="PASS_PARENT_ENVS" value="1" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="USE_MONO" value="0" />
@@ -328,9 +332,10 @@
       <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
       <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
       <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
-      <option name="PROJECT_KIND" value="None" />
-      <option name="PROJECT_TFM" value="" />
-      <option name="FUNCTION_NAMES" value="" />
+      <option name="PROJECT_KIND" value="AzureFunctions" />
+      <option name="PROJECT_TFM" value="net6.0" />
+      <option name="FUNCTION_NAMES" value="Exemplo" />
+      <browser url="http://localhost:7071" />
       <method v="2">
         <option name="BuildFunctionsProject" enabled="true" />
       </method>
@@ -776,6 +781,19 @@
           <line>61</line>
           <properties documentPath="$PROJECT_DIR$/src/Optsol.EventDriven.Components.Driving.Functions/BaseFunction.cs" initialLine="61" containingFunctionPresentation="method 'RollbackAsync'" />
           <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/src/Optsol.EventDriven.Components.Driving.Functions/BaseFunction.cs</url>
+          <line>77</line>
+          <properties documentPath="$PROJECT_DIR$/playground/EventDriven.Arch.Driving.Beneficiarios/BaseFunction.cs" initialLine="77" containingFunctionPresentation="method 'ExemploCommit'">
+            <startOffsets>
+              <option value="2433" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2480" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="46" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

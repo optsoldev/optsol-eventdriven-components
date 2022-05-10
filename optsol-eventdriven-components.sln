@@ -8,8 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{A9A243F4-C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4311E281-DC20-400C-BD0A-B582D711B873}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventDriven.Arch.Driven.Infra.Data.Unit.Test", "test\EventDriven.Arch.Driven.Infra.Data.Unit.Test\EventDriven.Arch.Driven.Infra.Data.Unit.Test.csproj", "{7EC83388-F175-4A85-B35E-0E719B801877}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Optsol.EventDriven.Components.Core.Domain", "src\Optsol.EventDriven.Components.Core.Domain\Optsol.EventDriven.Components.Core.Domain.csproj", "{AF570556-715D-4DA0-9758-3834100520FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Optsol.EventDriven.Components.Core.Application", "src\Optsol.EventDriven.Components.Core.Application\Optsol.EventDriven.Components.Core.Application.csproj", "{978E5C4D-8279-4180-B3F5-15B4EDA52974}"
@@ -28,7 +26,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventDriven.Arch.Applicatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventDriven.Arch.Domain", "playground\EventDriven.Arch.Domain\EventDriven.Arch.Domain.csproj", "{82B44FA0-FD16-40B3-B4A6-5409FEE1B9AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventDriven.Arch.Driven.Infra.Data", "playground\EventDriven.Arch.Driven.Infra.Data\EventDriven.Arch.Driven.Infra.Data.csproj", "{9EEF796F-8D69-4C3D-BA05-2BA855DC1EF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventDriven.Arch.Driven.Infra.Data.InMemory", "playground\EventDriven.Arch.Driven.Infra.Data.InMemory\EventDriven.Arch.Driven.Infra.Data.InMemory.csproj", "{9EEF796F-8D69-4C3D-BA05-2BA855DC1EF2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventDriven.Arch.Driven.Infra.Data.MongoDb", "playground\EventDriven.Arch.Driven.Infra.Data.MongoDb\EventDriven.Arch.Driven.Infra.Data.MongoDb.csproj", "{756F9155-22C8-4AA9-A677-21A7C91EAC59}"
 EndProject
@@ -53,7 +51,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{7EC83388-F175-4A85-B35E-0E719B801877} = {4311E281-DC20-400C-BD0A-B582D711B873}
 		{AF570556-715D-4DA0-9758-3834100520FA} = {A9A243F4-C14F-4B2B-9459-C93454A8CDA9}
 		{978E5C4D-8279-4180-B3F5-15B4EDA52974} = {A9A243F4-C14F-4B2B-9459-C93454A8CDA9}
 		{92D85F0A-A263-4D3B-B556-57E388EB3EBB} = {F3553D96-6EE2-4F54-8299-8B166DA4FE0D}
@@ -74,10 +71,6 @@ Global
 		{E90F6FF9-1805-4982-B7B1-EBBC78784B68} = {86B599DF-A3DC-4193-A6A9-59CE0D3AA908}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7EC83388-F175-4A85-B35E-0E719B801877}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7EC83388-F175-4A85-B35E-0E719B801877}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7EC83388-F175-4A85-B35E-0E719B801877}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7EC83388-F175-4A85-B35E-0E719B801877}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AF570556-715D-4DA0-9758-3834100520FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AF570556-715D-4DA0-9758-3834100520FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF570556-715D-4DA0-9758-3834100520FA}.Release|Any CPU.ActiveCfg = Release|Any CPU

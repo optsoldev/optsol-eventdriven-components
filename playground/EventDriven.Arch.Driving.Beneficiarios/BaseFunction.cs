@@ -1,11 +1,12 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using EventDriven.Arch.Application.Commands.Commits;
 using EventDriven.Arch.Application.Commands.Rollbacks;
 using MediatR;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
+using Optsol.EventDriven.Components.Core.Application.Commands.Commits;
 
 namespace EventDriven.Arch.Driving.Beneficiarios;
 
@@ -67,4 +68,15 @@ public class BaseFunction
 
         await Mediator.Send(command);
     }
+    
+    [FunctionName("Exemplo")]
+    public async Task ExemploCommit(
+        [HttpTrigger(AuthorizationLevel.Function, "get", Route = "v1/exemplo")] string req,
+        ILogger log)
+    {
+        var commit = new CommitCommand(Guid.NewGuid());
+
+        await Mediator.Send(commit);
+    }
+
 }

@@ -1,5 +1,3 @@
-using Optsol.EventDriven.Components.Core.Application;
-
-namespace EventDriven.Arch.Application.Commands.Commits;
+namespace Optsol.EventDriven.Components.Core.Application.Commands.Commits;
 
 public record CommitCommand(Guid IntegrationId) : ICommand;

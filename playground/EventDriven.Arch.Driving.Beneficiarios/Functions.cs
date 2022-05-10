@@ -1,6 +1,7 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
+using EventDriven.Arch.Application.Commands.Commits;
 using EventDriven.Arch.Application.Commands.CriarBeneficiarios;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +9,8 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
+using Optsol.EventDriven.Components.Core.Application.Commands.Commits;
+using Optsol.EventDriven.Components.Driving.Functions;
 
 namespace EventDriven.Arch.Driving.Beneficiarios;
 
@@ -42,7 +45,8 @@ public class Functions : BaseFunction
 
         await Mediator.Send(data);
     }
-    
+
+   
     /// <summary>
     /// 
     /// </summary>

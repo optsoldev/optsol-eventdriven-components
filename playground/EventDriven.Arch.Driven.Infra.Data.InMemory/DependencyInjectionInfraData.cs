@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Optsol.EventDriven.Components.Core.Domain;
 
-namespace EventDriven.Arch.Driven.Infra.Data;
+namespace EventDriven.Arch.Driven.Infra.Data.InMemory;
 
 public static class DependencyInjectionInfraData
 {

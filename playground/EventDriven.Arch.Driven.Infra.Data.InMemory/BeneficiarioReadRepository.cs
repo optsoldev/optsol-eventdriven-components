@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
 using Optsol.EventDriven.Components.Driven.Infra.Data;
 
-namespace EventDriven.Arch.Driven.Infra.Data;
+namespace EventDriven.Arch.Driven.Infra.Data.InMemory;
 
 public class BeneficiarioReadRepository : IBeneficiarioReadRepository
 {

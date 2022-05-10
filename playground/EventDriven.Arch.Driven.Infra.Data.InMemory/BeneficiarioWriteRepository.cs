@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Optsol.EventDriven.Components.Core.Domain;
 using Optsol.EventDriven.Components.Driven.Infra.Data;
 
-namespace EventDriven.Arch.Driven.Infra.Data;
+namespace EventDriven.Arch.Driven.Infra.Data.InMemory;
 
 public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
 {
@@ -50,8 +50,8 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
     {
         var events = model.PendingEvents.Select(e => new StagingEvent<string>(integrationId,
             model.Id,
-            ((DomainEvent)e).ModelVersion,
-            ((DomainEvent)e).When,
+            e.ModelVersion,
+            e.When,
             e.GetType().AssemblyQualifiedName ?? throw new InvalidOperationException(),
             JsonConvert.SerializeObject(e)));
         

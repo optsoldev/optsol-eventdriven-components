@@ -1,21 +1,12 @@
-using EventDriven.Arch.Domain;
-using MediatR;
+using EventDriven.Arch.Domain.Beneficiarios;
+using Optsol.EventDriven.Components.Core.Application.Commands.Commits;
+using Optsol.EventDriven.Components.Core.Domain.Repositories;
 
 namespace EventDriven.Arch.Application.Commands.Commits;
 
-public class CommitCommandHandler : IRequestHandler<CommitCommand>
+public class CommitCommandHandler : BaseCommitCommandHandler<Beneficiario>
 {
-    private readonly IBeneficiarioWriteRepository _repository;
-
-    public CommitCommandHandler(IBeneficiarioWriteRepository repository)
+    public CommitCommandHandler(IWriteRepository<Beneficiario> repository) : base(repository)
     {
-        _repository = repository;
-    }
-    
-    public Task<Unit> Handle(CommitCommand request, CancellationToken cancellationToken)
-    {
-        _repository.CommitIntegration(request.IntegrationId);
-
-        return Task.FromResult(new Unit());
     }
 }
