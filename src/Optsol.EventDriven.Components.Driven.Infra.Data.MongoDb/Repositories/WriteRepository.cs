@@ -8,10 +8,10 @@ namespace Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Repositories;
 
 public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggregate
 {
-    protected readonly MongoContext _context;
-    protected readonly IMessageBus _messageBus;
-    protected readonly IMongoCollection<PersistentEvent<IEvent>> _set;
-    protected readonly IMongoCollection<StagingEvent<IEvent>> _setStaging;
+    private readonly MongoContext _context;
+    private readonly IMessageBus _messageBus;
+    private readonly IMongoCollection<PersistentEvent<IEvent>> _set;
+    private readonly IMongoCollection<StagingEvent<IEvent>> _setStaging;
     
     protected WriteRepository(MongoContext context, IMessageBus messageBus, string collectionName)
     {

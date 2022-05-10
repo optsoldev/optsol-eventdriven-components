@@ -5,30 +5,18 @@ namespace Optsol.EventDriven.Components.Driven.Infra.Notification;
 
 public class MessageBus : IMessageBus
 {
-    private readonly IDomainHub _hub;
-
-    public MessageBus(IDomainHub hub)
+    public MessageBus()
     {
-        _hub = hub;
     }
     
     public async Task Publish(Guid integrationId, IEnumerable<IFailureEvent> events)
     {
         //Sobe para o event hub
-        
-        foreach (var evt in events)
-        {
-            await _hub.BroadcastFailure(integrationId, evt);
-        }
     }
 
     public async Task Publish(Guid integrationId, IEnumerable<IEvent> events)
     {
         //Sobe para o event hub
         
-        foreach (var evt in events)
-        {
-            await _hub.BroadcastSuccess(integrationId, evt);
-        }
     }
 }
