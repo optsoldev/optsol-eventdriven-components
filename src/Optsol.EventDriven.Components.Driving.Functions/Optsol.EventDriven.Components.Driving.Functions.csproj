@@ -7,18 +7,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
-        <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.ServiceBus" Version="5.2.0" />
+      <PackageReference Include="MediatR" Version="10.0.1" />
+      <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.ServiceBus" Version="5.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Azure.WebJobs">
+        <HintPath>..\..\..\..\..\..\opt\homebrew\Cellar\azure-functions-core-tools@4\4.0.4483\Microsoft.Azure.WebJobs.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.Azure.WebJobs.Extensions.Http">
+        <HintPath>..\..\..\..\..\..\opt\homebrew\Cellar\azure-functions-core-tools@4\4.0.4483\Microsoft.Azure.WebJobs.Extensions.Http.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Optsol.EventDriven.Components.Core.Application\Optsol.EventDriven.Components.Core.Application.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Reference Include="Microsoft.Azure.WebJobs.Extensions.Http">
-        <HintPath>..\..\..\..\..\..\opt\homebrew\Cellar\azure-functions-core-tools@4\4.0.4483\Microsoft.Azure.WebJobs.Extensions.Http.dll</HintPath>
-      </Reference>
     </ItemGroup>
 
 </Project>

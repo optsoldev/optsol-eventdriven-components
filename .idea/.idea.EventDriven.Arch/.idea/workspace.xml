@@ -198,6 +198,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/da7bfdc0748e4c23b7765b6c8583d3a2b55200/57/bc432b1f/Task.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/da7bfdc0748e4c23b7765b6c8583d3a2b55200/f1/b68b5469/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f142ce9f554d4e0d8033e232c5da4fa940c00/29/f3155d56/Queryable.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/18689f5a6b82cdb2ba2cbb9c25c0235e766a927ec90d1a4fb68b312e19bacf/ServiceBusClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/29336d53e64e532ebe5bdb1188c11d6be156d5e2617929556ba31e1f560/Hub.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3444aea72fd552a5be14e6c6d1bb43569412a5547ca7f0b93136753e44471e5c/CallSiteRuntimeResolver.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3a473bd7ec9fc9c39937e95569d5240d04ce5798cd65f8ad289d699c6be5c0/ObjectMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
@@ -215,6 +216,7 @@
     <setting file="file://$PROJECT_DIR$/playground/EventDriven.Arch.Driven.Infra.Data.InMemory/BeneficiarioReadRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/playground/EventDriven.Arch.Driven.Infra.Data.InMemory/BeneficiarioWriteRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/playground/EventDriven.Arch.Driven.Infra.Data.Unit.Test/DomainHubSpec.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/playground/EventDriven.Arch.Driven.Infra.Notification/Class1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Optsol.EventDriven.Components.Driven.Infra.Data/PersistentEvent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Optsol.EventDriven.Components.Driven.Infra.Data/StagingEvent.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -230,15 +232,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Azure Functions host.EventDriven.Arch.Driving.Beneficiarios">
     <configuration name="Commit (Driving\EventDriven.Arch.Driving.Beneficiarios)" type="AzureFunctionsHost" factoryName="Azure Functions host" temporary="true">
       <option name="EXE_PATH" value="$PROJECT_DIR$/EventDriven.Arch.Driving.Beneficiarios/bin/Debug/net6.0/EventDriven.Arch.Driving.Beneficiarios.dll" />
@@ -781,19 +784,6 @@
           <line>61</line>
           <properties documentPath="$PROJECT_DIR$/src/Optsol.EventDriven.Components.Driving.Functions/BaseFunction.cs" initialLine="61" containingFunctionPresentation="method 'RollbackAsync'" />
           <option name="timeStamp" value="39" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/src/Optsol.EventDriven.Components.Driving.Functions/BaseFunction.cs</url>
-          <line>77</line>
-          <properties documentPath="$PROJECT_DIR$/playground/EventDriven.Arch.Driving.Beneficiarios/BaseFunction.cs" initialLine="77" containingFunctionPresentation="method 'ExemploCommit'">
-            <startOffsets>
-              <option value="2433" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2480" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="46" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

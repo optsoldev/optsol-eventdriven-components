@@ -43,7 +43,7 @@ public class BaseFunction
     /// <param name="log">Instancia do <see cref="ILogger"/></param>
     [FunctionName("Commit")]
     public async Task CommitAsync(
-        [ServiceBusTrigger("%TopicNameSuccess%", "%SubscriptionSuccess%", Connection = "ServiceBusConnection")] string integrationId,
+        [ServiceBusTrigger("%TopicNameSuccess%", "commit", Connection = "ServiceBusConnection")] string integrationId,
         ILogger log)
     {
         log.LogInformation($@"Commit Triggered IntegrationId: {integrationId} ");
@@ -59,7 +59,7 @@ public class BaseFunction
     /// <param name="log">Instância do <see cref="ILogger"/></param>
     [FunctionName("Rollback")]
     public async Task RollbackAsync(
-        [ServiceBusTrigger("%TopicNameFailed%", "%SubscriptionFailed%", Connection = "ServiceBusConnection")] Guid integrationId,
+        [ServiceBusTrigger("%TopicNameFailed%", "rollback", Connection = "ServiceBusConnection")] Guid integrationId,
         ILogger log)
     {
         log.LogInformation($"Rollback Triggered IntegrationId : {integrationId}");
