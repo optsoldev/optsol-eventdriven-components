@@ -15,7 +15,7 @@ jobs:
       with:
         dotnet-version: ${{ env.dotnetSdkVersion }}
     - name: Restaurando Dependências
-      run: dotnet restore ./src/Optsol.EventDriven.Components.Core.Domain/Optsol.EventDriven.Components.Core.Domain.csproj
+      run: dotnet restore ./src/**/*.csproj
     - name: Rodando o Build
       run: dotnet build ./src/**/*.csproj -c ${{ env.buildConfiguration }} --no-restore
     - name: Rodando Testes Automatizados
