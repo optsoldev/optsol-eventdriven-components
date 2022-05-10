@@ -1,0 +1,41 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal --no-restore --collect "Code coverage"
+    - name: Criando Pacotes Nuget
+      run: |
+        dotnet custom **/src/*Components*/*.csproj -c ${{ env.buildConfiguration }} --no-restore --no-build -o packages 
+        dotnet custom !**/*.Test.*/*.csproj -c ${{ env.buildConfiguration }} --no-restore --no-build -o packages 
+        dotnet custom !**/playground/ -c ${{ env.buildConfiguration }} --no-restore --no-build -o packages
+    - name: Copiando Pacotes
+      run: Copy '${{ github.workspace }}/packages/*.nupkg' '${{ github.workspace }}'
+    - name: Publicando Artefato
+      uses: actions/upload-artifact@v2
+      with:
+        path: ${{ github.workspace }}
+        name: drop
+      
