@@ -8,6 +8,8 @@
     <projectFile>EventDriven.Arch.Driving.Beneficiarios/EventDriven.Arch.Driving.Beneficiarios.csproj</projectFile>
     <projectFile>Optsol.EventDriven.Components.Driving.Functions/Optsol.EventDriven.Components.Driving.Functions.csproj</projectFile>
     <projectFile>playground/EventDriven.Arch.Driving.Beneficiarios/EventDriven.Arch.Driving.Beneficiarios.csproj</projectFile>
+    <projectFile>playground/EventDriven.Arch.Driving.NegotiateServer/NegotiationServer.csproj</projectFile>
+    <projectFile>playground/EventDriven.Arch.Driving.MvcClient/EventDriven.Arch.Driving.MvcClient.csproj</projectFile>
     <projectFile profileName="EventDrive.Arch.Driving.Api">src/EventDrive.Arch.Driving.Api/EventDrive.Arch.Driving.Api.csproj</projectFile>
     <projectFile profileName="IIS Express">src/EventDrive.Arch.Driving.Api/EventDrive.Arch.Driving.Api.csproj</projectFile>
     <projectFile profileName="EventDriven.Arch.Driving.NegotiateServer">src/EventDriven.Arch.Driving.NegotiateServer/EventDriven.Arch.Driving.NegotiateServer.csproj</projectFile>
@@ -742,79 +744,37 @@
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/src/EventDriven.Arch.Application/Queries/BuscarBeneficiario/BuscarBeneficiarioQueryHandler.cs</url>
           <line>17</line>
-          <properties documentPath="$PROJECT_DIR$/src/EventDriven.Arch.Application/Queries/BuscarBeneficiario/BuscarBeneficiarioQueryHandler.cs" initialLine="17" containingFunctionPresentation="method 'Handle'">
-            <startOffsets>
-              <option value="606" />
-            </startOffsets>
-            <endOffsets>
-              <option value="693" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="$PROJECT_DIR$/src/EventDriven.Arch.Application/Queries/BuscarBeneficiario/BuscarBeneficiarioQueryHandler.cs" initialLine="17" containingFunctionPresentation="method 'Handle'" />
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/src/EventDriven.Arch.Application/Commands/CriarBeneficiarios/CriarBeneficiarioCommandHandler.cs</url>
           <line>17</line>
-          <properties documentPath="$PROJECT_DIR$/src/EventDriven.Arch.Application/Commands/CriarBeneficiarios/CriarBeneficiarioCommandHandler.cs" initialLine="17" containingFunctionPresentation="method 'Handle'">
-            <startOffsets>
-              <option value="619" />
-            </startOffsets>
-            <endOffsets>
-              <option value="721" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="$PROJECT_DIR$/src/EventDriven.Arch.Application/Commands/CriarBeneficiarios/CriarBeneficiarioCommandHandler.cs" initialLine="17" containingFunctionPresentation="method 'Handle'" />
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/src/Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb/Contexts/Context.cs</url>
           <line>28</line>
-          <properties documentPath="$PROJECT_DIR$/src/Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb/Context.cs" initialLine="28" containingFunctionPresentation="method 'SaveChanges'">
-            <startOffsets>
-              <option value="864" />
-            </startOffsets>
-            <endOffsets>
-              <option value="887" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="$PROJECT_DIR$/src/Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb/Context.cs" initialLine="28" containingFunctionPresentation="method 'SaveChanges'" />
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/src/EventDriven.Arch.Application/Commands/AlterarBeneficiarios/AlterarBeneficiarioCommandHandler.cs</url>
           <line>19</line>
-          <properties documentPath="$PROJECT_DIR$/src/EventDriven.Arch.Application/Commands/AlterarBeneficiarios/AlterarBeneficiarioCommandHandler.cs" initialLine="19" containingFunctionPresentation="method 'Handle'">
-            <startOffsets>
-              <option value="843" />
-            </startOffsets>
-            <endOffsets>
-              <option value="940" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="$PROJECT_DIR$/src/EventDriven.Arch.Application/Commands/AlterarBeneficiarios/AlterarBeneficiarioCommandHandler.cs" initialLine="19" containingFunctionPresentation="method 'Handle'" />
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/src/EventDriven.Arch.Driving.Api/Controllers/BeneficiariosController.cs</url>
           <line>38</line>
-          <properties documentPath="$PROJECT_DIR$/src/EventDriven.Arch.Driving.Api/Controllers/BeneficiariosController.cs" initialLine="38" containingFunctionPresentation="method 'BuscarBeneficiario'">
-            <startOffsets>
-              <option value="1194" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1241" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="$PROJECT_DIR$/src/EventDriven.Arch.Driving.Api/Controllers/BeneficiariosController.cs" initialLine="38" containingFunctionPresentation="method 'BuscarBeneficiario'" />
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/EventDriven.Arch.Driving.Beneficiarios/BaseFunction.cs</url>
           <line>61</line>
-          <properties documentPath="$PROJECT_DIR$/src/Optsol.EventDriven.Components.Driving.Functions/BaseFunction.cs" initialLine="61" containingFunctionPresentation="method 'RollbackAsync'">
-            <startOffsets>
-              <option value="2017" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2091" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="$PROJECT_DIR$/src/Optsol.EventDriven.Components.Driving.Functions/BaseFunction.cs" initialLine="61" containingFunctionPresentation="method 'RollbackAsync'" />
           <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
