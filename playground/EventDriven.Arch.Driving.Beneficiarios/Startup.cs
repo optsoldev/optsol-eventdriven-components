@@ -20,7 +20,7 @@ namespace EventDriven.Arch.Driving.Beneficiarios
         public override void Configure(IFunctionsHostBuilder builder)
         {
             builder.Services.AddMediatR(typeof(ApplicationMediatREntryPoint).Assembly);
-            builder.Services.RegisterNotification();
+            builder.Services.RegisterNotification(builder.GetContext().Configuration);
             builder.Services.AddDataMongoModule(builder.GetContext().Configuration);
         }
     }
