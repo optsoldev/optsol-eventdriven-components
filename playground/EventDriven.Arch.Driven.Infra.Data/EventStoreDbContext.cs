@@ -14,7 +14,7 @@ public class EventStoreDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<PersistentEvent>().HasKey(k => new {k.ModelId, k.ModelVersion});
+        modelBuilder.Entity<PersistentEvent<string>>().HasKey(k => new {k.ModelId, k.ModelVersion});
         modelBuilder.Entity<StagingEvent<string>>().HasKey(k => new {k.ModelId, k.ModelVersion});
     }
 }

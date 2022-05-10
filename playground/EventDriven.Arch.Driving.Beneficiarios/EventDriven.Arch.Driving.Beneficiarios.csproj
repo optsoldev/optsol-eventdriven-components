@@ -24,8 +24,9 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\src\EventDriven.Arch.Application\EventDriven.Arch.Application.csproj" />
-      <ProjectReference Include="..\src\EventDriven.Arch.Driven.Infra.Data.MongoDb\EventDriven.Arch.Driven.Infra.Data.MongoDb.csproj" />
-      <ProjectReference Include="..\src\Optsol.EventDriven.Components.Driven.Infra.Notification\Optsol.EventDriven.Components.Driven.Infra.Notification.csproj" />
+      <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Core.Application\Optsol.EventDriven.Components.Core.Application.csproj" />
+      <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Driven.Infra.Notification\Optsol.EventDriven.Components.Driven.Infra.Notification.csproj" />
+      <ProjectReference Include="..\EventDriven.Arch.Application\EventDriven.Arch.Application.csproj" />
+      <ProjectReference Include="..\EventDriven.Arch.Driven.Infra.Data.MongoDb\EventDriven.Arch.Driven.Infra.Data.MongoDb.csproj" />
     </ItemGroup>
 </Project>

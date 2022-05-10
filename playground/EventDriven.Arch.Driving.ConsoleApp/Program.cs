@@ -4,7 +4,7 @@
 
 using Azure.Messaging.ServiceBus;
 
-string connectionString = "Endpoint=sb://demo-eventdriven.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=7wg/7JCBYz89lVbGtVbkpDJZHndviidnljVzIIiyyq4=";
+string connectionString = "";
 
 // name of your Service Bus topic
 string topicName = "flight-success";

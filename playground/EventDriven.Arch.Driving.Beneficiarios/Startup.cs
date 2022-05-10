@@ -8,8 +8,15 @@ using Optsol.EventDriven.Components.Driven.Infra.Notification;
 [assembly: FunctionsStartup(typeof(EventDriven.Arch.Driving.Beneficiarios.Startup))]
 namespace EventDriven.Arch.Driving.Beneficiarios
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Startup : FunctionsStartup
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public override void Configure(IFunctionsHostBuilder builder)
         {
             builder.Services.AddMediatR(typeof(ApplicationMediatREntryPoint).Assembly);

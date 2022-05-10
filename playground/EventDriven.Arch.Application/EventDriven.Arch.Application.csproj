@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Core.Application\Optsol.EventDriven.Components.Core.Application.csproj" />
       <ProjectReference Include="..\EventDriven.Arch.Domain\EventDriven.Arch.Domain.csproj" />
-      <ProjectReference Include="..\Optsol.EventDriven.Components.Core.Application\Optsol.EventDriven.Components.Core.Application.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,3 @@
-using EventDriven.Arch.Application.Commands;
 using EventDriven.Arch.Domain.Beneficiarios;
 using Optsol.EventDriven.Components.Core.Application;
 
