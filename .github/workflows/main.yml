@@ -5,6 +5,7 @@ on:
 env:
   buildConfiguration: Release
   dotnetSdkVersion: 6.0.x
+  projectRoot: ./src/Optsol.EventDriven.Components.Core.Domain/Optsol.EventDriven.Components.Core.Domain.csproj
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,20 +18,20 @@ jobs:
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.0.5
     - name: Restaurando Dependências
-      run: dotnet restore ./src/Optsol.EventDriven.Components.Core.Domain/Optsol.EventDriven.Components.Core.Domain.csproj
-    - name: Rodando o Build
-      run: dotnet build ./src/Optsol.EventDriven.Components.Core.Domain/Optsol.EventDriven.Components.Core.Domain.csproj -c ${{ env.buildConfiguration }} --no-restore
+      run: dotnet restore ${{ env.projectRoot }}
+    - name: Rodando o Build 
+      run: dotnet build ${{ env.projectRoot }} -c ${{ env.buildConfiguration }} --no-restore
     - name: Rodando Testes Automatizados
       run: dotnet test ./playground/EventDriven.Arch.Driven.Infra.Data.Unit.Test/EventDriven.Arch.Driven.Infra.Data.Unit.Test.csproj -c ${{ env.buildConfiguration }} --no-restore --no-build --collect "Code coverage"
     #- name: Publish
     #  if: startsWith(github.ref, 'refs/heads/release')
     #  run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey 'secrets.oy2nihe3zvfrjsafortq3j333m24owde3al6skdkl7or2i'
     - name: Geração do package
-      run: dotnet pack ./src/Optsol.EventDriven.Components.Core.Domain/Optsol.EventDriven.Components.Core.Domain.csproj -c Release -o out
+      run: dotnet pack ${{ env.projectRoot }} -c Release -o out
     - name: Push no NuGet
       run: |
         cd out
-        dotnet nuget push *.nupkg --api-key 'oy2nihe3zvfrjsafortq3j333m24owde3al6skdkl7or2i' --source 'https://api.nuget.org/v3/index.json' --skip-duplicate
+        dotnet nuget push *.nupkg --api-key 'secrets.oy2nihe3zvfrjsafortq3j333m24owde3al6skdkl7or2i' --source 'https://api.nuget.org/v3/index.json' --skip-duplicate
     - name: Publicando Artefato
       uses: actions/upload-artifact@v2
       with:
