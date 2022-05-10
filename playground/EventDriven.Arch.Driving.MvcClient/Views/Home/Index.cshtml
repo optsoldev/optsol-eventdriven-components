@@ -1,0 +1,112 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h2 class="text-center" style="margin-top: 0; padding-top: 30px; padding-bottom: 30px;">Azure SignalR Group Chat</h2>
+<div class="container" style="height: calc(100% - 110px);">
+    <div id="messages" style="background-color: whitesmoke; "></div>
+    <div style="width: 100%; border-left-style: ridge; border-right-style: ridge;">
+            <textarea id="message"
+                      style="width: 100%; padding: 5px 10px; border-style: hidden;"
+                      placeholder="Type message and press Enter to send..."></textarea>
+    </div>
+    <div style="overflow: auto; border-style: ridge; border-top-style: hidden;">
+        <button class="btn-warning pull-right" id="echo">Echo</button>
+        <button class="btn-success pull-right" id="sendmessage">Send</button>
+    </div>
+</div>
+<div class="modal alert alert-danger fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>Connection Error...</div>
+                <div><strong style="font-size: 1.5em;">Hit Refresh/F5</strong> to rejoin. ;)</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Reference the SignalR library. -->
+<script src="https://cdn.jsdelivr.net/npm/&#64;microsoft/signalr@3.1.8/dist/browser/signalr.min.js"></script>
+
+<!--Add script to update the page and send messages.-->
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const generateRandomName = () =>
+            Math.random().toString(36).substring(2, 10);
+
+        let username = generateRandomName();
+        const promptMessage = 'Enter your name:';
+        do {
+            username = prompt(promptMessage, username);
+            if (!username || username.startsWith('_') || username.indexOf('<') > -1 || username.indexOf('>') > -1) {
+                username = '';
+                promptMessage = 'Invalid input. Enter your name:';
+            }
+        } while (!username)
+
+        const messageInput = document.getElementById('message');
+        messageInput.focus();
+
+        function createMessageEntry(encodedName, encodedMsg) {
+            var entry = document.createElement('div');
+            entry.classList.add("message-entry");
+            if (encodedName === "_SYSTEM_") {
+                entry.innerHTML = encodedMsg;
+                entry.classList.add("text-center");
+                entry.classList.add("system-message");
+            } else if (encodedName === "_BROADCAST_") {
+                entry.classList.add("text-center");
+                entry.innerHTML = `<div class="text-center broadcast-message">${encodedMsg}</div>`;
+            } else if (encodedName === username) {
+                entry.innerHTML = `<div class="message-avatar pull-right">${encodedName}</div>` +
+                    `<div class="message-content pull-right">${encodedMsg}<div>`;
+            } else {
+                entry.innerHTML = `<div class="message-avatar pull-left">${encodedName}</div>` +
+                    `<div class="message-content pull-left">${encodedMsg}<div>`;
+            }
+            return entry;
+        }
+
+        function bindConnectionMessage(connection) {
+            var messageCallback = function (name, message) {
+                console.log("passou");
+                console.log("mensagem", message);
+                if (!message) return;
+                var encodedName = name;
+                var encodedMsg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                var messageEntry = createMessageEntry(encodedName, encodedMsg);
+                console.log(messageEntry);
+                var messageBox = document.getElementById('messages');
+                messageBox.appendChild(messageEntry);
+                messageBox.scrollTop = messageBox.scrollHeight;
+            };
+            connection.on('sucesso', messageCallback);
+            //connection.on('echo', messageCallback);
+            connection.onclose(onConnectionError);
+        }
+
+        function onConnected(connection) {
+            console.log('connection started');
+        }
+
+        function onConnectionError(error) {
+            if (error && error.message) {
+                console.error(error.message);
+            }
+            var modal = document.getElementById('myModal');
+            modal.classList.add('in');
+            modal.style = 'display: block;';
+        }
+        
+        const hubEndpoint = "http://localhost:5000/Message?user=TestUser";
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl(hubEndpoint)
+            .build();
+        bindConnectionMessage(connection);
+        connection.start()
+            .then(() => onConnected(connection))
+            .catch(error => console.error(error.message));
+    });
+</script>

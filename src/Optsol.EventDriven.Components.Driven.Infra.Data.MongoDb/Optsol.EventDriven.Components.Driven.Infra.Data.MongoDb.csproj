@@ -11,4 +11,9 @@
       <PackageReference Include="MongoDB.Driver" Version="2.15.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Optsol.EventDriven.Components.Core.Domain\Optsol.EventDriven.Components.Core.Domain.csproj" />
+      <ProjectReference Include="..\Optsol.EventDriven.Components.Driven.Infra.Data\Optsol.EventDriven.Components.Driven.Infra.Data.csproj" />
+    </ItemGroup>
+
 </Project>

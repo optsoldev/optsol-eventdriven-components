@@ -7,7 +7,6 @@ public static class DependencyInjectionNotification
 {
     public static IServiceCollection RegisterNotification(this IServiceCollection services)
     {
-        services.AddScoped<IDomainHub, DomainHub>();
         services.AddScoped<IMessageBus, MessageBus>();
         
         return services;

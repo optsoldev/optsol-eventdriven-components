@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Core.Application\Optsol.EventDriven.Components.Core.Application.csproj" />
+      <ProjectReference Include="..\EventDriven.Arch.Domain\EventDriven.Arch.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
