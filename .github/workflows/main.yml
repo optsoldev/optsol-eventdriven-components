@@ -8,9 +8,6 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: '${{ env.DOTNET_ROOT }}'
     steps:
     - uses: actions/checkout@v2
     - name: Usando .NET SDK ${{ env.dotnetSdkVersion }}
@@ -18,7 +15,7 @@ jobs:
       with:
         dotnet-version: ${{ env.dotnetSdkVersion }}
     - name: Restaurando Dependências
-      run: dotnet restore **/*.csproj
+      run: dotnet restore ${{ env.DOTNET_ROOT }}/**/*.csproj
     - name: Rodando o Build
       run: dotnet build **/*.csproj -c ${{ env.buildConfiguration }} --no-restore
     - name: Rodando Testes Automatizados
