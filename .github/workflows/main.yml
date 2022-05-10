@@ -22,11 +22,11 @@ jobs:
       run: dotnet build ./src/Optsol.EventDriven.Components.Core.Domain/Optsol.EventDriven.Components.Core.Domain.csproj -c ${{ env.buildConfiguration }} --no-restore
     - name: Rodando Testes Automatizados
       run: dotnet test ./playground/EventDriven.Arch.Driven.Infra.Data.Unit.Test/EventDriven.Arch.Driven.Infra.Data.Unit.Test.csproj -c ${{ env.buildConfiguration }} --no-restore --no-build --collect "Code coverage"
-    - name: Copiando Pacotes
-      run: Copy '${{ github.workspace }}/packages/*.nupkg' '${{ github.workspace }}'
+    - name: Publish
+      if: startsWith(github.ref, 'refs/heads/release')
+      run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.oy2nihe3zvfrjsafortq3j333m24owde3al6skdkl7or2i}}
     - name: Publicando Artefato
       uses: actions/upload-artifact@v2
       with:
         path: ${{ github.workspace }}
         name: drop
-                    
