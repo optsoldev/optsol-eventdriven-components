@@ -15,9 +15,9 @@ jobs:
       with:
         dotnet-version: ${{ env.dotnetSdkVersion }}
     - name: Restaurando Dependências
-      run: dotnet restore **/src/**/*.csproj
+      run: dotnet restore ./src/**/*.csproj
     - name: Rodando o Build
-      run: dotnet build **/src/**/*.csproj -c ${{ env.buildConfiguration }} --no-restore
+      run: dotnet build ./src/**/*.csproj -c ${{ env.buildConfiguration }} --no-restore
     - name: Rodando Testes Automatizados
       run: dotnet test **/Optsol.Components.Test.*/*.csproj -c ${{ env.buildConfiguration }} --no-restore --no-build --collect "Code coverage"
     - name: Criando Pacotes Nuget
