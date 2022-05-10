@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: /home/runner/work/optsol-eventdriven-components
+        working-directory: ./optsol-eventdriven-components
         
     steps:
     - uses: actions/checkout@v3
