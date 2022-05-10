@@ -15,16 +15,16 @@ jobs:
       with:
         dotnet-version: ${{ env.dotnetSdkVersion }}
     - name: Restaurando Dependências
-      run: dotnet restore ../**/*.csproj
+      run: dotnet restore **/**/**/*.csproj
     - name: Rodando o Build
-      run: dotnet build ../**/*.csproj -c ${{ env.buildConfiguration }} --no-restore
+      run: dotnet build **/**/**/*.csproj -c ${{ env.buildConfiguration }} --no-restore
     - name: Rodando Testes Automatizados
-      run: dotnet test ../**/Optsol.Components.Test.*/*.csproj -c ${{ env.buildConfiguration }} --no-restore --no-build --collect "Code coverage"
+      run: dotnet test **/**/**/Optsol.Components.Test.*/*.csproj -c ${{ env.buildConfiguration }} --no-restore --no-build --collect "Code coverage"
     - name: Criando Pacotes Nuget
       run: |
-        dotnet custom ../**/src/*Components*/*.csproj -c ${{ env.buildConfiguration }} --no-restore --no-build -o packages 
-        dotnet custom !../**/*.Test.*/*.csproj -c ${{ env.buildConfiguration }} --no-restore --no-build -o packages 
-        dotnet custom !../**/playground/ -c ${{ env.buildConfiguration }} --no-restore --no-build -o packages
+        dotnet custom **/**/**/src/*Components*/*.csproj -c ${{ env.buildConfiguration }} --no-restore --no-build -o packages 
+        dotnet custom !**/**/**/*.Test.*/*.csproj -c ${{ env.buildConfiguration }} --no-restore --no-build -o packages 
+        dotnet custom !**/**/**/playground/ -c ${{ env.buildConfiguration }} --no-restore --no-build -o packages
     - name: Copiando Pacotes
       run: Copy '${{ github.workspace }}/packages/*.nupkg' '${{ github.workspace }}'
     - name: Publicando Artefato
