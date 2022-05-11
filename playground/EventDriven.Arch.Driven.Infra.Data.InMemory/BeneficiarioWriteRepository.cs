@@ -1,5 +1,6 @@
 using EventDriven.Arch.Domain;
 using EventDriven.Arch.Domain.Beneficiarios;
+using EventDriven.Arch.Domain.Beneficiarios.Repositories;
 using Newtonsoft.Json;
 using Optsol.EventDriven.Components.Core.Domain;
 using Optsol.EventDriven.Components.Driven.Infra.Data;

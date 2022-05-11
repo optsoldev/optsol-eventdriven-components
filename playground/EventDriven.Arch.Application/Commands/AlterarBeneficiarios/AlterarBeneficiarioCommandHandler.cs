@@ -1,5 +1,6 @@
 using EventDriven.Arch.Domain;
 using EventDriven.Arch.Domain.Beneficiarios;
+using EventDriven.Arch.Domain.Beneficiarios.Repositories;
 using MediatR;
 
 namespace EventDriven.Arch.Application.Commands.AlterarBeneficiarios;

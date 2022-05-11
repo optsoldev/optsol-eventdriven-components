@@ -1,6 +1,5 @@
-using EventDriven.Arch.Domain.Beneficiarios;
 using Optsol.EventDriven.Components.Core.Domain.Repositories;
 
-namespace EventDriven.Arch.Domain;
+namespace EventDriven.Arch.Domain.Beneficiarios.Repositories;
 
 public interface IBeneficiarioWriteRepository : IWriteRepository<Beneficiario> { }

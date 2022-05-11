@@ -1,5 +1,7 @@
 using System.Security.Authentication;
 using EventDriven.Arch.Domain;
+using EventDriven.Arch.Domain.Beneficiarios;
+using EventDriven.Arch.Domain.Beneficiarios.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
@@ -46,7 +48,7 @@ public static class DependencyInjectionInfraData
         //Repositories
         services.AddScoped<IBeneficiarioWriteRepository, BeneficiarioWriteRepository>();
         services.AddScoped<IBeneficiarioReadRepository, BeneficiarioReadRepository>();
-        
+        services.AddScoped<IBeneficiarioWriteProjectionRepository, BeneficiarioWriteProjectionRepository>();
         return services;
     }
 }

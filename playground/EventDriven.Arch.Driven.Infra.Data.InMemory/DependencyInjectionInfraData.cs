@@ -1,4 +1,6 @@
 using EventDriven.Arch.Domain;
+using EventDriven.Arch.Domain.Beneficiarios;
+using EventDriven.Arch.Domain.Beneficiarios.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Optsol.EventDriven.Components.Core.Domain;

@@ -41,33 +41,33 @@ public class BaseFunction
     /// </summary>
     /// <param name="integrationId">Guid do Id de integração.</param>
     /// <param name="log">Instancia do <see cref="ILogger"/></param>
-    [FunctionName("Commit")]
-    public async Task CommitAsync(
-        [ServiceBusTrigger("%TopicNameSuccess%", "commit", Connection = "ServiceBusConnection")] string integrationId,
-        ILogger log)
-    {
-        log.LogInformation($@"Commit Triggered IntegrationId: {integrationId} ");
-        var command = new CommitCommand(Guid.Parse(integrationId));
+    ///  [FunctionName("Commit")]
+    /// public async Task CommitAsync(
+    ///     [ServiceBusTrigger("%TopicNameSuccess%", "commit", Connection = "ServiceBusConnection")] string integrationId,
+    ///   ILogger log)
+    ///  {
+    ///     log.LogInformation($@"Commit Triggered IntegrationId: {integrationId} ");
+    ///    var command = new CommitCommand(Guid.Parse(integrationId));
 
-        await Mediator.Send(command);
-    }
+    ///     await Mediator.Send(command);
+    /// }
     
     /// <summary>
     /// Função criada para realizar o rollback de todos os eventos daquela transação. 
     /// </summary>
     /// <param name="integrationId">Guid do Id de integração.</param>
     /// <param name="log">Instância do <see cref="ILogger"/></param>
-    [FunctionName("Rollback")]
-    public async Task RollbackAsync(
-        [ServiceBusTrigger("%TopicNameFailed%", "rollback", Connection = "ServiceBusConnection")] Guid integrationId,
-        ILogger log)
-    {
-        log.LogInformation($"Rollback Triggered IntegrationId : {integrationId}");
+    /// [FunctionName("Rollback")]
+    /// public async Task RollbackAsync(
+    ///     [ServiceBusTrigger("%TopicNameFailed%", "rollback", Connection = "ServiceBusConnection")] Guid integrationId,
+    ///     ILogger log)
+    /// {
+    ///     log.LogInformation($"Rollback Triggered IntegrationId : {integrationId}");
         
-        var command = new RollbackCommand(integrationId);
+    ///     var command = new RollbackCommand(integrationId);
 
-        await Mediator.Send(command);
-    }
+    ///     await Mediator.Send(command);
+    ///  }
     
     [FunctionName("Exemplo")]
     public async Task ExemploCommit(
