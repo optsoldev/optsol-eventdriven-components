@@ -31,7 +31,7 @@ jobs:
     - name: Push no NuGet
       run: |
         cd out
-        dotnet nuget push *.nupkg --source https://api.nuget.org/v3/index.json --api-key oy2b5r4t6hc7udvdpcpq5ql3y2ndhj3edcjfo5jm4dhsci --skip-duplicate
+        dotnet nuget push *.nupkg --source https://api.nuget.org/v3/index.json --api-key oy2mqujvwfsggvrdh7mactvgneimvs7exm35xltpvevi2i --skip-duplicate
     - name: Publicando Artefato
       uses: actions/upload-artifact@v2
       with:
