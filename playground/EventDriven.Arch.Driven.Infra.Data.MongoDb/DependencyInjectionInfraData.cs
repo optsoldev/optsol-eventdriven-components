@@ -48,7 +48,7 @@ public static class DependencyInjectionInfraData
         //Repositories
         services.AddScoped<IBeneficiarioWriteRepository, BeneficiarioWriteRepository>();
         services.AddScoped<IBeneficiarioReadRepository, BeneficiarioReadRepository>();
-        services.AddScoped<IBeneficiarioWriteProjectionRepository, BeneficiarioWriteProjectionRepository>();
+        services.AddScoped<IBeneficiarioWriteReadModelRepository, BeneficiarioWriteReadModelRepository>();
         return services;
     }
 }

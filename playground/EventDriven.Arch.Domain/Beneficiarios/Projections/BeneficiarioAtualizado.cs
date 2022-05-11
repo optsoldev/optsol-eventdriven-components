@@ -1,6 +1,8 @@
 namespace EventDriven.Arch.Domain.Beneficiarios.Projections;
 
-public class BeneficiarioAtualizado
+public interface IReadModel {}
+
+public class BeneficiarioAtualizado : IReadModel
 {
     public Guid Id { get; set; }
     public string PrimeiroNome { get; set; }

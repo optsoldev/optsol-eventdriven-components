@@ -7,12 +7,12 @@ using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
 
 namespace EventDriven.Arch.Driven.Infra.Data.MongoDb;
 
-public class BeneficiarioWriteProjectionRepository : IBeneficiarioWriteProjectionRepository
+public class BeneficiarioWriteReadModelRepository : IBeneficiarioWriteReadModelRepository
 {
     private readonly MongoContext _context;
     private readonly IMongoCollection<BeneficiarioAtualizado> _set;
     
-    public BeneficiarioWriteProjectionRepository(MongoContext context)
+    public BeneficiarioWriteReadModelRepository(MongoContext context)
     {
         _context = context;
         _set = context.GetCollection<BeneficiarioAtualizado>(nameof(BeneficiarioAtualizado));

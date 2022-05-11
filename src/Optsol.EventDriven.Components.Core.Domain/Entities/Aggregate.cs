@@ -61,7 +61,7 @@ public abstract class Aggregate : IAggregate
     
     public bool Invalid => Valid is false;
     
-    public ValidationResult ValidationResult { get;} = new();
+    public ValidationResult ValidationResult { get; protected set; } = new();
 
     public abstract void Validate();
 }

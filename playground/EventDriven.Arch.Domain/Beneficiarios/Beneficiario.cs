@@ -1,3 +1,5 @@
+using System.Data;
+using FluentValidation;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
 
 namespace EventDriven.Arch.Domain.Beneficiarios;
@@ -27,13 +29,14 @@ public class Beneficiario : Aggregate
     public override void Validate(Guid integrationId)
     {
         Validate();
-        if(this.Invalid)
-            _failureEvents.Enqueue(new BeneficiarioNaoCriado(integrationId, ""));
+        if(Invalid)
+            _failureEvents.Enqueue(new BeneficiarioNaoCriado(integrationId, ValidationResult.Errors.ToString()));
     }
 
     public override void Validate()
     {
-        throw new NotImplementedException();
+        var validation = new BeneficiarioValidator();
+        ValidationResult = validation.Validate(this);
     }
 
     protected override void Apply(IEvent pendingEvent)
@@ -56,5 +59,22 @@ public class Beneficiario : Aggregate
 
     private void Apply(BeneficiarioAlterado alterado) => (Version, PrimeiroNome, SegundoNome) =
         (alterado.ModelVersion, alterado.PrimeiroNome, alterado.SegundoNome);
+
+    public sealed class BeneficiarioValidator : AbstractValidator<Beneficiario>
+    {
+        public BeneficiarioValidator()
+        {
+            RuleFor(beneficiario => beneficiario.PrimeiroNome)
+                .NotEmpty()
+                .NotNull()
+                .WithMessage("O primeiro nome não pode ser nulo ou vazio.");
+
+            RuleFor(beneficiario => beneficiario.SegundoNome)
+                .NotEmpty()
+                .NotNull()
+                .WithMessage("O segundo nome não pode ser nulo ou vazio.");
+            
+        }
+    }
 }
 

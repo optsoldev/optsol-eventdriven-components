@@ -1,7 +1,6 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using EventDriven.Arch.Application.Commands.Rollbacks;
 using MediatR;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;

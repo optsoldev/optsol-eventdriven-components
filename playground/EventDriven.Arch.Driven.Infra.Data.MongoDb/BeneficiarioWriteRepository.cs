@@ -9,9 +9,9 @@ namespace EventDriven.Arch.Driven.Infra.Data.MongoDb;
 
 public class BeneficiarioWriteRepository : WriteRepository<Beneficiario>, IBeneficiarioWriteRepository
 {
-    public BeneficiarioWriteRepository(MongoContext context, IMessageBus messageBus, IBeneficiarioWriteProjectionRepository repository) : base(context, messageBus, nameof(Beneficiario))
+    public BeneficiarioWriteRepository(MongoContext context, IMessageBus messageBus, IBeneficiarioWriteReadModelRepository repository) : base(context, messageBus, nameof(Beneficiario))
     {
-        this.Subscribe(repository.ReceiveEvent);
+        Subscribe(repository.ReceiveEvent);
     }
 }
 

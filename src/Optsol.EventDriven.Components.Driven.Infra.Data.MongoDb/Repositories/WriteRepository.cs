@@ -68,7 +68,7 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
         _context.AddTransaction(() => _setStaging.InsertManyAsync(events));
         _context.SaveChanges();
         _messageBus.Publish(integrationId, model.PendingEvents);
-        SendEvents(events.Select(e => e.Data));
+        //SendEvents(events.Select(e => e.Data));
     }
 
     public virtual void Rollback(Guid integrationId, T model)
