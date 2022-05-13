@@ -12,3 +12,6 @@ public record BeneficiarioQueryResponse(string?PrimeiroNome, string? SegundoNome
         return new BeneficiarioQueryResponse(entity.PrimeiroNome, entity.SegundoNome);
     }
 }
+
+
+

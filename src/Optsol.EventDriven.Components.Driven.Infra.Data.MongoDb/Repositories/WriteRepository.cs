@@ -12,7 +12,7 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
     private readonly IMessageBus _messageBus;
     private readonly IMongoCollection<PersistentEvent<IEvent>> _set;
     private readonly IMongoCollection<StagingEvent<IEvent>> _setStaging;
-    
+    private readonly List<Action<IEvent>> _projectionCallbacks = new();
     protected WriteRepository(MongoContext context, IMessageBus messageBus, string collectionName)
     {
         _context = context;
@@ -40,6 +40,19 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
         _context.AddTransaction(() => _set.InsertManyAsync(events));
         _context.AddTransaction(() => _setStaging.DeleteManyAsync(f => f.IntegrationId == integrationId));
         _context.SaveChanges();
+
+        SendEvents(events.Select(e => e.Data));
+    }
+
+    private void SendEvents(IEnumerable<IEvent> events)
+    {
+        foreach (var @event in events)
+        {
+            foreach (var callback in _projectionCallbacks)
+            {
+                callback(@event);
+            }
+        }
     }
     
     public virtual void Commit(Guid integrationId, T model)
@@ -55,10 +68,16 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
         _context.AddTransaction(() => _setStaging.InsertManyAsync(events));
         _context.SaveChanges();
         _messageBus.Publish(integrationId, model.PendingEvents);
+        //SendEvents(events.Select(e => e.Data));
     }
 
     public virtual void Rollback(Guid integrationId, T model)
     {
         _messageBus.Publish(integrationId, model.FailureEvents); 
+    }
+
+    public virtual void Subscribe(Action<IEvent> callback)
+    {
+        _projectionCallbacks.Add(callback);
     }
 }

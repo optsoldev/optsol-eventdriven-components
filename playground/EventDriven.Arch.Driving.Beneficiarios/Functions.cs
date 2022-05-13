@@ -42,7 +42,8 @@ public class Functions : BaseFunction
 
         await Mediator.Send(data);
     }
-    
+
+   
     /// <summary>
     /// 
     /// </summary>

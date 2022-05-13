@@ -1,5 +1,6 @@
 using EventDriven.Arch.Domain;
 using EventDriven.Arch.Domain.Beneficiarios;
+using EventDriven.Arch.Domain.Beneficiarios.Repositories;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Repositories;
 

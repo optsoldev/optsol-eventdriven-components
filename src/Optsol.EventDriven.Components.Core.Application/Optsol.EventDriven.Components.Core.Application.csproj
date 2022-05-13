@@ -11,4 +11,8 @@
       <PackageReference Include="MediatR" Version="10.0.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Optsol.EventDriven.Components.Core.Domain\Optsol.EventDriven.Components.Core.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
