@@ -4,21 +4,16 @@ using EventDriven.Arch.Domain.Beneficiarios.Repositories;
 using MongoDB.Driver;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
+using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Repositories;
 
-namespace EventDriven.Arch.Driven.Infra.Data.MongoDb;
+namespace EventDriven.Arch.Driven.Infra.Data.MongoDb.ReadModelRepository;
 
-public class BeneficiarioWriteReadModelRepository : IBeneficiarioWriteReadModelRepository
+public class BeneficiarioAtualizadoWriteReadModelRepository : WriteReadModelRepository<BeneficiarioAtualizado>, IBeneficiarioAtualizadoWriteReadModelRepository
 {
-    private readonly MongoContext _context;
-    private readonly IMongoCollection<BeneficiarioAtualizado> _set;
     
-    public BeneficiarioWriteReadModelRepository(MongoContext context)
-    {
-        _context = context;
-        _set = context.GetCollection<BeneficiarioAtualizado>(nameof(BeneficiarioAtualizado));
-    }
+    public BeneficiarioAtualizadoWriteReadModelRepository(MongoContext context) : base(context) {}
 
-    public void ReceiveEvent(IEvent @event)
+    public override void ReceiveEvent(IEvent @event)
     {
         switch (@event)
         {
@@ -33,7 +28,7 @@ public class BeneficiarioWriteReadModelRepository : IBeneficiarioWriteReadModelR
 
     private BeneficiarioAtualizado Get(Guid id)
     {
-        var beneficiario = _set.Find(f => f.Id == id).FirstOrDefault();
+        var beneficiario = Set.Find(f => f.Id == id).FirstOrDefault();
 
         if (beneficiario == null)
         {
@@ -41,7 +36,7 @@ public class BeneficiarioWriteReadModelRepository : IBeneficiarioWriteReadModelR
             {
                 Id = id
             };
-            _context.AddTransaction(() => _set.InsertOneAsync(beneficiario));
+            Context.AddTransaction(() => Set.InsertOneAsync(beneficiario));
         }
 
         return beneficiario;
@@ -55,7 +50,7 @@ public class BeneficiarioWriteReadModelRepository : IBeneficiarioWriteReadModelR
         beneficiario.DataAtualizacao = criado.When;
         beneficiario.NomeCompleto = criado.PrimeiroNome + criado.SegundoNome;
 
-        _context.SaveChanges();
+        Context.SaveChanges();
     }
 
     private void Apply(BeneficiarioAlterado alterado)
@@ -66,6 +61,6 @@ public class BeneficiarioWriteReadModelRepository : IBeneficiarioWriteReadModelR
         beneficiario.DataAtualizacao = alterado.When;
         beneficiario.NomeCompleto = alterado.PrimeiroNome + alterado.SegundoNome;
 
-        _context.SaveChanges();
+        Context.SaveChanges();
     }
 }

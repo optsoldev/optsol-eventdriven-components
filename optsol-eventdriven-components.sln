@@ -48,6 +48,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driven", "Driven", "{C4FD08
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driving", "Driving", "{2945B7BB-FBAA-4A2A-A140-E8BC0A24A094}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventDriven.Arch.Driving.Projections", "playground\EventDriven.Arch.Driving.Projections\EventDriven.Arch.Driving.Projections.csproj", "{8C47B9B1-6046-40C3-94E2-54AED444E533}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -98,6 +100,10 @@ Global
 		{DF847584-198B-4D1A-A93C-33BE06B15D67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF847584-198B-4D1A-A93C-33BE06B15D67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF847584-198B-4D1A-A93C-33BE06B15D67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C47B9B1-6046-40C3-94E2-54AED444E533}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C47B9B1-6046-40C3-94E2-54AED444E533}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C47B9B1-6046-40C3-94E2-54AED444E533}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C47B9B1-6046-40C3-94E2-54AED444E533}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -121,6 +127,7 @@ Global
 		{049423B0-3979-42A7-9263-553B643781D4} = {86B599DF-A3DC-4193-A6A9-59CE0D3AA908}
 		{C4FD0811-3BFB-4D65-A72F-53D7C2239E23} = {86B599DF-A3DC-4193-A6A9-59CE0D3AA908}
 		{2945B7BB-FBAA-4A2A-A140-E8BC0A24A094} = {86B599DF-A3DC-4193-A6A9-59CE0D3AA908}
+		{8C47B9B1-6046-40C3-94E2-54AED444E533} = {2945B7BB-FBAA-4A2A-A140-E8BC0A24A094}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CEB4F9A4-FE35-4F6F-9543-265AF7C84D23}

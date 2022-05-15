@@ -1,6 +1,6 @@
-namespace EventDriven.Arch.Domain.Beneficiarios.Projections;
+using Optsol.EventDriven.Components.Core.Domain.Entities;
 
-public interface IReadModel {}
+namespace EventDriven.Arch.Domain.Beneficiarios.Projections;
 
 public class BeneficiarioAtualizado : IReadModel
 {
