@@ -1,61 +1,71 @@
-using Azure.Messaging.ServiceBus;
-using Newtonsoft.Json;
+using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Producer;
 using Optsol.EventDriven.Components.Core.Domain;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
+using System.Text.Json;
 
 namespace Optsol.EventDriven.Components.Driven.Infra.Notification;
 
 public class MessageBus : IMessageBus
 {
-    private readonly ServiceBusClient _client;
+    private EventHubProducerClient? _client;
     private readonly ServiceBusSettings _settings;
-    
+
     public MessageBus(ServiceBusSettings settings)
     {
         _settings = settings;
-        _client = new ServiceBusClient(settings.ConnectionString);
     }
     
     public async Task Publish(Guid integrationId, IEnumerable<IFailureEvent> events)
     {
-        var sender = _client.CreateSender($"{_settings.TopicName}-failed");
-        using ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
+        _client = new EventHubProducerClient(_settings.ConnectionString, 
+            $"{_settings.EventHubName.ToString().ToLower()}-failure");
+
+        EventDataBatch eventBatch = await _client.CreateBatchAsync();
+
         foreach (var @event in events)
         {
-            var data = JsonConvert.SerializeObject(@events);
-            messageBatch.TryAddMessage(new ServiceBusMessage(data));
-        }
+            var eventBody = new BinaryData(JsonSerializer.Serialize(@event));
+            var eventData = new EventData(eventBody);
 
-        try
-        {
-            await sender.SendMessagesAsync(messageBatch);
-        }
-        finally
-        {
-            await sender.DisposeAsync();
-            await _client.DisposeAsync();
+            if (!eventBatch.TryAdd(eventData))
+            {
+                await _client.SendAsync(eventBatch);
+                eventBatch = await _client.CreateBatchAsync();
+                eventBatch.TryAdd(eventData);
+            }
         }
     }
 
     public async Task Publish(Guid integrationId, IEnumerable<IEvent> events)
     {
-        var sender = _client.CreateSender($"{_settings.TopicName}-success");
-        using ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
-        foreach (var @event in events)
-        {
-            var data = JsonConvert.SerializeObject(@events);
-            messageBatch.TryAddMessage(new ServiceBusMessage(data));
-        }
-
+        _client = new EventHubProducerClient(_settings.ConnectionString,
+            $"{_settings.EventHubName.ToString().ToLower()}-success");        
         try
         {
-            await sender.SendMessagesAsync(messageBatch);
+            
+
+            EventDataBatch eventBatch = await _client.CreateBatchAsync();
+
+            foreach (var @event in events)
+            {
+                var eventBody = new BinaryData(JsonSerializer.Serialize(@event));
+                var eventData = new EventData(eventBody);
+
+                if (!eventBatch.TryAdd(eventData))
+                {
+                    await _client.SendAsync(eventBatch);
+                    eventBatch = await _client.CreateBatchAsync();
+                    eventBatch.TryAdd(eventData);
+                }
+            }
+            await _client.SendAsync(eventBatch);
+            eventBatch.Dispose();
+            await _client.DisposeAsync();
         }
         finally
         {
-            await sender.DisposeAsync();
-            await _client.DisposeAsync();
+            await _client.CloseAsync();
         }
-        
     }
 }
