@@ -1,13 +1,13 @@
-using EventDriven.Arch.Domain.Beneficiarios;
+using EventDriven.Arch.Domain.Beneficiarios.Projections;
 using Optsol.EventDriven.Components.Core.Application;
 
 namespace EventDriven.Arch.Application.Queries.BuscarBeneficiario;
 
-public record BuscarBeneficiarioQuery(Guid Id) : IQuery<BeneficiarioQueryResponse>;
+public record BuscarBeneficiarioAtualizadoQuery(Guid Id) : IQuery<BeneficiarioQueryResponse>;
 
 public record BeneficiarioQueryResponse(string?PrimeiroNome, string? SegundoNome) : IQueryResponse
 {
-    public static implicit operator BeneficiarioQueryResponse(Beneficiario entity)
+    public static implicit operator BeneficiarioQueryResponse(BeneficiarioAtualizado entity)
     {
         return new BeneficiarioQueryResponse(entity.PrimeiroNome, entity.SegundoNome);
     }

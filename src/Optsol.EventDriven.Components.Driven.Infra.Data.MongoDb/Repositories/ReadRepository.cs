@@ -6,13 +6,13 @@ using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
 
 namespace Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Repositories;
 
-public abstract class ReadEventRepository<T> : IReadRepository<T> where T : IAggregate
+public abstract class ReadRepository<T> : IReadRepository<T> where T : IAggregate
 {
-    private readonly IMongoCollection<PersistentEvent<IEvent>> _set;
+    protected readonly IMongoCollection<PersistentEvent<IEvent>> Set;
 
-    protected ReadEventRepository(MongoContext context, string collectionName)
+    protected ReadRepository(MongoContext context, string collectionName)
     {
-        _set = context.GetCollection<PersistentEvent<IEvent>>(collectionName);
+        Set = context.GetCollection<PersistentEvent<IEvent>>(collectionName);
     }
     
     public IEnumerable<IEvent> GetById(Guid id) => GetEvents(e => e.ModelId == id);
@@ -21,6 +21,6 @@ public abstract class ReadEventRepository<T> : IReadRepository<T> where T : IAgg
     {
         var sortDef = Builders<PersistentEvent<IEvent>>.Sort.Descending(d => d.ModelVersion);
 
-        return _set.Find(expression).Sort(sortDef).Project(p => p.Data).ToList();
+        return Set.Find(expression).Sort(sortDef).Project(p => p.Data).ToList();
     }
 }

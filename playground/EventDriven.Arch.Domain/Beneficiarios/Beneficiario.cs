@@ -1,4 +1,3 @@
-using System.Data;
 using FluentValidation;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
 
@@ -19,7 +18,9 @@ public class Beneficiario : Aggregate
         
     }
     
-    public Beneficiario(IEnumerable<IEvent> persistentEvents) :base(persistentEvents) {}
+    public Beneficiario(IEnumerable<IEvent> persistentEvents) :base(persistentEvents) 
+    {
+    }
     
     public void AlterarNome(Guid integrationId, string primeiroNome, string segundoNome)
     {
