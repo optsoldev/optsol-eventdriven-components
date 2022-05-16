@@ -38,6 +38,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Solution Items", "0 - Solution Items", "{41186282-35D7-4558-AFF8-133D4B70D977}"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines.yml = azure-pipelines.yml
+		playground\docker-compose.yml = playground\docker-compose.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Driving.Functions", "src\Optsol.EventDriven.Components.Driving.Functions\Optsol.EventDriven.Components.Driving.Functions.csproj", "{DF847584-198B-4D1A-A93C-33BE06B15D67}"
@@ -48,7 +49,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driven", "Driven", "{C4FD08
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driving", "Driving", "{2945B7BB-FBAA-4A2A-A140-E8BC0A24A094}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventDriven.Arch.Driving.Projections", "playground\EventDriven.Arch.Driving.Projections\EventDriven.Arch.Driving.Projections.csproj", "{8C47B9B1-6046-40C3-94E2-54AED444E533}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventDriven.Arch.Driving.Projections", "playground\EventDriven.Arch.Driving.Projections\EventDriven.Arch.Driving.Projections.csproj", "{8C47B9B1-6046-40C3-94E2-54AED444E533}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Optsol.EventDriven.Components.Driven.Infra.Notification.Integration.Tests", "test\Optsol.EventDriven.Components.Driven.Infra.Notification.Integration.Tests\Optsol.EventDriven.Components.Driven.Infra.Notification.Integration.Tests.csproj", "{4F03523E-A9A5-435A-82DA-68D20DD1AEE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Optsol.EventDriven.Components.Core.Domain.Unit.Tests", "test\Optsol.EventDriven.Components.Core.Domain.Unit.Tests\Optsol.EventDriven.Components.Core.Domain.Unit.Tests.csproj", "{1BCB0772-0139-4D00-B2AA-8672FDA42823}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -104,6 +109,14 @@ Global
 		{8C47B9B1-6046-40C3-94E2-54AED444E533}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C47B9B1-6046-40C3-94E2-54AED444E533}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C47B9B1-6046-40C3-94E2-54AED444E533}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F03523E-A9A5-435A-82DA-68D20DD1AEE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F03523E-A9A5-435A-82DA-68D20DD1AEE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F03523E-A9A5-435A-82DA-68D20DD1AEE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F03523E-A9A5-435A-82DA-68D20DD1AEE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BCB0772-0139-4D00-B2AA-8672FDA42823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BCB0772-0139-4D00-B2AA-8672FDA42823}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BCB0772-0139-4D00-B2AA-8672FDA42823}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BCB0772-0139-4D00-B2AA-8672FDA42823}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -128,6 +141,8 @@ Global
 		{C4FD0811-3BFB-4D65-A72F-53D7C2239E23} = {86B599DF-A3DC-4193-A6A9-59CE0D3AA908}
 		{2945B7BB-FBAA-4A2A-A140-E8BC0A24A094} = {86B599DF-A3DC-4193-A6A9-59CE0D3AA908}
 		{8C47B9B1-6046-40C3-94E2-54AED444E533} = {2945B7BB-FBAA-4A2A-A140-E8BC0A24A094}
+		{4F03523E-A9A5-435A-82DA-68D20DD1AEE7} = {4311E281-DC20-400C-BD0A-B582D711B873}
+		{1BCB0772-0139-4D00-B2AA-8672FDA42823} = {4311E281-DC20-400C-BD0A-B582D711B873}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CEB4F9A4-FE35-4F6F-9543-265AF7C84D23}

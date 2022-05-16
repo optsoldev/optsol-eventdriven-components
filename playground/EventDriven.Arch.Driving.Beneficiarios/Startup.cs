@@ -22,6 +22,7 @@ namespace EventDriven.Arch.Driving.Beneficiarios
             builder.Services.AddMediatR(typeof(ApplicationMediatREntryPoint).Assembly);
             builder.Services.RegisterNotification(builder.GetContext().Configuration);
             builder.Services.AddDataMongoModule(builder.GetContext().Configuration);
+            builder.Services.AddApplicationModule();
         }
     }
 }

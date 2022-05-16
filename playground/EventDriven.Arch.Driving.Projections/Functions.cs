@@ -1,23 +1,16 @@
-using EventDriven.Arch.Domain.Beneficiarios.Repositories;
+using System.Threading.Tasks;
+using Azure.Messaging.EventHubs;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
-using Optsol.EventDriven.Components.Core.Domain.Entities;
 
 namespace EventDriven.Arch.Driving.Projections
 {
     public class Functions
     {
-        private readonly IBeneficiarioAtualizadoWriteReadModelRepository _repository;
-
-        public Functions(IBeneficiarioAtualizadoWriteReadModelRepository repository)
+        [FunctionName("Functions")]
+        public async Task Run([EventHubTrigger("beneficiario-success", Connection = "ConnectionString")] EventData @event, ILogger log)
         {
-            _repository = repository;
-        }
-
-        [FunctionName("Projection")]
-        public void Run([QueueTrigger("beneficiarios-sucesso", Connection = "AzureWebJobsStorage")] IEvent @event, ILogger log)
-        {
-            _repository.ReceiveEvent(@event);
+            log.LogInformation($"{@event}");
         }
     }
 }

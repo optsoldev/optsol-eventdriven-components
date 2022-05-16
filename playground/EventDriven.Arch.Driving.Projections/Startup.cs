@@ -1,6 +1,6 @@
-﻿using EventDriven.Arch.Driven.Infra.Data.MongoDb;
+using EventDriven.Arch.Application;
+using EventDriven.Arch.Driven.Infra.Data.MongoDb;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-
 
 [assembly: FunctionsStartup(typeof(EventDriven.Arch.Driving.Projections.Startup))]
 namespace EventDriven.Arch.Driving.Projections
@@ -17,6 +17,7 @@ namespace EventDriven.Arch.Driving.Projections
         public override void Configure(IFunctionsHostBuilder builder)
         {
             builder.Services.AddDataMongoModule(builder.GetContext().Configuration);
+            builder.Services.AddApplicationModule();
         }
     }
 }
