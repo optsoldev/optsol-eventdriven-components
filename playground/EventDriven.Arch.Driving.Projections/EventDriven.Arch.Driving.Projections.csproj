@@ -6,11 +6,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.EventHubs" Version="5.0.0" />
-<<<<<<< HEAD
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.0.1" />
-=======
-    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.13" />
->>>>>>> 53426e8e4cc66e8e5b39c2f80ad296bf56cd321a
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Core.Domain\Optsol.EventDriven.Components.Core.Domain.csproj" />
