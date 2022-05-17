@@ -8,17 +8,9 @@ using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Repositories;
 
 namespace EventDriven.Arch.Driven.Infra.Data.MongoDb.ReadModelRepository;
 
-<<<<<<<< HEAD:playground/EventDriven.Arch.Driven.Infra.Data.MongoDb/ProjectionRepository/BeneficiarioAtualizadoWriteProjectionRepository.cs
 public class BeneficiarioAtualizadoWriteProjectionRepository : WriteProjectionRepository<BeneficiarioAtualizado>, IBeneficiarioAtualizadoWriteProjectionRepository
-{
-    
-    public BeneficiarioAtualizadoWriteProjectionRepository(MongoContext context) : base(context) {}
-========
-public class BeneficiarioAtualizadoWriteReadModelRepository : WriteReadModelRepository<BeneficiarioAtualizado>, IBeneficiarioAtualizadoWriteReadModelRepository
-{
-    
-    public BeneficiarioAtualizadoWriteReadModelRepository(MongoContext context) : base(context) {}
->>>>>>>> 53426e8e4cc66e8e5b39c2f80ad296bf56cd321a:playground/EventDriven.Arch.Driven.Infra.Data.MongoDb/ReadModelRepository/BeneficiarioAtualizadoWriteReadModelRepository.cs
+{    
+    public BeneficiarioAtualizadoWriteProjectionRepository(MongoContext context) : base(context) {} 
 
     public override void ReceiveEvent(IEvent @event)
     {
