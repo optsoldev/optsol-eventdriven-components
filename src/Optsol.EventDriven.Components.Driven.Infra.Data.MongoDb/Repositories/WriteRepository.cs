@@ -10,15 +10,15 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
 {
     private readonly MongoContext _context;
     private readonly IMessageBus _messageBus;
-    private readonly IMongoCollection<PersistentEvent<IEvent>> _set;
-    private readonly IMongoCollection<StagingEvent<IEvent>> _setStaging;
-    private readonly List<Action<IEvent>> _projectionCallbacks = new();
+    private readonly IMongoCollection<PersistentEvent<IDomainEvent>> _set;
+    private readonly IMongoCollection<StagingEvent<IDomainEvent>> _setStaging;
+    private readonly List<Action<IDomainEvent>> _projectionCallbacks = new();
     protected WriteRepository(MongoContext context, IMessageBus messageBus, string collectionName)
     {
         _context = context;
         _messageBus = messageBus;
-        _set = context.GetCollection<PersistentEvent<IEvent>>(collectionName);
-        _setStaging = context.GetCollection<StagingEvent<IEvent>>($"{collectionName}-Staging");
+        _set = context.GetCollection<PersistentEvent<IDomainEvent>>(collectionName);
+        _setStaging = context.GetCollection<StagingEvent<IDomainEvent>>($"{collectionName}-Staging");
     }
     
     public virtual void RollbackIntegration(Guid integrationId)
@@ -29,12 +29,12 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
 
     public virtual void CommitIntegration(Guid integrationId)
     {
-        var sortDef = Builders<StagingEvent<IEvent>>.Sort.Descending(d => d.ModelVersion);
+        var sortDef = Builders<StagingEvent<IDomainEvent>>.Sort.Descending(d => d.ModelVersion);
 
         var events = _setStaging
             .Find(e => e.IntegrationId == integrationId)
             .Sort(sortDef)
-            .Project(p => (PersistentEvent<IEvent>)p)
+            .Project(p => (PersistentEvent<IDomainEvent>)p)
             .ToList();
 
         _context.AddTransaction(() => _set.InsertManyAsync(events));
@@ -44,7 +44,7 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
         SendEvents(events.Select(e => e.Data));
     }
 
-    private void SendEvents(IEnumerable<IEvent> events)
+    private void SendEvents(IEnumerable<IDomainEvent> events)
     {
         foreach (var @event in events)
         {
@@ -57,7 +57,7 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
     
     public virtual void Commit(Guid integrationId, T model)
     {
-        var events = model.PendingEvents.Select(e => new StagingEvent<IEvent>(
+        var events = model.PendingEvents.Select(e => new StagingEvent<IDomainEvent>(
             integrationId,
             model.Id,
             e.ModelVersion,
@@ -76,7 +76,7 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
         _messageBus.Publish(integrationId, model.FailureEvents); 
     }
 
-    public virtual void Subscribe(Action<IEvent> callback)
+    public virtual void Subscribe(Action<IDomainEvent> callback)
     {
         _projectionCallbacks.Add(callback);
     }

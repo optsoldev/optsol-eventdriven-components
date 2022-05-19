@@ -6,7 +6,7 @@ namespace Optsol.EventDriven.Components.Core.Domain
 {
     public interface IDomainEventConverter
     {
-        public IEvent Convert(string eventData);
+        public IDomainEvent Convert(string eventData);
     }
 
     public class DomainEventConverter : IDomainEventConverter
@@ -18,7 +18,7 @@ namespace Optsol.EventDriven.Components.Core.Domain
             _register = register;
         }
 
-        public IEvent Convert(string eventData)
+        public IDomainEvent Convert(string eventData)
         {
 
             foreach (var type in _register.GetTypes())
@@ -32,7 +32,7 @@ namespace Optsol.EventDriven.Components.Core.Domain
             throw new InvalidCastException("Nao Existe Evento registrado.");
         }
 
-        private bool TryDeserializeEvent(string eventData, Type type, out IEvent result)
+        private bool TryDeserializeEvent(string eventData, Type type, out IDomainEvent result)
         {
             result = default;
             try
@@ -40,7 +40,7 @@ namespace Optsol.EventDriven.Components.Core.Domain
                 result = JsonConvert.DeserializeObject(eventData, type, new JsonSerializerSettings
                 {
                  MissingMemberHandling = MissingMemberHandling.Error
-                }) as IEvent;
+                }) as IDomainEvent;
 
                 return true;
             }

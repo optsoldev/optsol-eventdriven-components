@@ -18,7 +18,7 @@ public class Beneficiario : Aggregate
         
     }
     
-    public Beneficiario(IEnumerable<IEvent> persistentEvents) :base(persistentEvents) 
+    public Beneficiario(IEnumerable<IDomainEvent> persistentEvents) :base(persistentEvents) 
     {
     }
     
@@ -40,7 +40,7 @@ public class Beneficiario : Aggregate
         ValidationResult = validation.Validate(this);
     }
 
-    protected override void Apply(IEvent pendingEvent)
+    protected override void Apply(IDomainEvent pendingEvent)
     {
         switch (pendingEvent)
         {

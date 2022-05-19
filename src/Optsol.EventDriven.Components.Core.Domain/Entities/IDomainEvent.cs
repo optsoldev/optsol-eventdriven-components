@@ -1,6 +1,6 @@
 namespace Optsol.EventDriven.Components.Core.Domain.Entities;
 
-public interface IEvent
+public interface IDomainEvent
 {
     public Guid IntegrationId { get; }
     public Guid ModelId { get; }

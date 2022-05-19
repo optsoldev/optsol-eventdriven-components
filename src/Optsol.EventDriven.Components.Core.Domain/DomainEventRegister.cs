@@ -20,7 +20,7 @@ namespace Optsol.EventDriven.Components.Core.Domain
 
         public void Register(Type type)
         {
-            if (!type.GetInterfaces().Contains(typeof(IEvent))) throw new InvalidCastException("Tipo deve implementar IEvent");
+            if (!type.GetInterfaces().Contains(typeof(IDomainEvent))) throw new InvalidCastException("Tipo deve implementar IEvent");
             domainEvents.Add(type);
         }
     }

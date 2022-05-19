@@ -12,7 +12,7 @@ public class BeneficiarioAtualizadoWriteProjectionRepository : WriteProjectionRe
 {    
     public BeneficiarioAtualizadoWriteProjectionRepository(MongoContext context) : base(context) {} 
 
-    public override void ReceiveEvent(IEvent @event)
+    public override void ReceiveEvent(IDomainEvent @event)
     {
         switch (@event)
         {

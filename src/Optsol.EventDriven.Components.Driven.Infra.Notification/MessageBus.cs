@@ -37,7 +37,7 @@ public class MessageBus : IMessageBus
         }
     }
 
-    public async Task Publish(Guid integrationId, IEnumerable<IEvent> events)
+    public async Task Publish(Guid integrationId, IEnumerable<IDomainEvent> events)
     {
         _client = new EventHubProducerClient(_settings.ConnectionString,
             $"{_settings.EventHubName.ToString().ToLower()}-success");        
