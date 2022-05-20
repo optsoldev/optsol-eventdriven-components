@@ -4,7 +4,7 @@ namespace Optsol.EventDriven.Components.Core.Domain.Entities;
 
 public abstract class Aggregate : IAggregate 
 {
-    private readonly Queue<IEvent> _pendingEvents = new();
+    private readonly Queue<IDomainEvent> _pendingEvents = new();
     protected readonly Queue<IFailureEvent> _failureEvents = new();
     protected int Version { get; set; } = 0;
     protected int NextVersion
@@ -12,7 +12,7 @@ public abstract class Aggregate : IAggregate
         get => Version + 1;
     }
     public Guid Id { get; protected set; }
-    public IEnumerable<IEvent> PendingEvents
+    public IEnumerable<IDomainEvent> PendingEvents
     {
         get => _pendingEvents.AsEnumerable();
     }
@@ -22,8 +22,7 @@ public abstract class Aggregate : IAggregate
         get => _failureEvents.AsEnumerable();
     }
     
-    protected Aggregate() {}
-    public Aggregate(IEnumerable<IEvent> persistedEvents)
+    public Aggregate(IEnumerable<IDomainEvent> persistedEvents)
     {
         if (persistedEvents.Any())
         {
@@ -31,16 +30,16 @@ public abstract class Aggregate : IAggregate
         }
     }
     
-    protected void RaiseEvent<TEvent>(TEvent pendingEvent) where TEvent : IEvent
+    protected void RaiseEvent<TEvent>(TEvent pendingEvent) where TEvent : IDomainEvent
     {
         _pendingEvents.Enqueue(pendingEvent);
         Apply(pendingEvent);
         Version = pendingEvent.ModelVersion;
     }
 
-    protected abstract void Apply(IEvent @event);
+    protected abstract void Apply(IDomainEvent @event);
     
-    private void ApplyPersistedEvents(IEnumerable<IEvent> events)
+    private void ApplyPersistedEvents(IEnumerable<IDomainEvent> events)
     {
         foreach (var e in events)
         {
@@ -63,5 +62,5 @@ public abstract class Aggregate : IAggregate
     
     public ValidationResult ValidationResult { get; protected set; } = new();
 
-    public abstract void Validate();
+    protected abstract void Validate();
 }

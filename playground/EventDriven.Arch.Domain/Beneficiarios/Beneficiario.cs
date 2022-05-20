@@ -12,13 +12,18 @@ public class Beneficiario : Aggregate
     
     public IReadOnlyCollection<Endereco> Enderecos => _enderecos.ToList();
 
-    public Beneficiario(Guid integrationId, string primeiroNome, string segundoNome)
+    public static Beneficiario Create(Guid integrationId, string primeiroNome, string segundoNome)
     {
-        RaiseEvent(new BeneficiarioCriado(integrationId, primeiroNome, segundoNome));
-        
+        var beneficiario = new Beneficiario(Enumerable.Empty<IDomainEvent>());
+        beneficiario.RaiseEvent(new BeneficiarioCriado(integrationId, primeiroNome, segundoNome));
+
+        beneficiario.Validate(integrationId);
+
+        return beneficiario;
     }
+
     
-    public Beneficiario(IEnumerable<IEvent> persistentEvents) :base(persistentEvents) 
+    public Beneficiario(IEnumerable<IDomainEvent> persistentEvents) :base(persistentEvents) 
     {
     }
     
@@ -34,13 +39,13 @@ public class Beneficiario : Aggregate
             _failureEvents.Enqueue(new BeneficiarioNaoCriado(integrationId, ValidationResult.Errors.ToString()));
     }
 
-    public override void Validate()
+    protected override void Validate()
     {
         var validation = new BeneficiarioValidator();
         ValidationResult = validation.Validate(this);
     }
 
-    protected override void Apply(IEvent pendingEvent)
+    protected override void Apply(IDomainEvent pendingEvent)
     {
         switch (pendingEvent)
         {

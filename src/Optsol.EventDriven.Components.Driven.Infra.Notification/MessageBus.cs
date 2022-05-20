@@ -16,7 +16,7 @@ public class MessageBus : IMessageBus
         _settings = settings;
     }
     
-    public async Task Publish(Guid integrationId, IEnumerable<IFailureEvent> events)
+    public async Task Publish(IEnumerable<IFailureEvent> events)
     {
         _client = new EventHubProducerClient(_settings.ConnectionString, 
             $"{_settings.EventHubName.ToString().ToLower()}-failure");
@@ -37,7 +37,7 @@ public class MessageBus : IMessageBus
         }
     }
 
-    public async Task Publish(Guid integrationId, IEnumerable<IEvent> events)
+    public async Task Publish(IEnumerable<IDomainEvent> events)
     {
         _client = new EventHubProducerClient(_settings.ConnectionString,
             $"{_settings.EventHubName.ToString().ToLower()}-success");        

@@ -16,15 +16,15 @@ public class CriarBeneficiarioCommandHandler : IRequestHandler<CriarBeneficiario
     
     public Task<Unit> Handle(CriarBeneficiarioCommand request, CancellationToken cancellationToken)
     {
-        var beneficiario = new Beneficiario(request.IntegrationId, request.PrimeiroNome, request.SegundoNome);
+        var beneficiario = Beneficiario.Create(request.IntegrationId, request.PrimeiroNome, request.SegundoNome);
 
         if (beneficiario.Invalid)
         {
-            _beneficiarioRepository.Rollback(request.IntegrationId, beneficiario);
+            _beneficiarioRepository.Rollback(beneficiario);
         }
         else
         {
-            _beneficiarioRepository.Commit(request.IntegrationId, beneficiario);
+            _beneficiarioRepository.Commit(beneficiario);
         }
 
         return Task.FromResult(new Unit());

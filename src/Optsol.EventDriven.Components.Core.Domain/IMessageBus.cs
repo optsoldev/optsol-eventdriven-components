@@ -4,6 +4,6 @@ namespace Optsol.EventDriven.Components.Core.Domain;
 
 public interface IMessageBus
 {
-    Task Publish(Guid integrationId, IEnumerable<IEvent> events);
-    Task Publish(Guid integrationId, IEnumerable<IFailureEvent> events);
+    Task Publish(IEnumerable<IDomainEvent> events);
+    Task Publish(IEnumerable<IFailureEvent> events);
 }

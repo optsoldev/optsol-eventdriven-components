@@ -10,7 +10,7 @@ namespace Optsol.EventDriven.Components.Driven.Infra.Notification.Integration.Te
         [Fact(Skip="")]
         public async Task Publish_To_EventHub_Sucessusfully()
         {
-            var eventDataRead = new List<IEvent>();
+            var eventDataRead = new List<IDomainEvent>();
 
             var settings = new ServiceBusSettings()
             {
@@ -20,10 +20,10 @@ namespace Optsol.EventDriven.Components.Driven.Infra.Notification.Integration.Te
 
             var messageBus = new MessageBus(settings);
 
-            var events = new List<IEvent>();
+            var events = new List<IDomainEvent>();
             var evt = new Event();
             events.Add(evt);
-            await messageBus.Publish(Guid.NewGuid(), events);
+            await messageBus.Publish(events);
 
             
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
@@ -54,7 +54,7 @@ namespace Optsol.EventDriven.Components.Driven.Infra.Notification.Integration.Te
         }
     }
 
-    public class Event : IEvent
+    public class Event : IDomainEvent
     {
         public Guid IntegrationId => Guid.NewGuid();
 

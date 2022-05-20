@@ -16,5 +16,5 @@ public abstract class WriteProjectionRepository<T> : IWriteProjectionRepository<
         Set = context.GetCollection<T>(nameof(T));
         
     }
-    public abstract void ReceiveEvent(IEvent @event);
+    public abstract void ReceiveEvent(IDomainEvent @event);
 }

@@ -24,11 +24,11 @@ public class AlterarBeneficiarioCommandHandler : IRequestHandler<AlterarBenefici
         
         if (beneficiario.Invalid)
         {
-            _beneficiarioWriteRepository.Rollback(request.IntegrationId, beneficiario);
+            _beneficiarioWriteRepository.Rollback(beneficiario);
         }
         else
         {
-            _beneficiarioWriteRepository.Commit(request.IntegrationId, beneficiario);
+            _beneficiarioWriteRepository.Commit(beneficiario);
         }
 
         return Task.FromResult(new Unit());
