@@ -5,7 +5,7 @@ using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
 
 namespace Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Repositories;
 
-public abstract class WriteProjectionRepository<T> : IWriteProjectionRepository<T> where T : IProjection, new()
+public abstract class WriteProjectionRepository<T> : IWriteProjectionRepository<T> where T : IProjection
 {
     protected readonly IMongoCollection<T> Set;
     protected readonly MongoContext Context;

@@ -2,7 +2,7 @@ using Optsol.EventDriven.Components.Core.Domain.Entities;
 
 namespace EventDriven.Arch.Domain.Beneficiarios.Projections;
 
-public class BeneficiarioAtualizado : IProjection
+public record BeneficiarioAtualizado : IProjection
 {
     public Guid Id { get; set; }
     public string PrimeiroNome { get; set; }
