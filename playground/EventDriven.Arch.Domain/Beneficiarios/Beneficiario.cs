@@ -39,7 +39,7 @@ public class Beneficiario : Aggregate
             _failureEvents.Enqueue(new BeneficiarioNaoCriado(integrationId, ValidationResult.Errors.ToString()));
     }
 
-    public override void Validate()
+    protected override void Validate()
     {
         var validation = new BeneficiarioValidator();
         ValidationResult = validation.Validate(this);

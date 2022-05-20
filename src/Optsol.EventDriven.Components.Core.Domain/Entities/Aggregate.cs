@@ -62,5 +62,5 @@ public abstract class Aggregate : IAggregate
     
     public ValidationResult ValidationResult { get; protected set; } = new();
 
-    public abstract void Validate();
+    protected abstract void Validate();
 }
