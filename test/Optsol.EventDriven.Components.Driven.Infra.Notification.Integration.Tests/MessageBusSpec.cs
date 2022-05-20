@@ -23,7 +23,7 @@ namespace Optsol.EventDriven.Components.Driven.Infra.Notification.Integration.Te
             var events = new List<IDomainEvent>();
             var evt = new Event();
             events.Add(evt);
-            await messageBus.Publish(Guid.NewGuid(), events);
+            await messageBus.Publish(events);
 
             
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;

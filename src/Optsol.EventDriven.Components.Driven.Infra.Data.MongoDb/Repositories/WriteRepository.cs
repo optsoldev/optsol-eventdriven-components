@@ -12,7 +12,6 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
     private readonly IMessageBus _messageBus;
     private readonly IMongoCollection<PersistentEvent<IDomainEvent>> _set;
     private readonly IMongoCollection<StagingEvent<IDomainEvent>> _setStaging;
-    private readonly List<Action<IDomainEvent>> _projectionCallbacks = new();
     protected WriteRepository(MongoContext context, IMessageBus messageBus, string collectionName)
     {
         _context = context;
@@ -40,25 +39,13 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
         _context.AddTransaction(() => _set.InsertManyAsync(events));
         _context.AddTransaction(() => _setStaging.DeleteManyAsync(f => f.IntegrationId == integrationId));
         _context.SaveChanges();
-
-        SendEvents(events.Select(e => e.Data));
     }
 
-    private void SendEvents(IEnumerable<IDomainEvent> events)
-    {
-        foreach (var @event in events)
-        {
-            foreach (var callback in _projectionCallbacks)
-            {
-                callback(@event);
-            }
-        }
-    }
     
-    public virtual void Commit(Guid integrationId, T model)
+    public virtual void Commit(T model)
     {
         var events = model.PendingEvents.Select(e => new StagingEvent<IDomainEvent>(
-            integrationId,
+            e.IntegrationId,
             model.Id,
             e.ModelVersion,
             e.When,
@@ -67,17 +54,11 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
         
         _context.AddTransaction(() => _setStaging.InsertManyAsync(events));
         _context.SaveChanges();
-        _messageBus.Publish(integrationId, model.PendingEvents);
-        //SendEvents(events.Select(e => e.Data));
+        _messageBus.Publish(model.PendingEvents);
     }
 
-    public virtual void Rollback(Guid integrationId, T model)
+    public virtual void Rollback(T model)
     {
-        _messageBus.Publish(integrationId, model.FailureEvents); 
-    }
-
-    public virtual void Subscribe(Action<IDomainEvent> callback)
-    {
-        _projectionCallbacks.Add(callback);
+        _messageBus.Publish(model.FailureEvents); 
     }
 }

@@ -12,11 +12,16 @@ public class Beneficiario : Aggregate
     
     public IReadOnlyCollection<Endereco> Enderecos => _enderecos.ToList();
 
-    public Beneficiario(Guid integrationId, string primeiroNome, string segundoNome)
+    public static Beneficiario Create(Guid integrationId, string primeiroNome, string segundoNome)
     {
-        RaiseEvent(new BeneficiarioCriado(integrationId, primeiroNome, segundoNome));
-        
+        var beneficiario = new Beneficiario(Enumerable.Empty<IDomainEvent>());
+        beneficiario.RaiseEvent(new BeneficiarioCriado(integrationId, primeiroNome, segundoNome));
+
+        beneficiario.Validate(integrationId);
+
+        return beneficiario;
     }
+
     
     public Beneficiario(IEnumerable<IDomainEvent> persistentEvents) :base(persistentEvents) 
     {

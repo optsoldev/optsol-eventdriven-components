@@ -1,4 +1,3 @@
-using EventDriven.Arch.Domain;
 using EventDriven.Arch.Domain.Beneficiarios;
 using EventDriven.Arch.Domain.Beneficiarios.Repositories;
 using Newtonsoft.Json;
@@ -18,15 +17,11 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
         _messageBus = messageBus;
     }
 
-    public void Rollback(Guid integrationId, Beneficiario model)
+    public void Rollback(Beneficiario model)
     {
         _eventStoreContext.Beneficiarios?.RemoveRange();
     }
     
-    public void Undo(Guid integrationId, Beneficiario model)
-    {
-        _messageBus.Publish(integrationId, model.FailureEvents); 
-    }
 
     public void RollbackIntegration(Guid integrationId)
     {
@@ -47,9 +42,9 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
         _eventStoreContext.SaveChanges();
     }
 
-    public void Commit(Guid integrationId, Beneficiario model)
+    public void Commit(Beneficiario model)
     {
-        var events = model.PendingEvents.Select(e => new StagingEvent<string>(integrationId,
+        var events = model.PendingEvents.Select(e => new StagingEvent<string>(e.IntegrationId,
             model.Id,
             e.ModelVersion,
             e.When,
@@ -58,7 +53,7 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
         
         _eventStoreContext.BeneficiariosStaging?.AddRange(events);
         _eventStoreContext.SaveChanges();
-        _messageBus.Publish(integrationId, model.PendingEvents);
+        _messageBus.Publish(model.PendingEvents);
         model.Commit();
 
     }

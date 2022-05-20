@@ -22,7 +22,6 @@ public abstract class Aggregate : IAggregate
         get => _failureEvents.AsEnumerable();
     }
     
-    protected Aggregate() {}
     public Aggregate(IEnumerable<IDomainEvent> persistedEvents)
     {
         if (persistedEvents.Any())
