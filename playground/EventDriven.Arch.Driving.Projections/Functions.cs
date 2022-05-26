@@ -8,7 +8,7 @@ namespace EventDriven.Arch.Driving.Projections
     public class Functions
     {
         [FunctionName("Functions")]
-        public async Task Run([EventHubTrigger("beneficiarios-resposta", Connection = "ConnectionString")] EventData @event, ILogger log)
+        public async Task Run([EventHubTrigger("beneficiario-saga-response", Connection = "ConnectionString")] EventData @event, ILogger log)
         {
             log.LogInformation($"{@event}");
         }
