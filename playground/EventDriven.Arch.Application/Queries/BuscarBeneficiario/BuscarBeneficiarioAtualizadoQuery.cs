@@ -5,7 +5,7 @@ namespace EventDriven.Arch.Application.Queries.BuscarBeneficiario;
 
 public record BuscarBeneficiarioAtualizadoQuery(Guid Id) : IQuery<BeneficiarioQueryResponse>;
 
-public record BeneficiarioQueryResponse(string?PrimeiroNome, string? SegundoNome) : IQueryResponse
+public record BeneficiarioQueryResponse(string?PrimeiroNome, string? SegundoNome)
 {
     public static implicit operator BeneficiarioQueryResponse(BeneficiarioAtualizado entity)
     {

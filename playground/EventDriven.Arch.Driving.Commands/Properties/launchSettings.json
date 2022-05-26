@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "EventDriven.Arch.Driving.Commands": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7035"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "httpPort": 34977,
+      "useSSL": false
+    }
+  }
+}
