@@ -1,4 +1,8 @@
+using EventDriven.Arch.Application;
+using EventDriven.Arch.Driven.Infra.Data.MongoDb;
+using MediatR;
 using Microsoft.Extensions.Hosting;
+using Optsol.EventDriven.Components.Driven.Infra.Notification;
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults()
