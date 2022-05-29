@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DevBetter.JsonExtensions;
+using DevBetter.JsonExtensions.Extensions;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
 using System.Text.Json;
 
@@ -37,10 +38,8 @@ namespace Optsol.EventDriven.Components.Core.Domain
             result = default;
             try
             {
-                result = JsonConvert.DeserializeObject(eventData, type, new JsonSerializerSettings
-                {
-                 MissingMemberHandling = MissingMemberHandling.Error
-                }) as IDomainEvent;
+                result = JsonSerializer.Deserialize(eventData, type, 
+                    new JsonSerializerOptions().SetMissingMemberHandling(MissingMemberHandling.Ignore)) as IDomainEvent;
 
                 return true;
             }

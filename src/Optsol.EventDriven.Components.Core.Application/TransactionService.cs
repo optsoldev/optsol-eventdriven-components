@@ -1,7 +1,7 @@
 ﻿using Functions.Worker.ContextAccessor;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Optsol.EventDriven.Components.Core.Domain;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Optsol.EventDriven.Components.Core.Application
 {
@@ -15,7 +15,7 @@ namespace Optsol.EventDriven.Components.Core.Application
         }
         public Guid GetTransactionId()
         {
-            JObject headers = JsonConvert.DeserializeObject<JObject>(_accessor.FunctionContext.BindingContext.BindingData["Headers"].ToString());
+            JsonObject headers = JsonSerializer.Deserialize<JsonObject>(_accessor.FunctionContext.BindingContext.BindingData["Headers"].ToString());
             var transaction = headers["Transaction"].ToString();
 
             return Guid.Parse(transaction);
