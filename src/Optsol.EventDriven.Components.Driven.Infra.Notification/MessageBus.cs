@@ -19,7 +19,6 @@ public class MessageBus : IMessageBus
     
     public Task Publish(IEnumerable<IFailureEvent> events)
     {
-
         var factory = new ConnectionFactory() { HostName = _settings.ConnectionString };
         using (var connection = factory.CreateConnection())
         using (var channel = connection.CreateModel())
@@ -47,7 +46,7 @@ public class MessageBus : IMessageBus
         using (var channel = connection.CreateModel())
         {
             channel.ExchangeDeclare(exchange: _settings.Exchange,
-                                    type: ExchangeType.Direct);
+                                    type: ExchangeType.Topic);
 
             foreach (var @event in events)
             {
