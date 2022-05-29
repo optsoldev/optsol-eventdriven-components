@@ -31,7 +31,7 @@ public class MessageBus : IMessageBus
                 var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(@event));
 
                 channel.BasicPublish(exchange: _settings.Exchange,
-                                     routingKey: $"{_transactionService.GetTransactionId()}.failure.{@event.GetType()}",
+                                     routingKey: $"{_transactionService.GetTransactionId()}.failure",
                                      basicProperties: null,
                                      body: body);
             }
@@ -53,7 +53,7 @@ public class MessageBus : IMessageBus
                 var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(@event));
 
                 channel.BasicPublish(exchange: _settings.Exchange,
-                                     routingKey: $"{_transactionService.GetTransactionId()}.success.{@event.GetType()}",
+                                     routingKey: $"{_transactionService.GetTransactionId()}.success",
                                      basicProperties: null,
                                      body: body);
             }

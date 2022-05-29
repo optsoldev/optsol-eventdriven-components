@@ -1,11 +1,9 @@
 using EventDriven.Arch.Application.Commands.CriarBeneficiarios;
-using Functions.Worker.ContextAccessor;
 using MediatR;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
 
 namespace EventDriven.Arch.Driving.Commands
 {
@@ -34,7 +32,7 @@ namespace EventDriven.Arch.Driving.Commands
         {
             //_logger.LogInformation("Criar Beneficiário Triggered");
 
-            var data = await System.Text.Json.JsonSerializer.DeserializeAsync<CriarBeneficiarioCommand>(req.Body);
+            var data = await JsonSerializer.DeserializeAsync<CriarBeneficiarioCommand>(req.Body);
 
             if (data == null) throw new InvalidCastException($"Não foi possível converter para {nameof(CriarBeneficiarioCommand)}");
 

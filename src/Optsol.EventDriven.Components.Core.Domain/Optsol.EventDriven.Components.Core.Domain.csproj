@@ -8,8 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="DevBetter.JsonExtensions" Version="0.1.5" />
       <PackageReference Include="FluentValidation" Version="10.4.0" />
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 
 </Project>
