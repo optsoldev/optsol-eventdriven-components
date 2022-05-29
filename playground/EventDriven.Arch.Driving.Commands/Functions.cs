@@ -1,23 +1,27 @@
-using System.Collections.Generic;
-using System.Net;
-using System.Text.Json;
 using EventDriven.Arch.Application.Commands.CriarBeneficiarios;
+using Functions.Worker.ContextAccessor;
 using MediatR;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace EventDriven.Arch.Driving.Commands
 {
     public class Functions
     {
-        private readonly Mediator _mediator;
+        private readonly IMediator _mediator;
+        //private readonly ILogger _logger;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="mediator"></param>
-        public Functions(IMediator mediator) { }
+        public Functions(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
 
         /// <summary>
         /// 
@@ -26,12 +30,11 @@ namespace EventDriven.Arch.Driving.Commands
         /// <param name="log"></param>
         /// <exception cref="InvalidCastException"></exception>
         [Function("CriarBeneficiario")]
-        public async Task CriarBeneficiarioAsync([HttpTrigger(AuthorizationLevel.Function, "post", Route = "v1/beneficiarios/criar")] HttpRequestData req,
-            ILogger log)
+        public async Task CriarBeneficiarioAsync([HttpTrigger(AuthorizationLevel.Function, "post", Route = "v1/beneficiarios/criar")] HttpRequestData req)
         {
-            log.LogInformation("Criar Beneficiário Triggered");
+            //_logger.LogInformation("Criar Beneficiário Triggered");
 
-            var data = await JsonSerializer.DeserializeAsync<CriarBeneficiarioCommand>(req.Body);
+            var data = await System.Text.Json.JsonSerializer.DeserializeAsync<CriarBeneficiarioCommand>(req.Body);
 
             if (data == null) throw new InvalidCastException($"Não foi possível converter para {nameof(CriarBeneficiarioCommand)}");
 
@@ -48,7 +51,7 @@ namespace EventDriven.Arch.Driving.Commands
         /// <exception cref="NotImplementedException"></exception>
         [Function("CriarDependente")]
         public Task CriarDependente([HttpTrigger(AuthorizationLevel.Function, "get",
-            Route = "/v1/beneficiarios/{id}/dependentes/criar")] HttpRequestData req,
+            Route = "v1/beneficiarios/{id}/dependentes/criar")] HttpRequestData req,
             ILogger log)
         {
             log.LogInformation("Enviar Envelope Triggered");
