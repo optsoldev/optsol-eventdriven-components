@@ -1,5 +1,6 @@
 ﻿using EventDriven.Arch.Domain.Beneficiarios;
 using Microsoft.Extensions.DependencyInjection;
+using Optsol.EventDriven.Components.Core.Application;
 using Optsol.EventDriven.Components.Core.Domain;
 
 namespace EventDriven.Arch.Application
@@ -14,6 +15,7 @@ namespace EventDriven.Arch.Application
 
             services.AddSingleton<IDomainEventRegister>(register);
             services.AddSingleton<IDomainEventConverter, DomainEventConverter>();
+            services.AddScoped<ITransactionService, TransactionService>();
             return services;
         }
     }

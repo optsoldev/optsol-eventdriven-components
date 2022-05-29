@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Componen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Core.Application", "src\Optsol.EventDriven.Components.Core.Application\Optsol.EventDriven.Components.Core.Application.csproj", "{978E5C4D-8279-4180-B3F5-15B4EDA52974}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Driven.Infra.Notification", "src\Optsol.EventDriven.Components.Driven.Infra.Notification\Optsol.EventDriven.Components.Driven.Infra.Notification.csproj", "{92D85F0A-A263-4D3B-B556-57E388EB3EBB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Driven.Infra.Data", "src\Optsol.EventDriven.Components.Driven.Infra.Data\Optsol.EventDriven.Components.Driven.Infra.Data.csproj", "{AA69FB76-EFA6-454B-B81C-963F5953DEDA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb", "src\Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb\Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.csproj", "{EC31DCDE-BB65-4272-B34E-43D416EB35C8}"
@@ -45,7 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driven", "Driven", "{C4FD08
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driving", "Driving", "{2945B7BB-FBAA-4A2A-A140-E8BC0A24A094}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Driven.Infra.Notification.Integration.Tests", "test\Optsol.EventDriven.Components.Driven.Infra.Notification.Integration.Tests\Optsol.EventDriven.Components.Driven.Infra.Notification.Integration.Tests.csproj", "{4F03523E-A9A5-435A-82DA-68D20DD1AEE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Driven.Infra.Notification.EventHub.Integration.Tests", "test\Optsol.EventDriven.Components.Driven.Infra.Notification.Integration.Tests\Optsol.EventDriven.Components.Driven.Infra.Notification.EventHub.Integration.Tests.csproj", "{4F03523E-A9A5-435A-82DA-68D20DD1AEE7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Core.Domain.Unit.Tests", "test\Optsol.EventDriven.Components.Core.Domain.Unit.Tests\Optsol.EventDriven.Components.Core.Domain.Unit.Tests.csproj", "{1BCB0772-0139-4D00-B2AA-8672FDA42823}"
 EndProject
@@ -54,6 +52,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Driving.Functions", "src\Optsol.EventDriven.Components.Driving.Functions\Optsol.EventDriven.Components.Driving.Functions.csproj", "{52DC8C19-264B-4CD3-90AF-BF36DF94AFE9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventDriven.Arch.Driving.Commands", "playground\EventDriven.Arch.Driving.Commands\EventDriven.Arch.Driving.Commands.csproj", "{E52FF343-AE06-4500-BC65-E36960F48773}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Driven.Infra.Notification.EventHub", "src\Optsol.EventDriven.Components.Driven.Infra.Notification.EventHub\Optsol.EventDriven.Components.Driven.Infra.Notification.EventHub.csproj", "{FB158D61-2EF5-48C7-AE06-D589D88886A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Optsol.EventDriven.Components.Driven.Infra.Notification", "src\Optsol.EventDriven.Components.Driven.Infra.Notification\Optsol.EventDriven.Components.Driven.Infra.Notification.csproj", "{2AFD335E-9119-4E92-83E5-DBEBF187F61D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,10 +71,6 @@ Global
 		{978E5C4D-8279-4180-B3F5-15B4EDA52974}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{978E5C4D-8279-4180-B3F5-15B4EDA52974}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{978E5C4D-8279-4180-B3F5-15B4EDA52974}.Release|Any CPU.Build.0 = Release|Any CPU
-		{92D85F0A-A263-4D3B-B556-57E388EB3EBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{92D85F0A-A263-4D3B-B556-57E388EB3EBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{92D85F0A-A263-4D3B-B556-57E388EB3EBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{92D85F0A-A263-4D3B-B556-57E388EB3EBB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AA69FB76-EFA6-454B-B81C-963F5953DEDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AA69FB76-EFA6-454B-B81C-963F5953DEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA69FB76-EFA6-454B-B81C-963F5953DEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -117,6 +115,14 @@ Global
 		{E52FF343-AE06-4500-BC65-E36960F48773}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E52FF343-AE06-4500-BC65-E36960F48773}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E52FF343-AE06-4500-BC65-E36960F48773}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB158D61-2EF5-48C7-AE06-D589D88886A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB158D61-2EF5-48C7-AE06-D589D88886A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB158D61-2EF5-48C7-AE06-D589D88886A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB158D61-2EF5-48C7-AE06-D589D88886A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AFD335E-9119-4E92-83E5-DBEBF187F61D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AFD335E-9119-4E92-83E5-DBEBF187F61D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AFD335E-9119-4E92-83E5-DBEBF187F61D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AFD335E-9119-4E92-83E5-DBEBF187F61D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -128,7 +134,6 @@ Global
 		{4311E281-DC20-400C-BD0A-B582D711B873} = {9E653BCC-D992-44D4-BA54-1279D88188B6}
 		{AF570556-715D-4DA0-9758-3834100520FA} = {A9A243F4-C14F-4B2B-9459-C93454A8CDA9}
 		{978E5C4D-8279-4180-B3F5-15B4EDA52974} = {A9A243F4-C14F-4B2B-9459-C93454A8CDA9}
-		{92D85F0A-A263-4D3B-B556-57E388EB3EBB} = {F3553D96-6EE2-4F54-8299-8B166DA4FE0D}
 		{AA69FB76-EFA6-454B-B81C-963F5953DEDA} = {F3553D96-6EE2-4F54-8299-8B166DA4FE0D}
 		{EC31DCDE-BB65-4272-B34E-43D416EB35C8} = {F3553D96-6EE2-4F54-8299-8B166DA4FE0D}
 		{FD308FC8-1B3F-4D2B-A52E-A29203FDB9F5} = {049423B0-3979-42A7-9263-553B643781D4}
@@ -143,6 +148,8 @@ Global
 		{9942B246-C4CB-4C08-9B4E-02912F6AB7C7} = {2945B7BB-FBAA-4A2A-A140-E8BC0A24A094}
 		{52DC8C19-264B-4CD3-90AF-BF36DF94AFE9} = {71A4C664-2972-4143-95A8-FDF25D631A48}
 		{E52FF343-AE06-4500-BC65-E36960F48773} = {2945B7BB-FBAA-4A2A-A140-E8BC0A24A094}
+		{FB158D61-2EF5-48C7-AE06-D589D88886A9} = {F3553D96-6EE2-4F54-8299-8B166DA4FE0D}
+		{2AFD335E-9119-4E92-83E5-DBEBF187F61D} = {F3553D96-6EE2-4F54-8299-8B166DA4FE0D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CEB4F9A4-FE35-4F6F-9543-265AF7C84D23}

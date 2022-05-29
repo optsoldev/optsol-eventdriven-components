@@ -1,71 +1,63 @@
-using Azure.Messaging.EventHubs;
-using Azure.Messaging.EventHubs.Producer;
 using Optsol.EventDriven.Components.Core.Domain;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
+using RabbitMQ.Client;
+using System.Text;
 using System.Text.Json;
 
 namespace Optsol.EventDriven.Components.Driven.Infra.Notification;
 
 public class MessageBus : IMessageBus
 {
-    private EventHubProducerClient? _client;
     private readonly ServiceBusSettings _settings;
+    private readonly ITransactionService _transactionService;
 
-    public MessageBus(ServiceBusSettings settings)
+    public MessageBus(ITransactionService transactionService, ServiceBusSettings settings)
     {
+        _transactionService = transactionService;
         _settings = settings;
     }
     
-    public async Task Publish(IEnumerable<IFailureEvent> events)
+    public Task Publish(IEnumerable<IFailureEvent> events)
     {
-        _client = new EventHubProducerClient(_settings.ConnectionString, 
-            $"{_settings.EventHubName.ToString().ToLower()}-failure");
-
-        EventDataBatch eventBatch = await _client.CreateBatchAsync();
-
-        foreach (var @event in events)
+        var factory = new ConnectionFactory() { HostName = _settings.ConnectionString };
+        using (var connection = factory.CreateConnection())
+        using (var channel = connection.CreateModel())
         {
-            var eventBody = new BinaryData(JsonSerializer.Serialize(@event));
-            var eventData = new EventData(eventBody);
-
-            if (!eventBatch.TryAdd(eventData))
-            {
-                await _client.SendAsync(eventBatch);
-                eventBatch = await _client.CreateBatchAsync();
-                eventBatch.TryAdd(eventData);
-            }
-        }
-    }
-
-    public async Task Publish(IEnumerable<IDomainEvent> events)
-    {
-        _client = new EventHubProducerClient(_settings.ConnectionString,
-            $"{_settings.EventHubName.ToString().ToLower()}-success");        
-        try
-        {
-            
-
-            EventDataBatch eventBatch = await _client.CreateBatchAsync();
+            channel.ExchangeDeclare(exchange: _settings.Exchange,
+                                    type: ExchangeType.Direct);
 
             foreach (var @event in events)
             {
-                var eventBody = new BinaryData(JsonSerializer.Serialize(@event));
-                var eventData = new EventData(eventBody);
+                var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(@event));
 
-                if (!eventBatch.TryAdd(eventData))
-                {
-                    await _client.SendAsync(eventBatch);
-                    eventBatch = await _client.CreateBatchAsync();
-                    eventBatch.TryAdd(eventData);
-                }
+                channel.BasicPublish(exchange: _settings.Exchange,
+                                     routingKey: $"{_transactionService.GetTransactionId()}.failure.{@event.GetType()}",
+                                     basicProperties: null,
+                                     body: body);
             }
-            await _client.SendAsync(eventBatch);
-            eventBatch.Dispose();
-            await _client.DisposeAsync();
         }
-        finally
+        return Task.CompletedTask;
+    }
+
+    public Task Publish(IEnumerable<IDomainEvent> events)
+    {
+        var factory = new ConnectionFactory() { HostName = _settings.ConnectionString };
+        using (var connection = factory.CreateConnection())
+        using (var channel = connection.CreateModel())
         {
-            await _client.CloseAsync();
+            channel.ExchangeDeclare(exchange: _settings.Exchange,
+                                    type: ExchangeType.Direct);
+
+            foreach (var @event in events)
+            {
+                var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(@event));
+
+                channel.BasicPublish(exchange: _settings.Exchange,
+                                     routingKey: $"{_transactionService.GetTransactionId()}.success.{@event.GetType()}",
+                                     basicProperties: null,
+                                     body: body);
+            }
         }
+        return Task.CompletedTask;
     }
 }
