@@ -24,7 +24,7 @@ public class MessageBus : IMessageBus
         using (var channel = connection.CreateModel())
         {
             channel.ExchangeDeclare(exchange: _settings.Exchange,
-                                    type: ExchangeType.Direct);
+                                    type: ExchangeType.Topic);
 
             foreach (var @event in events)
             {
@@ -46,7 +46,7 @@ public class MessageBus : IMessageBus
         using (var channel = connection.CreateModel())
         {
             channel.ExchangeDeclare(exchange: _settings.Exchange,
-                                    type: ExchangeType.Direct);
+                                    type: ExchangeType.Topic);
 
             foreach (var @event in events)
             {
