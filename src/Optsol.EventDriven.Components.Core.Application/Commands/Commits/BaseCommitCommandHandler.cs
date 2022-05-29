@@ -15,7 +15,7 @@ public abstract class BaseCommitCommandHandler<T> : IRequestHandler<CommitComman
     
     public Task<Unit> Handle(CommitCommand request, CancellationToken cancellationToken)
     {
-        _repository.CommitIntegration(request.IntegrationId);
+        _repository.CommitIntegration();
 
         return Task.FromResult(new Unit());
     }

@@ -10,11 +10,13 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
 {
     private readonly EventStoreDbContext _eventStoreContext;
     private readonly IMessageBus _messageBus;
+    private readonly ITransactionService _transactionService;
 
-    public BeneficiarioWriteRepository(EventStoreDbContext eventStoreContext, IMessageBus messageBus)
+    public BeneficiarioWriteRepository(EventStoreDbContext eventStoreContext, ITransactionService transactionService, IMessageBus messageBus)
     {
         _eventStoreContext = eventStoreContext;
         _messageBus = messageBus;
+        _transactionService = transactionService;
     }
 
     public void Rollback(Beneficiario model)
@@ -23,19 +25,19 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
     }
     
 
-    public void RollbackIntegration(Guid integrationId)
+    public void RollbackIntegration()
     {
         var events = _eventStoreContext.BeneficiariosStaging?
-            .Where(b => b.IntegrationId == integrationId);
+            .Where(b => b.IntegrationId == _transactionService.GetTransactionId());
         
         _eventStoreContext.BeneficiariosStaging?.RemoveRange(events);
         _eventStoreContext.SaveChanges();
     }
 
-    public void CommitIntegration(Guid integrationId)
+    public void CommitIntegration()
     {
         var events = _eventStoreContext.BeneficiariosStaging?
-            .Where(b => b.IntegrationId == integrationId)
+            .Where(b => b.IntegrationId == _transactionService.GetTransactionId())
             .Select(s => (PersistentEvent<string?>)s);
         
         _eventStoreContext.Beneficiarios?.UpdateRange(events);
@@ -44,7 +46,7 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
 
     public void Commit(Beneficiario model)
     {
-        var events = model.PendingEvents.Select(e => new StagingEvent<string>(e.IntegrationId,
+        var events = model.PendingEvents.Select(e => new StagingEvent<string>(_transactionService.GetTransactionId(),
             model.Id,
             e.ModelVersion,
             e.When,

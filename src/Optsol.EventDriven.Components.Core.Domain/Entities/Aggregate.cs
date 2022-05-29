@@ -54,8 +54,6 @@ public abstract class Aggregate : IAggregate
         _failureEvents.Clear();
     }
 
-    public abstract void Validate(Guid integrationId);
-    
     public bool Valid => ValidationResult.IsValid;
     
     public bool Invalid => Valid is false;

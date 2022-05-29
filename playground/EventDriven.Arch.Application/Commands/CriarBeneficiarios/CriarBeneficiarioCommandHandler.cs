@@ -1,4 +1,3 @@
-using EventDriven.Arch.Domain;
 using EventDriven.Arch.Domain.Beneficiarios;
 using EventDriven.Arch.Domain.Beneficiarios.Repositories;
 using MediatR;
@@ -16,7 +15,7 @@ public class CriarBeneficiarioCommandHandler : IRequestHandler<CriarBeneficiario
     
     public Task<Unit> Handle(CriarBeneficiarioCommand request, CancellationToken cancellationToken)
     {
-        var beneficiario = Beneficiario.Create(request.IntegrationId, request.PrimeiroNome, request.SegundoNome);
+        var beneficiario = Beneficiario.Create(request.PrimeiroNome, request.SegundoNome);
 
         if (beneficiario.Invalid)
         {

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Driven.Infra.Notification\Optsol.EventDriven.Components.Driven.Infra.Notification.csproj" />
+    <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Driven.Infra.Notification.EventHub\Optsol.EventDriven.Components.Driven.Infra.Notification.EventHub.csproj" />
   </ItemGroup>
 
 </Project>

@@ -16,7 +16,7 @@ public abstract class BaseRollbackCommandHandler<T> : IRequestHandler<RollbackCo
     
     public Task<Unit> Handle(RollbackCommand request, CancellationToken cancellationToken)
     {
-        _repository.RollbackIntegration(request.IntegrationId);
+        _repository.RollbackIntegration();
 
         return Task.FromResult(new Unit());
     }
