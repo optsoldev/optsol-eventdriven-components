@@ -10,13 +10,18 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
 {
     private readonly MongoContext _context;
     private readonly ITransactionService _transactionService;
+    private readonly IAutoCommitService _autoCommitService;
     private readonly IMessageBus _messageBus;
     private readonly IMongoCollection<PersistentEvent<IDomainEvent>> _set;
     private readonly IMongoCollection<StagingEvent<IDomainEvent>> _setStaging;
-    protected WriteRepository(MongoContext context, ITransactionService transactionService, IMessageBus messageBus, string collectionName)
+    protected WriteRepository(MongoContext context, 
+        ITransactionService transactionService,
+        IAutoCommitService autoCommitService,
+        IMessageBus messageBus, string collectionName)
     {
         _context = context;
         _transactionService = transactionService;
+        _autoCommitService = autoCommitService;
         _messageBus = messageBus;
         _set = context.GetCollection<PersistentEvent<IDomainEvent>>(collectionName);
         _setStaging = context.GetCollection<StagingEvent<IDomainEvent>>($"{collectionName}-Staging");
@@ -59,6 +64,11 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
         _context.AddTransaction(() => _setStaging.InsertManyAsync(events));
         _context.SaveChanges();
         _messageBus.Publish(model.PendingEvents);
+
+        if (_autoCommitService.IsAutoCommit())
+        {
+            CommitIntegration();
+        }
     }
 
     public virtual void Rollback(T model)
