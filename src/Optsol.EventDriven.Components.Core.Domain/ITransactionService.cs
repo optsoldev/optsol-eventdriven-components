@@ -3,4 +3,6 @@
 public interface ITransactionService
 {
     public Guid GetTransactionId();
+
+    public bool IsAutoCommit();
 }
