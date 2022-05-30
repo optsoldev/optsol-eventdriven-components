@@ -10,11 +10,9 @@ public class EventStoreDbContext : DbContext
 
     public DbSet<PersistentEvent<string>>?  Beneficiarios { get; set; }
     
-    public DbSet<StagingEvent<string>>? BeneficiariosStaging { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<PersistentEvent<string>>().HasKey(k => new {k.ModelId, k.ModelVersion});
-        modelBuilder.Entity<StagingEvent<string>>().HasKey(k => new {k.ModelId, k.ModelVersion});
     }
 }

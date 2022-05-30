@@ -8,7 +8,7 @@ namespace EventDriven.Arch.Driven.Infra.Data.MongoDb;
 
 public class BeneficiarioWriteRepository : WriteRepository<Beneficiario>, IBeneficiarioWriteRepository
 {
-    public BeneficiarioWriteRepository(MongoContext context, ITransactionService transactionService, IMessageBus messageBus) : base(context, transactionService, messageBus, nameof(Beneficiario))
+    public BeneficiarioWriteRepository(MongoContext context, ITransactionService transactionService, IAutoCommitService autoCommitService, IMessageBus messageBus) : base(context, transactionService, autoCommitService, messageBus, nameof(Beneficiario))
     {
     }
 }
