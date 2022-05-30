@@ -13,7 +13,6 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
     private readonly IAutoCommitService _autoCommitService;
     private readonly IMessageBus _messageBus;
     private readonly IMongoCollection<PersistentEvent<IDomainEvent>> _set;
-    private readonly IMongoCollection<StagingEvent<IDomainEvent>> _setStaging;
     protected WriteRepository(MongoContext context, 
         ITransactionService transactionService,
         IAutoCommitService autoCommitService,
@@ -24,45 +23,45 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
         _autoCommitService = autoCommitService;
         _messageBus = messageBus;
         _set = context.GetCollection<PersistentEvent<IDomainEvent>>(collectionName);
-        _setStaging = context.GetCollection<StagingEvent<IDomainEvent>>($"{collectionName}-Staging");
     }
     
     public virtual void RollbackIntegration()
     {
-        _context.AddTransaction(() => _setStaging.DeleteManyAsync(f => 
-            f.IntegrationId == _transactionService.GetTransactionId()));
+        _context.AddTransaction(() => _set.DeleteManyAsync(f => 
+            f.TransactionId == _transactionService.GetTransactionId()));
         _context.SaveChanges();
     }
 
     public virtual void CommitIntegration()
     {
-        var sortDef = Builders<StagingEvent<IDomainEvent>>.Sort.Descending(d => d.ModelVersion);
+        var sortDef = Builders<PersistentEvent<IDomainEvent>>.Sort.Descending(d => d.ModelVersion);
 
-        var events = _setStaging
-            .Find(e => e.IntegrationId == _transactionService.GetTransactionId())
+        UpdateDefinition<PersistentEvent<IDomainEvent>> updateDefinition = Builders<PersistentEvent<IDomainEvent>>.Update.Set(x => x.IsStaging, false);
+
+        var events = _set
+            .Find(e => e.TransactionId == _transactionService.GetTransactionId())
             .Sort(sortDef)
-            .Project(p => (PersistentEvent<IDomainEvent>)p)
             .ToList();
 
-        _context.AddTransaction(() => _set.InsertManyAsync(events));
-        _context.AddTransaction(() => _setStaging.DeleteManyAsync(f => 
-            f.IntegrationId == _transactionService.GetTransactionId()));
+        _context.AddTransaction(() => _set.UpdateManyAsync(u => u.TransactionId == _transactionService.GetTransactionId(), updateDefinition));
         _context.SaveChanges();
     }
 
     
     public virtual void Commit(T model)
     {
-        var events = model.PendingEvents.Select(e => new StagingEvent<IDomainEvent>(
+        var events = model.PendingEvents.Select(e => new PersistentEvent<IDomainEvent>(
             _transactionService.GetTransactionId(),
             model.Id,
             e.ModelVersion,
             e.When,
+            IsStaging: true,
             e.GetType().AssemblyQualifiedName,
             e));
         
-        _context.AddTransaction(() => _setStaging.InsertManyAsync(events));
+        _context.AddTransaction(() => _set.InsertManyAsync(events));
         _context.SaveChanges();
+
         _messageBus.Publish(model.PendingEvents);
 
         if (_autoCommitService.IsAutoCommit())

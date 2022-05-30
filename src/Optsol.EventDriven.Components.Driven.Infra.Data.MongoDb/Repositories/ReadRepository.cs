@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using MongoDB.Driver;
+using Optsol.EventDriven.Components.Core.Domain;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
 using Optsol.EventDriven.Components.Core.Domain.Repositories;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
@@ -10,12 +11,17 @@ public abstract class ReadRepository<T> : IReadRepository<T> where T : IAggregat
 {
     protected readonly IMongoCollection<PersistentEvent<IDomainEvent>> Set;
 
-    protected ReadRepository(MongoContext context, string collectionName)
+    protected readonly ITransactionService TransactionService;
+
+    protected ReadRepository(MongoContext context, ITransactionService transactionService, string collectionName)
     {
         Set = context.GetCollection<PersistentEvent<IDomainEvent>>(collectionName);
+        TransactionService = transactionService;
     }
     
-    public IEnumerable<IDomainEvent> GetById(Guid id) => GetEvents(e => e.ModelId == id);
+    public IEnumerable<IDomainEvent> GetById(Guid id) => GetEvents(e => 
+        e.ModelId == id && e.IsStaging == false || 
+        e.TransactionId == TransactionService.GetTransactionId() && e.ModelId == id);
     
     protected IEnumerable<IDomainEvent> GetEvents(Expression<Func<PersistentEvent<IDomainEvent>, bool>> expression)
     {

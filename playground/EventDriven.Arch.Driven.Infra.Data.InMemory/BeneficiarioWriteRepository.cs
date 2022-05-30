@@ -27,17 +27,17 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
 
     public void RollbackIntegration()
     {
-        var events = _eventStoreContext.BeneficiariosStaging?
-            .Where(b => b.IntegrationId == _transactionService.GetTransactionId());
+        var events = _eventStoreContext.Beneficiarios?
+            .Where(b => b.TransactionId == _transactionService.GetTransactionId());
         
-        _eventStoreContext.BeneficiariosStaging?.RemoveRange(events);
+        _eventStoreContext.Beneficiarios?.RemoveRange(events);
         _eventStoreContext.SaveChanges();
     }
 
     public void CommitIntegration()
     {
-        var events = _eventStoreContext.BeneficiariosStaging?
-            .Where(b => b.IntegrationId == _transactionService.GetTransactionId())
+        var events = _eventStoreContext.Beneficiarios?
+            .Where(b => b.TransactionId == _transactionService.GetTransactionId())
             .Select(s => (PersistentEvent<string?>)s);
         
         _eventStoreContext.Beneficiarios?.UpdateRange(events);
@@ -46,14 +46,15 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
 
     public void Commit(Beneficiario model)
     {
-        var events = model.PendingEvents.Select(e => new StagingEvent<string>(_transactionService.GetTransactionId(),
+        var events = model.PendingEvents.Select(e => new PersistentEvent<string>(_transactionService.GetTransactionId(),
             model.Id,
             e.ModelVersion,
             e.When,
+            IsStaging : true,
             e.GetType().AssemblyQualifiedName ?? throw new InvalidOperationException(),
             JsonConvert.SerializeObject(e)));
         
-        _eventStoreContext.BeneficiariosStaging?.AddRange(events);
+        _eventStoreContext.Beneficiarios?.AddRange(events);
         _eventStoreContext.SaveChanges();
         _messageBus.Publish(model.PendingEvents);
         model.Commit();
