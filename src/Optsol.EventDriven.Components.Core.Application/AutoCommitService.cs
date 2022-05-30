@@ -10,9 +10,12 @@ namespace Optsol.EventDriven.Components.Core.Application
         public bool IsAutoCommit()
         {
             JsonObject headers = JsonSerializer.Deserialize<JsonObject>(_accessor.FunctionContext.BindingContext.BindingData["Headers"].ToString());
-            var transaction = headers["AutoCommit"].ToString();
+            if(headers.TryGetPropertyValue("AutoCommit", out JsonNode autoCommit))
+            {
+                return bool.Parse(autoCommit.ToString());
+            }
 
-            return bool.Parse(transaction);
+            return false;
         }
 
         private readonly IFunctionContextAccessor _accessor;
