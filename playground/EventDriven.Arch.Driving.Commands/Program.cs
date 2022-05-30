@@ -4,6 +4,7 @@ using Functions.Worker.ContextAccessor;
 using MediatR;
 using Microsoft.Extensions.Hosting;
 using Optsol.EventDriven.Components.Driven.Infra.Notification;
+using Optsol.EventDriven.Components.Driving.Functions;
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults(worker =>
@@ -16,7 +17,8 @@ var host = new HostBuilder()
         services.RegisterNotification(context.Configuration);
         services.AddDataMongoModule(context.Configuration);
         services.AddApplicationModule();
-
+        services.AddFunctionContextAccessor();
+        services.AddOptsolLogging();
     })
     .Build();
 

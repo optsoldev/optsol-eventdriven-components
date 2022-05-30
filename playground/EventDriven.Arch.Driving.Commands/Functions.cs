@@ -10,15 +10,16 @@ namespace EventDriven.Arch.Driving.Commands
     public class Functions
     {
         private readonly IMediator _mediator;
-        //private readonly ILogger _logger;
+        private readonly ILogger _log;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="mediator"></param>
-        public Functions(IMediator mediator)
+        public Functions(IMediator mediator, ILoggerFactory loggerFactory)
         {
             _mediator = mediator;
+            _log = loggerFactory.CreateLogger<Functions>();
         }
 
         /// <summary>
@@ -30,7 +31,7 @@ namespace EventDriven.Arch.Driving.Commands
         [Function("CriarBeneficiario")]
         public async Task CriarBeneficiarioAsync([HttpTrigger(AuthorizationLevel.Function, "post", Route = "v1/beneficiarios/criar")] HttpRequestData req)
         {
-            //_logger.LogInformation("Criar Beneficiário Triggered");
+            _log.LogInformation("Criar Beneficiário Triggered");
 
             var data = await JsonSerializer.DeserializeAsync<CriarBeneficiarioCommand>(req.Body);
 
