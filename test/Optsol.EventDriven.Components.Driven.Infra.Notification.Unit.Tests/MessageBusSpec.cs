@@ -14,7 +14,8 @@ namespace Optsol.EventDriven.Components.Driven.Infra.Notification.Unit.Tests
 
             JsonSerializerOptions options = new(JsonSerializerDefaults.Web)
             {
-                WriteIndented = true
+                WriteIndented = true,
+                
             };
 
             var eventoSerializado = JsonSerializer.Serialize(evento, evento.GetType(), options);
