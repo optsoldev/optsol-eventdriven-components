@@ -11,7 +11,6 @@ public abstract record DomainEvent() : IDomainEvent
         this.When = when;
     }
 
-    [BsonId]
     public Guid ModelId { get; init; }
 
     public int ModelVersion { get; init; }

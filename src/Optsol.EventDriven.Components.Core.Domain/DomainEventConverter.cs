@@ -39,7 +39,7 @@ namespace Optsol.EventDriven.Components.Core.Domain
             try
             {
                 result = JsonSerializer.Deserialize(eventData, type, 
-                    new JsonSerializerOptions().SetMissingMemberHandling(MissingMemberHandling.Ignore)) as IDomainEvent;
+                    new JsonSerializerOptions().SetMissingMemberHandling(MissingMemberHandling.Error)) as IDomainEvent;
 
                 return true;
             }
