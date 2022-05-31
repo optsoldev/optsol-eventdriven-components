@@ -27,6 +27,6 @@ public abstract class ReadRepository<T> : IReadRepository<T> where T : IAggregat
     {
         var sortDef = Builders<PersistentEvent<IDomainEvent>>.Sort.Descending(d => d.ModelVersion);
 
-        return Set.Find(expression).Sort(sortDef).Project(p => p.Data).ToList();
+        return Set.AsQueryable().Where(expression).OrderByDescending(s => s.ModelVersion).Select(p => p.Data).ToList();
     }
 }
