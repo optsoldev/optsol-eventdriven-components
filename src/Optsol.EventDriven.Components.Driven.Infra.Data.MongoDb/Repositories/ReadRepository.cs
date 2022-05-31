@@ -14,10 +14,10 @@ public abstract class ReadRepository<T> : IReadRepository<T> where T : IAggregat
     {
         Set = context.GetCollection<PersistentEvent<IDomainEvent>>(collectionName);
     }
-    
-    public IEnumerable<IDomainEvent> GetById(Guid id) => GetEvents(e => e.ModelId == id);
-    
-    protected IEnumerable<IDomainEvent> GetEvents(Expression<Func<PersistentEvent<IDomainEvent>, bool>> expression)
+
+    public virtual IEnumerable<IDomainEvent> GetById(Guid id) => GetEvents(e => e.ModelId == id);
+
+    protected virtual IEnumerable<IDomainEvent> GetEvents(Expression<Func<PersistentEvent<IDomainEvent>, bool>> expression)
     {
         var sortDef = Builders<PersistentEvent<IDomainEvent>>.Sort.Descending(d => d.ModelVersion);
 
