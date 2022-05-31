@@ -49,7 +49,7 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
     {
         var events = model.PendingEvents.Select(e => new PersistentEvent<IDomainEvent>(
             _transactionService.GetTransactionId(),
-            model.Id,
+            model.ModelId,
             e.ModelVersion,
             e.When,
             IsStaging: true,
