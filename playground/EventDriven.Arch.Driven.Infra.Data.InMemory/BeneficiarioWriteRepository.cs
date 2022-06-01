@@ -56,7 +56,7 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
         
         _eventStoreContext.Beneficiarios?.AddRange(events);
         _eventStoreContext.SaveChanges();
-        _messageBus.Publish(model.PendingEvents);
+        //_messageBus.Publish(model.PendingEvents);
         model.Commit();
 
     }
