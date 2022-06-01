@@ -42,6 +42,8 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
 
         _context.AddTransaction(() => _set.UpdateManyAsync(u => u.TransactionId == _transactionService.GetTransactionId(), updateDefinition));
         _context.SaveChanges();
+
+        _messageBus.Publish(events.Select(e => e.Data), $"response");
     }
 
     
@@ -59,7 +61,7 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
         _context.AddTransaction(() => _set.InsertManyAsync(events));
         _context.SaveChanges();
 
-        _messageBus.Publish(model.PendingEvents);
+        _messageBus.Publish(model.PendingEvents, $"{_transactionService.GetTransactionId()}.success");
 
         if (_transactionService.IsAutoCommit())
         {
@@ -69,6 +71,6 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
 
     public virtual void Rollback(T model)
     {
-        _messageBus.Publish(model.FailureEvents); 
+        _messageBus.Publish(model.FailureEvents, $"{_transactionService.GetTransactionId()}.failure"); 
     }
 }

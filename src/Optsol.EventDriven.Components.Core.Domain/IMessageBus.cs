@@ -1,9 +1,8 @@
-using Optsol.EventDriven.Components.Core.Domain.Entities;
-
 namespace Optsol.EventDriven.Components.Core.Domain;
 
 public interface IMessageBus
 {
-    Task Publish(IEnumerable<IDomainEvent> events);
-    Task Publish(IEnumerable<IFailureEvent> events);
+    Task Publish<T>(IEnumerable<T> events, string routingKey);
+    //Task Publish(IEnumerable<IDomainEvent> events);
+    //Task Publish(IEnumerable<IFailureEvent> events);
 }

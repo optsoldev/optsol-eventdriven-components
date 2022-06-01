@@ -3,6 +3,8 @@ using EventDriven.Arch.Domain.Beneficiarios.Repositories;
 using EventDriven.Arch.Driven.Infra.Data.MongoDb.ReadModelRepository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
@@ -36,6 +38,10 @@ public static class DependencyInjectionInfraData
             return settings;
         });
 
+        var pack = new ConventionPack();
+        pack.Add(new IgnoreExtraElementsConvention(true));
+        ConventionRegistry.Register("OptsolConvention", pack, t => true);
+        
         services.AddScoped<IMongoClient>(impl => new MongoClient(impl.GetService<MongoClientSettings>()));
         services.AddScoped<MongoContext>();
 
