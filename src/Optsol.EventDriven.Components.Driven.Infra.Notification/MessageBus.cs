@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Optsol.EventDriven.Components.Core.Domain;
 using RabbitMQ.Client;
 using System.Text;
@@ -25,7 +26,7 @@ public class MessageBus : IMessageBus
 
             foreach (var @event in events)
             {
-                var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(@event));
+                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(@event));
 
                 channel.BasicPublish(exchange: _settings.Exchange,
                                      routingKey: routingKey,
