@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Linq.Expressions;
 using MongoDB.Driver;
 using Optsol.EventDriven.Components.Core.Domain;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
@@ -22,6 +20,7 @@ public abstract class ReadRepository<T> : IReadRepository<T> where T : IAggregat
 
     public virtual IEnumerable<IDomainEvent> GetById(Guid id) {
         return Set.Find(e => e.ModelId == id && e.IsStaging == false ||
-        e.TransactionId == TransactionService.GetTransactionId() && e.ModelId == id).SortByDescending(e => e.ModelVersion).Project(e => e.Data).ToList().AsEnumerable();
+        e.TransactionId == TransactionService.GetTransactionId() && e.ModelId == id)
+            .SortByDescending(e => e.Version).Project(e => e.Data).ToList().AsEnumerable();
 }
 }

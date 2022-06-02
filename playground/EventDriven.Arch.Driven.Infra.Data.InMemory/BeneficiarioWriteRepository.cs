@@ -47,8 +47,9 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
     public void Commit(Beneficiario model)
     {
         var events = model.PendingEvents.Select(e => new PersistentEvent<string>(_transactionService.GetTransactionId(),
-            model.ModelId,
-            e.ModelVersion,
+            Guid.NewGuid(),
+            model.Id,
+            e.Version,
             e.When,
             IsStaging : true,
             e.GetType().AssemblyQualifiedName ?? throw new InvalidOperationException(),

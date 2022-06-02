@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Optsol.EventDriven.Components.Core.Application;
 using Optsol.EventDriven.Components.Core.Domain;
+using Optsol.EventDriven.Components.Core.Domain.Entities;
 
 namespace EventDriven.Arch.Application
 {

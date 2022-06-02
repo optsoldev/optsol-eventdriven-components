@@ -7,10 +7,10 @@ public abstract class Aggregate : IAggregate
     private readonly Queue<IDomainEvent> _pendingEvents = new();
     protected readonly Queue<IFailureEvent> _failureEvents = new();
 
-    public Guid ModelId { get; protected set; }
+    public Guid Id { get; protected set; }
 
-    protected int Version { get; set; } = 0;
-    protected int NextVersion
+    protected long Version { get; set; } = 0;
+    protected long NextVersion
     {
         get => Version + 1;
     }
@@ -36,7 +36,7 @@ public abstract class Aggregate : IAggregate
     {
         _pendingEvents.Enqueue(pendingEvent);
         Apply(pendingEvent);
-        Version = pendingEvent.ModelVersion;
+        Version = pendingEvent.Version;
     }
 
     protected abstract void Apply(IDomainEvent @event);
@@ -46,7 +46,7 @@ public abstract class Aggregate : IAggregate
         foreach (var e in events)
         {
             Apply(e);
-            Version = e.ModelVersion;
+            Version = e.Version;
         }
     }
     
