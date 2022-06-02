@@ -10,7 +10,7 @@ namespace EventDriven.Arch.Driven.Infra.Data.MongoDb.ReadModelRepository;
 
 public class BeneficiarioAtualizadoWriteProjectionRepository : WriteProjectionRepository<BeneficiarioAtualizado>, IBeneficiarioAtualizadoWriteProjectionRepository
 {    
-    public BeneficiarioAtualizadoWriteProjectionRepository(MongoContext context) : base(context) {} 
+    public BeneficiarioAtualizadoWriteProjectionRepository(MongoContext context) : base(context, "beneficiarioAtualizado") {} 
 
     public override void ReceiveEvent(IDomainEvent @event)
     {

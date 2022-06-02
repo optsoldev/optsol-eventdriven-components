@@ -11,9 +11,9 @@ public abstract class ReadProjectionRepository<T> : IReadProjectionRepository<T>
 {
     protected readonly IMongoCollection<T> Set;
 
-    protected ReadProjectionRepository(MongoContext context)
+    protected ReadProjectionRepository(MongoContext context, string collectionName)
     {
-        Set = context.GetCollection<T>(nameof(T));
+        Set = context.GetCollection<T>(collectionName);
     }
 
 

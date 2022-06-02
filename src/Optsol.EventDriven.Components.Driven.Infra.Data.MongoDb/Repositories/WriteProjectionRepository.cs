@@ -10,10 +10,10 @@ public abstract class WriteProjectionRepository<T> : IWriteProjectionRepository<
     protected readonly IMongoCollection<T> Set;
     protected readonly MongoContext Context;
 
-    protected WriteProjectionRepository(MongoContext context)
+    protected WriteProjectionRepository(MongoContext context, string collectionName)
     {
         Context = context;
-        Set = context.GetCollection<T>(nameof(T));
+        Set = context.GetCollection<T>(collectionName);
         
     }
     public abstract void ReceiveEvent(IDomainEvent @event);

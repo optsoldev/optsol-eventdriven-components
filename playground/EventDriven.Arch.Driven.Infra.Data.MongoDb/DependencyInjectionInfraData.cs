@@ -1,4 +1,5 @@
 using System.Security.Authentication;
+using EventDriven.Arch.Domain.Beneficiarios;
 using EventDriven.Arch.Domain.Beneficiarios.Repositories;
 using EventDriven.Arch.Driven.Infra.Data.MongoDb.ReadModelRepository;
 using Microsoft.Extensions.Configuration;
@@ -41,7 +42,9 @@ public static class DependencyInjectionInfraData
         var pack = new ConventionPack();
         pack.Add(new IgnoreExtraElementsConvention(true));
         ConventionRegistry.Register("OptsolConvention", pack, t => true);
-        
+        //BeneficiarioCriado
+        BsonClassMap.RegisterClassMap<BeneficiarioCriado>();
+        BsonClassMap.RegisterClassMap<BeneficiarioAlterado>();
         services.AddScoped<IMongoClient>(impl => new MongoClient(impl.GetService<MongoClientSettings>()));
         services.AddScoped<MongoContext>();
 

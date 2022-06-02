@@ -21,7 +21,7 @@ public abstract class ReadRepository<T> : IReadRepository<T> where T : IAggregat
     }
 
     public virtual IEnumerable<IDomainEvent> GetById(Guid id) {
-        return Set.AsQueryable().ToEnumerable().Where(e => e.ModelId == id && e.IsStaging == false ||
-        e.TransactionId == TransactionService.GetTransactionId() && e.ModelId == id).OrderByDescending(s => s.ModelVersion).Select(p => p.Data).ToList();
-    }
+        return Set.Find(e => e.ModelId == id && e.IsStaging == false ||
+        e.TransactionId == TransactionService.GetTransactionId() && e.ModelId == id).SortByDescending(e => e.ModelVersion).Project(e => e.Data).ToList().AsEnumerable();
+}
 }
