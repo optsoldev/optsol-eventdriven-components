@@ -19,9 +19,9 @@ namespace Optsol.EventDriven.Components.Driven.Infra.Notification.Unit.Tests
         [JsonObject]
         public class Evento : IDomainEvent
         {
-            public Guid ModelId => Guid.NewGuid();
+            public Guid Id => Guid.NewGuid();
 
-            public int ModelVersion => 1;
+            public long Version => 1;
 
             public DateTime When => DateTime.UtcNow;
 

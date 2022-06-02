@@ -18,20 +18,20 @@ public class BeneficiarioReadRepository : IBeneficiarioReadRepository
     }
     
     public IEnumerable<IDomainEvent> GetById(Guid id) =>
-        GetEvents(e => e.ModelId == id);
+        GetEvents(e => e.Id == id);
 
     public IEnumerable<IDomainEvent> GetByVersion(Guid id, int version) =>
-        GetEvents(e => e.ModelId == id && e.ModelVersion <= version);
+        GetEvents(e => e.Id == id && e.Version <= version);
 
     public IEnumerable<IDomainEvent> GetByTime(Guid id, DateTime until) =>
-        GetEvents(e => e.ModelId == id && e.When <= until);
+        GetEvents(e => e.Id == id && e.When <= until);
 
     public IEnumerable<IDomainEvent> GetFromVersion(Guid id, int version) =>
-        GetEvents(e => e.ModelId == id && e.ModelVersion > version);
+        GetEvents(e => e.Id == id && e.Version > version);
 
     private IEnumerable<IDomainEvent> GetEvents(Expression<Func<PersistentEvent<string>, bool>> expression) =>
         (_eventStoreContext.Beneficiarios ?? throw new InvalidOperationException()).Where(expression)
-            .OrderBy(e => e.ModelVersion)
+            .OrderBy(e => e.Version)
             .Select(e => JsonConvert.DeserializeObject(e.Data, Type.GetType(e.EventType)))
             .Cast<DomainEvent>();
 }

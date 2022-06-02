@@ -29,7 +29,7 @@ public class Beneficiario : Aggregate
     
     public void AlterarNome(string primeiroNome, string segundoNome)
     {
-        RaiseEvent(new BeneficiarioAlterado(ModelId, NextVersion, primeiroNome, segundoNome));
+        RaiseEvent(new BeneficiarioAlterado(Id, NextVersion, primeiroNome, segundoNome));
     }
     
     protected override void Validate()
@@ -55,11 +55,11 @@ public class Beneficiario : Aggregate
         }
     }
     
-    private void Apply(BeneficiarioCriado criado) => (ModelId, Version, PrimeiroNome, SegundoNome) =
-        (criado.ModelId, criado.ModelVersion, criado.PrimeiroNome, criado.SegundoNome);
+    private void Apply(BeneficiarioCriado criado) => (Id, Version, PrimeiroNome, SegundoNome) =
+        (criado.Id, criado.Version, criado.PrimeiroNome, criado.SegundoNome);
 
     private void Apply(BeneficiarioAlterado alterado) => (Version, PrimeiroNome, SegundoNome) =
-        (alterado.ModelVersion, alterado.PrimeiroNome, alterado.SegundoNome);
+        (alterado.Version, alterado.PrimeiroNome, alterado.SegundoNome);
 
     public sealed class BeneficiarioValidator : AbstractValidator<Beneficiario>
     {

@@ -2,7 +2,6 @@
 using Optsol.EventDriven.Components.Core.Domain.Entities;
 using Optsol.EventDriven.Components.Core.Domain.Repositories;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Repositories;
@@ -39,8 +38,8 @@ public abstract class ReadProjectionRepository<T> : IReadProjectionRepository<T>
 
     public virtual SearchResult<T> GetAll<TSearch>(SearchRequest<TSearch> searchRequest) where TSearch : class
     {
-        var search = searchRequest.Search as ISearch<T>;
-        var orderBy = searchRequest.Search as IOrderBy<T>;
+        var search = searchRequest?.Search as ISearch<T>;
+        var orderBy = searchRequest?.Search as IOrderBy<T>;    
 
         var countFacet = AggregateFacet.Create("countFacet",
             PipelineDefinition<T, AggregateCountResult>.Create(new[]
@@ -84,7 +83,7 @@ public abstract class ReadProjectionRepository<T> : IReadProjectionRepository<T>
             .SetTotalCount((int)count);
     }
 
-    private static FilterDefinition<T> GetFilterDef(ISearch<T> search)
+    private static FilterDefinition<T> GetFilterDef(ISearch<T>? search)
     {
         var defaultDef = Builders<T>.Filter.Empty;
 

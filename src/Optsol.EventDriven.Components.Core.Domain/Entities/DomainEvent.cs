@@ -1,19 +1,17 @@
-using MongoDB.Bson.Serialization.Attributes;
-
 namespace Optsol.EventDriven.Components.Core.Domain.Entities;
 
 public abstract record DomainEvent() : IDomainEvent
 {
-    public DomainEvent(Guid modelId, int modelVersion, DateTime when) : this()
+    public DomainEvent(Guid id, long version, DateTime when) : this()
     {
-        this.ModelId = modelId;
-        this.ModelVersion = modelVersion;
+        this.Id = id;
+        this.Version = version;
         this.When = when;
     }
 
-    public Guid ModelId { get; init; }
+    public Guid Id { get; init; }
 
-    public int ModelVersion { get; init; }
+    public long Version { get; init; }
 
     public DateTime When { get; init; }
 }

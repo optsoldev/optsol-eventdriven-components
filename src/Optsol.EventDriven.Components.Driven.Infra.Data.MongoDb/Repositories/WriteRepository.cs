@@ -31,7 +31,7 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
 
     public virtual void CommitIntegration()
     {
-        var sortDef = Builders<PersistentEvent<IDomainEvent>>.Sort.Descending(d => d.ModelVersion);
+        var sortDef = Builders<PersistentEvent<IDomainEvent>>.Sort.Descending(d => d.Version);
 
         UpdateDefinition<PersistentEvent<IDomainEvent>> updateDefinition = Builders<PersistentEvent<IDomainEvent>>.Update.Set(x => x.IsStaging, false);
 
@@ -49,12 +49,19 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
     
     public virtual void Commit(T model)
     {
+        bool isStaging = true;
+        if(_transactionService.IsAutoCommit())
+        {
+            isStaging = false;
+        }
+
         var events = model.PendingEvents.Select(e => new PersistentEvent<IDomainEvent>(
             _transactionService.GetTransactionId(),
-            model.ModelId,
-            e.ModelVersion,
+            Guid.NewGuid(),
+            model.Id,
+            e.Version,
             e.When,
-            IsStaging: true,
+            IsStaging: isStaging,
             e.GetType().AssemblyQualifiedName,
             e));
         
@@ -63,10 +70,7 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
 
         _messageBus.Publish(model.PendingEvents, $"{_transactionService.GetTransactionId()}.success");
 
-        if (_transactionService.IsAutoCommit())
-        {
-            CommitIntegration();
-        }
+        if(_transactionService.IsAutoCommit()) _messageBus.Publish(events.Select(e => e.Data), $"response");
     }
 
     public virtual void Rollback(T model)
