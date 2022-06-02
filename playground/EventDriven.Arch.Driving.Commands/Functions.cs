@@ -1,3 +1,4 @@
+using EventDriven.Arch.Application.Commands.AlterarBeneficiarios;
 using EventDriven.Arch.Application.Commands.CriarBeneficiarios;
 using MediatR;
 using Microsoft.Azure.Functions.Worker;
@@ -40,6 +41,23 @@ namespace EventDriven.Arch.Driving.Commands
             await _mediator.Send(data);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="req"></param>
+        /// <param name="log"></param>
+        /// <exception cref="InvalidCastException"></exception>
+        [Function("AlterarBeneficiario")]
+        public async Task AlterarBeneficiarioAsync([HttpTrigger(AuthorizationLevel.Function, "post", Route = "v1/beneficiarios/alterar")] HttpRequestData req)
+        {
+            _log.LogInformation("Alterar Beneficiário Triggered");
+
+            var data = await JsonSerializer.DeserializeAsync<AlterarBeneficiarioCommand>(req.Body);
+
+            if (data == null) throw new InvalidCastException($"Não foi possível converter para {nameof(CriarBeneficiarioCommand)}");
+
+            await _mediator.Send(data);
+        }
 
         /// <summary>
         /// 

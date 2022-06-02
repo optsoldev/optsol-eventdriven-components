@@ -7,7 +7,7 @@ namespace EventDriven.Arch.Driven.Infra.Data.MongoDb.ReadModelRepository
 {
     public class BeneficiarioAtualizadoReadProjectionRepository : ReadProjectionRepository<BeneficiarioAtualizado>, IBeneficiarioAtualizadoReadProjectionRepository
     {
-        public BeneficiarioAtualizadoReadProjectionRepository(MongoContext context) : base(context)
+        public BeneficiarioAtualizadoReadProjectionRepository(MongoContext context) : base(context, "beneficiarioAtualizado")
         {
         }
     }

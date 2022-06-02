@@ -11,7 +11,6 @@ public class Functions
     {
         _logger = loggerFactory.CreateLogger<Functions>();
        
-        //CreateQueue();
     }
 
     [Function("Projecao")]
