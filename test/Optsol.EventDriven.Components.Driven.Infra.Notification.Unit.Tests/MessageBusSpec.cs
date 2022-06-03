@@ -21,7 +21,7 @@ namespace Optsol.EventDriven.Components.Driven.Infra.Notification.Unit.Tests
         {
             public Guid Id => Guid.NewGuid();
 
-            public long Version => 1;
+            public long ModelVersion => 1;
 
             public DateTime When => DateTime.UtcNow;
 

@@ -36,7 +36,7 @@ public abstract class Aggregate : IAggregate
     {
         _pendingEvents.Enqueue(pendingEvent);
         Apply(pendingEvent);
-        Version = pendingEvent.Version;
+        Version = pendingEvent.ModelVersion;
     }
 
     protected abstract void Apply(IDomainEvent @event);
@@ -46,7 +46,7 @@ public abstract class Aggregate : IAggregate
         foreach (var e in events)
         {
             Apply(e);
-            Version = e.Version;
+            Version = e.ModelVersion;
         }
     }
     

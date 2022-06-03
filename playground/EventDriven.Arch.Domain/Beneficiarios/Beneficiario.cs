@@ -56,7 +56,7 @@ public class Beneficiario : Aggregate
     }
     
     private void Apply(BeneficiarioCriado criado) => (Id, Version, PrimeiroNome, SegundoNome) =
-        (criado.Id, criado.Version, criado.PrimeiroNome, criado.SegundoNome);
+        (criado.Id, criado.ModelVersion, criado.PrimeiroNome, criado.SegundoNome);
 
     private void Apply(BeneficiarioAlterado alterado) => (Version, PrimeiroNome, SegundoNome) =
         (alterado.Version, alterado.PrimeiroNome, alterado.SegundoNome);

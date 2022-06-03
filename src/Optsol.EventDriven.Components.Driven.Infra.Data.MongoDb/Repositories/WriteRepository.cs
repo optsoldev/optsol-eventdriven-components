@@ -59,7 +59,7 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
             _transactionService.GetTransactionId(),
             Guid.NewGuid(),
             model.Id,
-            e.Version,
+            e.ModelVersion,
             e.When,
             IsStaging: isStaging,
             e.GetType().AssemblyQualifiedName,
