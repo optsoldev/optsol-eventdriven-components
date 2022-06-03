@@ -31,7 +31,7 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
 
     public virtual void CommitIntegration()
     {
-        var sortDef = Builders<PersistentEvent<IDomainEvent>>.Sort.Descending(d => d.Version);
+        var sortDef = Builders<PersistentEvent<IDomainEvent>>.Sort.Descending(d => d.ModelVersion);
 
         UpdateDefinition<PersistentEvent<IDomainEvent>> updateDefinition = Builders<PersistentEvent<IDomainEvent>>.Update.Set(x => x.IsStaging, false);
 
