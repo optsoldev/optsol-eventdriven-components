@@ -21,6 +21,6 @@ public abstract class ReadRepository<T> : IReadRepository<T> where T : IAggregat
     public virtual IEnumerable<IDomainEvent> GetById(Guid id) {
         return Set.Find(e => e.ModelId == id && e.IsStaging == false ||
         e.TransactionId == TransactionService.GetTransactionId() && e.ModelId == id)
-            .SortByDescending(e => e.Version).Project(e => e.Data).ToList().AsEnumerable();
+            .SortByDescending(e => e.ModelVersion).Project(e => e.Data).ToList().AsEnumerable();
 }
 }
