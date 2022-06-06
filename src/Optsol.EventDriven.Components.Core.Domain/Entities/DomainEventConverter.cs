@@ -5,17 +5,17 @@ namespace Optsol.EventDriven.Components.Core.Domain.Entities
 
     public class DomainEventConverter : IDomainEventConverter
     {
-        private readonly IDomainEventFinder domainEventFinder;
+        private readonly IDomainEventRegister _register;
 
-        public DomainEventConverter(IDomainEventFinder domainEventFinder)
+        public DomainEventConverter(IDomainEventRegister register)
         {
-            this.domainEventFinder = domainEventFinder;
+            _register = register;
         }
 
         public IDomainEvent Convert(string eventData)
         {
 
-            Type eventType = domainEventFinder.Get(eventData);
+            Type eventType = _register.Get(eventData);
             if (eventType is null)
                 throw new InvalidCastException("Nao Existe Evento registrado.");
 
