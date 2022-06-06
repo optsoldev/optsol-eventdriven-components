@@ -3,6 +3,7 @@
     public interface IDomainEventRegister
     {
         public void Register(Type type);
+        Type Get(string eventData);
 
     }
 }

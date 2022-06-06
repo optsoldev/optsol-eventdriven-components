@@ -5,7 +5,7 @@ using Newtonsoft.Json.Schema.Generation;
 
 namespace Optsol.EventDriven.Components.Core.Domain.Entities
 {
-    public class DomainEventRegister : IDomainEventRegister, IDomainEventFinder
+    public class DomainEventRegister : IDomainEventRegister
     {
         public record RegisteredDomainEvent(Type domainEvent, JSchema schema);
 
