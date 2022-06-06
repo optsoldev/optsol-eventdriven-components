@@ -8,6 +8,6 @@ namespace Optsol.EventDriven.Components.Core.Domain.Unit.Tests
         
     }
     public record FakeEvent(Guid IntegrationId) { }
-    public record EventoTeste(Guid TransactionId, Guid Id, long ModelVersion, DateTime When): IDomainEvent { }
-    public record EventoTeste2(Guid TransactionId, Guid Id, long ModelVersion, DateTime When, DateTime AnotherProperty) : IDomainEvent { }
+    public record EventoTeste(Guid TransactionId, Guid ModelId, long ModelVersion, DateTime When): IDomainEvent { }
+    public record EventoTeste2(Guid TransactionId, Guid ModelId, long ModelVersion, DateTime When, DateTime AnotherProperty) : IDomainEvent { }
 }

@@ -43,7 +43,7 @@ public class BeneficiarioAtualizadoWriteProjectionRepository : WriteProjectionRe
 
     private void Apply(BeneficiarioCriado criado)
     {
-        var beneficiario = Get(criado.Id);
+        var beneficiario = Get(criado.ModelId);
         beneficiario.PrimeiroNome = criado.PrimeiroNome;
         beneficiario.SegundoNome = criado.SegundoNome;
         beneficiario.DataAtualizacao = criado.When;

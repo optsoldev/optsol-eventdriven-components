@@ -2,14 +2,14 @@ namespace Optsol.EventDriven.Components.Core.Domain.Entities;
 
 public abstract record DomainEvent() : IDomainEvent
 {
-    public DomainEvent(Guid id, long version, DateTime when) : this()
+    public DomainEvent(Guid modelId, long modelVersion, DateTime when) : this()
     {
-        this.Id = id;
-        this.ModelVersion = version;
+        this.ModelId = modelId;
+        this.ModelVersion = modelVersion;
         this.When = when;
     }
 
-    public Guid Id { get; init; }
+    public Guid ModelId { get; init; }
 
     public long ModelVersion { get; init; }
 
