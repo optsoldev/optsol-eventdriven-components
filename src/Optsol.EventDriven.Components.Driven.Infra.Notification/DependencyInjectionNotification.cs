@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Optsol.EventDriven.Components.Core.Domain;
 using RabbitMQ.Client;
 
@@ -8,19 +7,23 @@ namespace Optsol.EventDriven.Components.Driven.Infra.Notification;
 
 public static class DependencyInjectionNotification
 {
-    public static IServiceCollection RegisterNotification(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection RegisterNotification(this IServiceCollection services, 
+        IConfiguration configuration)
     {
+        
         services.AddSingleton(configuration.GetSection(nameof(ServiceBusSettings)).Get<ServiceBusSettings>());
         services.AddScoped<IMessageBus, MessageBus>();
 
         return services;
     }
     
-    public static IHost RegisterNotificationQueue(this IHost host, string queueDescricao)
+    public static IServiceCollection RegisterNotificationQueue(this IServiceCollection services, 
+        IConfiguration configuration, string queueDescricao)
     {
-        var settings = (ServiceBusSettings)host.Services.GetService(typeof(ServiceBusSettings));
+        var settings = configuration.GetSection(nameof(ServiceBusSettings)).Get<ServiceBusSettings>();
 
-        var factory = new ConnectionFactory() { HostName = settings.ConnectionString };
+        var factory = CreateConnectionFactory(settings);
+
         using (var connection = factory.CreateConnection())
         using (var channel = connection.CreateModel())
         {
@@ -30,8 +33,24 @@ public static class DependencyInjectionNotification
 
             channel.QueueBind(queue: queueName, exchange: settings.Exchange, routingKey: "response");
         }
-
-        return host;
+        
+        return services;
     }
-    
+
+    private static ConnectionFactory CreateConnectionFactory(ServiceBusSettings settings)
+    {
+        if (string.IsNullOrWhiteSpace(settings.ConnectionString))
+        {
+            return new ConnectionFactory()
+            {
+                HostName = settings.HostName,
+                UserName = settings.UserName,
+                Password = settings.Password,
+                Port = settings.Port ?? 5672
+            };
+        }
+
+        return new ConnectionFactory() { HostName = settings.ConnectionString };
+    }
+
 }
