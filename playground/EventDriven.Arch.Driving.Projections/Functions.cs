@@ -14,7 +14,8 @@ public class Functions
     }
 
     [Function("Projecao")]
-   public Task Run([RabbitMQTrigger(queueName: "saga-response-projection", ConnectionStringSetting = "rabbitMQConnectionAppSetting")] string req)
+   public Task Run([RabbitMQTrigger( queueName: "saga-response-projection", HostName = "%ServiceBusSettings:HostName%", 
+        PasswordSetting = "%ServiceBusSettings:Password%", UserNameSetting = "%ServiceBusSettings:UserName%")] string req)
     {
         _logger.LogInformation($"{req}");
 

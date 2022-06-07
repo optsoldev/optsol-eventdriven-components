@@ -19,9 +19,10 @@ var host = new HostBuilder()
         services.AddApplicationModule();
         services.AddFunctionContextAccessor();
         services.AddOptsolLogging();
+        services.RegisterNotificationQueue(context.Configuration, "saga-response-projection");
     })
-    .Build()
-    .RegisterNotificationQueue("saga-response-projection");
+    .Build();
+    
 
 host.Run();
 

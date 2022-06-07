@@ -7,6 +7,9 @@
 	  <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Functions.cs~RF13d6f4e.TMP" />
+  </ItemGroup>
+  <ItemGroup>
 	  <PackageReference Include="Functions.Worker.ContextAccessor" Version="1.0.0" />
 	  <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
 	  <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
