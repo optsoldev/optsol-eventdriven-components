@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Mvc;
-using Sample.Saga.Contracts;
+using Sample.Saga.Contracts.Commands;
+using Sample.Saga.Contracts.Events;
 
 namespace Sample.Bff.Api.Controllers;
 

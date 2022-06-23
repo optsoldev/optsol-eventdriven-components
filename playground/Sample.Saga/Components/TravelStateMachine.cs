@@ -1,9 +1,9 @@
 ﻿using MassTransit;
-using Sample.Saga.Contracts;
 
 using Sample.Hotel.Contracts.Commands;
 using Sample.Flight.Contracts.Commands;
 using Sample.Flight.Contracts.Events;
+using Sample.Saga.Contracts.Events;
 
 namespace Sample.Saga.Components
 {

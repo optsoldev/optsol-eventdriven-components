@@ -1,4 +1,4 @@
-﻿namespace Sample.Saga.Contracts;
+﻿namespace Sample.Saga.Contracts.Commands;
 
 public class SubmitTravel
 {

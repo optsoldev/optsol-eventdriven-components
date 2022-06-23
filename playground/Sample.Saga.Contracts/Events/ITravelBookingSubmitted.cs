@@ -1,6 +1,6 @@
 ﻿using Optsol.EventDriven.Components.Core.Contracts;
 
-namespace Sample.Saga.Contracts;
+namespace Sample.Saga.Contracts.Events;
 
 public interface ITravelBookingSubmitted : ISagaContract
 {
