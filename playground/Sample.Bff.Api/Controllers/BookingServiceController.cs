@@ -29,6 +29,7 @@ public class BookingServiceController : ControllerBase
         return Accepted(new {CorrelationId = correlationId });
     }
 
+
     private async Task<Guid> PublishSaga(SubmitTravel submitTravel)
     {
         var correlationId = Guid.NewGuid();
@@ -37,10 +38,11 @@ public class BookingServiceController : ControllerBase
         {
             TravelId = Guid.NewGuid(),
             CorrelationId = correlationId,
-            UserId = submitTravel.UserId,
-            From = submitTravel.From,
-            To = submitTravel.To,
-            HotelId = submitTravel.HotelId
+            submitTravel.UserId,
+            submitTravel.From,
+            submitTravel.To,
+            submitTravel.HotelId,
+            submitTravel.Departure,
         });
 
         return correlationId;

@@ -6,4 +6,6 @@ public class SubmitTravel
     public string From { get; set; }
     public string To { get; set; }
     public int HotelId { get; set; }
+
+    public DateTime Departure { get; set; }
 }

@@ -28,7 +28,7 @@ namespace Sample.Saga.Components
                     context.Saga.HotelId = context.Message.HotelId;                    
                 })
                 .SendAsync(new Uri("queue:book-flight"), 
-                    context => context.Init<IBookFlight>(new
+                    context => context.Init<BookFlight>(new
                     {
                         context.Message.CorrelationId,
                         context.Message.From,
