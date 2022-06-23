@@ -30,7 +30,7 @@ IHost host = Host.CreateDefaultBuilder(args)
             cfg.AddSagaStateMachine<TravelStateMachine, TravelState>()
              .MongoDbRepository(r =>
              {
-                 r.Connection = "mongodb://arch-dev-cosmos:PW4MVBKPBBmwHj3v6ibH1NWPfjpToNezcWWF6OPd6Mh2If8PdsxG3jFcdCnYDYhhq0ApDJLgEKuyro2BIPm7LA==@arch-dev-cosmos.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@arch-dev-cosmos@";
+                 r.Connection = "mongodb://127.0.0.1";
                  r.DatabaseName = "saga-db";
                  r.CollectionName = "travel-state";
              });
