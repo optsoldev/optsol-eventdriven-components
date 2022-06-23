@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-Sample.Hotel.Driving.Commands-40BBDF73-D91C-4A4D-8312-4D9EBFCA27FB</UserSecretsId>
+    <UserSecretsId>dotnet-Sample.Flight.Driving.Commands-B57DB57E-B475-41D0-839B-692757D8D571</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
@@ -20,6 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Sample.Hotel.Commands\Sample.Hotel.Contracts.csproj" />
+	  <ProjectReference Include="..\Sample.Flight.Contracts\Sample.Flight.Contracts.csproj" />
 	</ItemGroup>
+	
 </Project>

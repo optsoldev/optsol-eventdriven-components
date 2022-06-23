@@ -1,6 +1,6 @@
-﻿namespace Sample.Saga.Contracts;
+﻿namespace Optsol.EventDriven.Components.Core.Contracts;
 
 public interface ISagaContract
 {
-    Guid CorrelationId { get; }
+   public Guid CorrelationId { get; }
 }

@@ -1,6 +1,8 @@
-﻿namespace Sample.Saga.Contracts;
+﻿using Optsol.EventDriven.Components.Core.Contracts;
 
-public interface ITravelBookingSubmitted : ISagaContracts
+namespace Sample.Saga.Contracts;
+
+public interface ITravelBookingSubmitted : ISagaContract
 {
     Guid TravelId { get; }
     Guid UserId { get; }

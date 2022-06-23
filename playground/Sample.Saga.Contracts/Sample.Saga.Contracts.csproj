@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Optsol.EventDriven.Components.Core.Contracts\Optsol.EventDriven.Components.Core.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Core.Contracts\Optsol.EventDriven.Components.Core.Contracts.csproj" />
   </ItemGroup>
 
 </Project>
