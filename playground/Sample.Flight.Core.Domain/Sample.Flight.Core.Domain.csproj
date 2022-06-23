@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Core.Domain\Optsol.EventDriven.Components.Core.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

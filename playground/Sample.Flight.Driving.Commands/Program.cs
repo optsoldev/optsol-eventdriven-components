@@ -1,10 +1,11 @@
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Sample.Flight.Core.Application;
 using Sample.Flight.Driving.Commands;
 using Sample.Flight.Driving.Commands.Consumers;
 using Serilog;
 using Serilog.Events;
-using System.Reflection;
+using MediatR;
 
 Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -37,6 +38,8 @@ IHost host = Host.CreateDefaultBuilder(args)
                 configurator.ConfigureEndpoints(context);
             });
         });
+
+        services.AddMediatR(typeof(ApplicationMediatREntryPoint).Assembly);
     })
     .Build();
 

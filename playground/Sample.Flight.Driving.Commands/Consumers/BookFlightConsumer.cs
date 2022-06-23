@@ -1,24 +1,29 @@
 ﻿using MassTransit;
+using MediatR;
 using Sample.Flight.Contracts.Commands;
 using Sample.Flight.Contracts.Events;
 
 namespace Sample.Flight.Driving.Commands.Consumers;
 
-public class BookFlightConsumer : IConsumer<IBookFlight>
+public class BookFlightConsumer : IConsumer<BookFlight>
 {
+    private readonly IMediator _mediator;
     private readonly ILogger<BookFlightConsumer> _logger;
 
-    public BookFlightConsumer(ILogger<BookFlightConsumer> logger)
+    public BookFlightConsumer(ILogger<BookFlightConsumer> logger, IMediator mediator)
     {
         _logger = logger;
+        _mediator = mediator;
     }
 
-    public Task Consume(ConsumeContext<IBookFlight> context)
+    public async Task Consume(ConsumeContext<BookFlight> context)
     {
 
-        Console.WriteLine("BookFlightConsumer {0}", context.Message.CorrelationId);
+        _logger.LogDebug("BookFlightConsumer {0}", context.Message.CorrelationId);
 
-        return context.Publish<IFlightBooked>(new
+        await _mediator.Send(context.Message);
+
+        await context.Publish<IFlightBooked>(new
         {
             context.Message.CorrelationId,
             context.Message.TravelId

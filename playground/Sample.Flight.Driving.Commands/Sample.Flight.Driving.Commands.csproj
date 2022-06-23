@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Worker">
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -12,6 +12,7 @@
 	<ItemGroup>
 		<PackageReference Include="MassTransit" Version="8.0.3" />
 		<PackageReference Include="MassTransit.RabbitMQ" Version="8.0.3" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.16.1" />
 		<PackageReference Include="Serilog" Version="2.11.0" />
@@ -21,6 +22,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Sample.Flight.Contracts\Sample.Flight.Contracts.csproj" />
+	  <ProjectReference Include="..\Sample.Flight.Core.Application\Sample.Flight.Core.Application.csproj" />
 	</ItemGroup>
 	
 </Project>
