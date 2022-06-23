@@ -59,7 +59,7 @@ public class Beneficiario : Aggregate
         (criado.ModelId, criado.ModelVersion, criado.PrimeiroNome, criado.SegundoNome);
 
     private void Apply(BeneficiarioAlterado alterado) => (Version, PrimeiroNome, SegundoNome) =
-        (alterado.ModelVersion, alterado.PrimeiroNome, alterado.SegundoNome);
+        (alterado.Version, alterado.PrimeiroNome, alterado.SegundoNome);
 
     public sealed class BeneficiarioValidator : AbstractValidator<Beneficiario>
     {

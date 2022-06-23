@@ -1,25 +1,22 @@
+using Newtonsoft.Json;
 using Optsol.EventDriven.Components.Core.Domain;
-using Optsol.EventDriven.Components.Core.Domain.Entities;
 using RabbitMQ.Client;
 using System.Text;
-using System.Text.Json;
 
 namespace Optsol.EventDriven.Components.Driven.Infra.Notification;
 
 public class MessageBus : IMessageBus
 {
     private readonly ServiceBusSettings _settings;
-    private readonly ITransactionService _transactionService;
 
-    public MessageBus(ITransactionService transactionService, ServiceBusSettings settings)
+    public MessageBus(ServiceBusSettings settings)
     {
-        _transactionService = transactionService;
         _settings = settings;
     }
-    
-    public Task Publish(IEnumerable<IFailureEvent> events)
+
+    public Task Publish<T>(IEnumerable<T> events, string routingKey)
     {
-        var factory = new ConnectionFactory() { HostName = _settings.ConnectionString };
+        var factory = CreateConnectionFactory();
         using (var connection = factory.CreateConnection())
         using (var channel = connection.CreateModel())
         {
@@ -28,10 +25,10 @@ public class MessageBus : IMessageBus
 
             foreach (var @event in events)
             {
-                var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(@event));
+                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(@event));
 
                 channel.BasicPublish(exchange: _settings.Exchange,
-                                     routingKey: $"{_transactionService.GetTransactionId()}.failure",
+                                     routingKey: routingKey,
                                      basicProperties: null,
                                      body: body);
             }
@@ -39,25 +36,19 @@ public class MessageBus : IMessageBus
         return Task.CompletedTask;
     }
 
-    public Task Publish(IEnumerable<IDomainEvent> events)
+    private ConnectionFactory CreateConnectionFactory()
     {
-        var factory = new ConnectionFactory() { HostName = _settings.ConnectionString };
-        using (var connection = factory.CreateConnection())
-        using (var channel = connection.CreateModel())
+        if(string.IsNullOrWhiteSpace(_settings.ConnectionString))
         {
-            channel.ExchangeDeclare(exchange: _settings.Exchange,
-                                    type: ExchangeType.Topic);
-
-            foreach (var @event in events)
+            return new ConnectionFactory()
             {
-                var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(@event));
-
-                channel.BasicPublish(exchange: _settings.Exchange,
-                                     routingKey: $"{_transactionService.GetTransactionId()}.success",
-                                     basicProperties: null,
-                                     body: body);
-            }
+                HostName = _settings.HostName,
+                UserName = _settings.UserName,
+                Password = _settings.Password,
+                Port = _settings.Port ?? 5672
+            };
         }
-        return Task.CompletedTask;
+
+        return new ConnectionFactory() { HostName = _settings.ConnectionString };
     }
 }

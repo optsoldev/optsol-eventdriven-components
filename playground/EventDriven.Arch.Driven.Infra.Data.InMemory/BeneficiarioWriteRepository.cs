@@ -47,6 +47,7 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
     public void Commit(Beneficiario model)
     {
         var events = model.PendingEvents.Select(e => new PersistentEvent<string>(_transactionService.GetTransactionId(),
+            Guid.NewGuid(),
             model.Id,
             e.ModelVersion,
             e.When,
@@ -56,7 +57,7 @@ public class BeneficiarioWriteRepository : IBeneficiarioWriteRepository
         
         _eventStoreContext.Beneficiarios?.AddRange(events);
         _eventStoreContext.SaveChanges();
-        _messageBus.Publish(model.PendingEvents);
+        //_messageBus.Publish(model.PendingEvents);
         model.Commit();
 
     }

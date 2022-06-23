@@ -31,7 +31,7 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
 
     public virtual void CommitIntegration()
     {
-        var sortDef = Builders<PersistentEvent<IDomainEvent>>.Sort.Descending(d => d.ModelVersion);
+        var sortDef = Builders<PersistentEvent<IDomainEvent>>.Sort.Ascending(d => d.ModelVersion);
 
         UpdateDefinition<PersistentEvent<IDomainEvent>> updateDefinition = Builders<PersistentEvent<IDomainEvent>>.Update.Set(x => x.IsStaging, false);
 
@@ -42,33 +42,39 @@ public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggreg
 
         _context.AddTransaction(() => _set.UpdateManyAsync(u => u.TransactionId == _transactionService.GetTransactionId(), updateDefinition));
         _context.SaveChanges();
+
+        _messageBus.Publish(events.Select(e => e.Data), $"response");
     }
 
     
     public virtual void Commit(T model)
     {
+        bool isStaging = true;
+        if(_transactionService.IsAutoCommit())
+        {
+            isStaging = false;
+        }
+
         var events = model.PendingEvents.Select(e => new PersistentEvent<IDomainEvent>(
             _transactionService.GetTransactionId(),
+            Guid.NewGuid(),
             model.Id,
             e.ModelVersion,
             e.When,
-            IsStaging: true,
+            IsStaging: isStaging,
             e.GetType().AssemblyQualifiedName,
             e));
         
         _context.AddTransaction(() => _set.InsertManyAsync(events));
         _context.SaveChanges();
 
-        _messageBus.Publish(model.PendingEvents);
+        _messageBus.Publish(model.PendingEvents, $"{_transactionService.GetTransactionId()}.success");
 
-        if (_transactionService.IsAutoCommit())
-        {
-            CommitIntegration();
-        }
+        if(_transactionService.IsAutoCommit()) _messageBus.Publish(events.Select(e => e.Data), $"response");
     }
 
     public virtual void Rollback(T model)
     {
-        _messageBus.Publish(model.FailureEvents); 
+        _messageBus.Publish(model.FailureEvents, $"{_transactionService.GetTransactionId()}.failure"); 
     }
 }

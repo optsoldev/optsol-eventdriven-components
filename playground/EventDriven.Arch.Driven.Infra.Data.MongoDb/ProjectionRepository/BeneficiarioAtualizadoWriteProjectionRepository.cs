@@ -10,7 +10,7 @@ namespace EventDriven.Arch.Driven.Infra.Data.MongoDb.ReadModelRepository;
 
 public class BeneficiarioAtualizadoWriteProjectionRepository : WriteProjectionRepository<BeneficiarioAtualizado>, IBeneficiarioAtualizadoWriteProjectionRepository
 {    
-    public BeneficiarioAtualizadoWriteProjectionRepository(MongoContext context) : base(context) {} 
+    public BeneficiarioAtualizadoWriteProjectionRepository(MongoContext context) : base(context, "beneficiarioAtualizado") {} 
 
     public override void ReceiveEvent(IDomainEvent @event)
     {
@@ -54,7 +54,7 @@ public class BeneficiarioAtualizadoWriteProjectionRepository : WriteProjectionRe
 
     private void Apply(BeneficiarioAlterado alterado)
     {
-        var beneficiario = Get(alterado.ModelId);
+        var beneficiario = Get(alterado.Id);
         beneficiario.PrimeiroNome = alterado.PrimeiroNome;
         beneficiario.SegundoNome = alterado.SegundoNome;
         beneficiario.DataAtualizacao = alterado.When;

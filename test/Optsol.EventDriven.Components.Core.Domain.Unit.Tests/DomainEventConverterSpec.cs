@@ -1,10 +1,6 @@
 ﻿using FluentAssertions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Optsol.EventDriven.Components.Core.Domain.Entities;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Optsol.EventDriven.Components.Core.Domain.Unit.Tests
 {

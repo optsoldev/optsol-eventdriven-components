@@ -1,16 +1,26 @@
-using System.Threading.Tasks;
-using Azure.Messaging.EventHubs;
-using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 
-namespace EventDriven.Arch.Driving.Projections
+namespace EventDriven.Arch.Driving.Projections;
+
+public class Functions
 {
-    public class Functions
+    private readonly ILogger _logger;
+    
+    public Functions(ILoggerFactory loggerFactory)
     {
-        [FunctionName("Functions")]
-        public async Task Run([EventHubTrigger("beneficiario-saga-response", Connection = "ConnectionString")] EventData @event, ILogger log)
-        {
-            log.LogInformation($"{@event}");
-        }
+        _logger = loggerFactory.CreateLogger<Functions>();
+       
     }
+
+    [Function("Projecao")]
+   public Task Run([RabbitMQTrigger( queueName: "saga-response-projection", HostName = "%ServiceBusSettings:HostName%", 
+        PasswordSetting = "%ServiceBusSettings:Password%", UserNameSetting = "%ServiceBusSettings:UserName%")] string req)
+    {
+        _logger.LogInformation($"{req}");
+
+       return Task.CompletedTask;
+   }
+
+   
 }

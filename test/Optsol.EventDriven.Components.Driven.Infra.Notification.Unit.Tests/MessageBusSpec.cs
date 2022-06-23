@@ -1,7 +1,6 @@
 using FluentAssertions;
+using Newtonsoft.Json;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
-using System.Runtime.Serialization;
-using System.Text.Json;
 
 namespace Optsol.EventDriven.Components.Driven.Infra.Notification.Unit.Tests
 {
@@ -12,22 +11,17 @@ namespace Optsol.EventDriven.Components.Driven.Infra.Notification.Unit.Tests
         {
             var evento = new Evento();
 
-            JsonSerializerOptions options = new(JsonSerializerDefaults.Web)
-            {
-                WriteIndented = true
-            };
-
-            var eventoSerializado = JsonSerializer.Serialize(evento, evento.GetType(), options);
+            var eventoSerializado = JsonConvert.SerializeObject(evento, evento.GetType(), Formatting.None, new JsonSerializerSettings {  });
 
             eventoSerializado.Should().Contain("Teste");
         }
 
-        [DataContract]
+        [JsonObject]
         public class Evento : IDomainEvent
         {
             public Guid ModelId => Guid.NewGuid();
 
-            public int ModelVersion => 1;
+            public long ModelVersion => 1;
 
             public DateTime When => DateTime.UtcNow;
 

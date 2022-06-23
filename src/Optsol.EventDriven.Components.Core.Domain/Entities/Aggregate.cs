@@ -6,12 +6,14 @@ public abstract class Aggregate : IAggregate
 {
     private readonly Queue<IDomainEvent> _pendingEvents = new();
     protected readonly Queue<IFailureEvent> _failureEvents = new();
-    protected int Version { get; set; } = 0;
-    protected int NextVersion
+
+    public Guid Id { get; protected set; }
+
+    protected long Version { get; set; } = 0;
+    protected long NextVersion
     {
         get => Version + 1;
     }
-    public Guid Id { get; protected set; }
     public IEnumerable<IDomainEvent> PendingEvents
     {
         get => _pendingEvents.AsEnumerable();
@@ -59,6 +61,7 @@ public abstract class Aggregate : IAggregate
     public bool Invalid => Valid is false;
     
     public ValidationResult ValidationResult { get; protected set; } = new();
+
 
     protected abstract void Validate();
 }

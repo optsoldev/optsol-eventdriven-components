@@ -11,9 +11,9 @@ public class SearchResult<T>
 
     public long TotalCount { get; private set; }
 
-    public long PageCount => Items.Count();
+    public long PageCount => Data.Count();
 
-    public IEnumerable<T> Items { get; private set; }
+    public IEnumerable<T> Data { get; private set; }
 
     public SearchResult<T> SetPage(int page)
     {
@@ -36,9 +36,9 @@ public class SearchResult<T>
         return this;
     }
 
-    public SearchResult<T> SetPaginatedItems(IEnumerable<T> items)
+    public SearchResult<T> SetPaginatedItems(IEnumerable<T> data)
     {
-        Items = items;
+        Data = data;
 
         return this;
     }
