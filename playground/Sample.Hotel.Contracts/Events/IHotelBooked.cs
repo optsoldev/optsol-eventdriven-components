@@ -1,7 +1,8 @@
-﻿namespace Sample.Hotel.Contracts.Events;
+﻿using Optsol.EventDriven.Components.Core.Contracts;
 
-public interface IHotelBooked
+namespace Sample.Hotel.Contracts.Events;
+
+public interface IHotelBooked : ISagaContract
 {
-    Guid CorrelationId { get; }
-    Guid TravelId { get; }
+    public Guid TravelId { get; }
 }

@@ -19,16 +19,16 @@ public class BookingServiceController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(Guid userId)
+    public async Task<IActionResult> Post(SubmitTravel submitTravel)
     {
-        _logger.LogInformation(message: "SubmitTravel for UserId {0}", userId);
+        _logger.LogInformation(message: "SubmitTravel for UserId {0}", submitTravel.UserId);
 
-        var correlationId = await PublishSaga(userId);
+        var correlationId = await PublishSaga(submitTravel);
 
         return Accepted(new {CorrelationId = correlationId });
     }
 
-    private async Task<Guid> PublishSaga(Guid userId)
+    private async Task<Guid> PublishSaga(SubmitTravel submitTravel)
     {
         var correlationId = Guid.NewGuid();
 
@@ -36,7 +36,10 @@ public class BookingServiceController : ControllerBase
         {
             TravelId = Guid.NewGuid(),
             CorrelationId = correlationId,
-            UserId = userId
+            UserId = submitTravel.UserId,
+            From = submitTravel.From,
+            To = submitTravel.To,
+            HotelId = submitTravel.HotelId
         });
 
         return correlationId;

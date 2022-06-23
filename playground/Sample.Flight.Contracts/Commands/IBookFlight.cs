@@ -4,8 +4,8 @@ namespace Sample.Flight.Contracts.Commands;
 
 public interface IBookFlight : ISagaContract
 {
-    Guid TravelId { get; }
-    string From { get; }
-    string To { get; }
+    public Guid TravelId { get; }
+    public string From { get; }
+    public string To { get; }
 
 }

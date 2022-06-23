@@ -9,5 +9,5 @@ public interface ITravelBookingSubmitted : ISagaContract
     public string From { get; }
     public string To { get; }
     public DateTime Departure { get; }
-    Guid HotelId { get; }
+    int HotelId { get; }
 }

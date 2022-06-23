@@ -64,7 +64,7 @@ namespace Sample.Saga.Components
 
         public string CurrentState { get; set; }
 
-        public Guid HotelId { get; set; }
+        public int HotelId { get; set; }
 
         public long Version { get; set; }
     }
