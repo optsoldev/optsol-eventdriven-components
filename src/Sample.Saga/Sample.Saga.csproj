@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-Sample.Saga-B27CC8B1-C86F-4F21-8825-646EC6B9484C</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.0.3" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.16.1" />
+    <PackageReference Include="Serilog" Version="2.11.0" />
+	<PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
+	<PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sample.Flight.Core.Application.Commands\Sample.Flight.Commands.csproj" />
+    <ProjectReference Include="..\Sample.Flight.Core.Events\Sample.Flight.Events.csproj" />
+    <ProjectReference Include="..\Sample.Hotel.Commands\Sample.Hotel.Commands.csproj" />
+    <ProjectReference Include="..\Sample.Saga.Contracts\Sample.Saga.Contracts.csproj" />
+  </ItemGroup>
+</Project>
