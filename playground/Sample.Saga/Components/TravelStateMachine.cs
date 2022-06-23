@@ -1,8 +1,8 @@
 ﻿using MassTransit;
-
-using Sample.Hotel.Contracts.Commands;
+using MongoDB.Bson.Serialization.Attributes;
 using Sample.Flight.Contracts.Commands;
 using Sample.Flight.Contracts.Events;
+using Sample.Hotel.Contracts.Commands;
 using Sample.Saga.Contracts.Events;
 
 namespace Sample.Saga.Components
@@ -58,14 +58,16 @@ namespace Sample.Saga.Components
 
     }
 
-    public class TravelState : SagaStateMachineInstance
+    public class TravelState : SagaStateMachineInstance,
+        ISagaVersion
     {
+        [BsonId]
         public Guid CorrelationId { get; set; }
 
-        public string CurrentState { get; set; }
+        public string? CurrentState { get; set; }
 
         public int HotelId { get; set; }
 
-        public long Version { get; set; }
+        public int Version { get; set; }
     }
 }
