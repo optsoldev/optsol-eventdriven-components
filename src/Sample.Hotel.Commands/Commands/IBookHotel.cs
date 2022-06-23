@@ -1,4 +1,4 @@
-﻿namespace Sample.Hotel.Commands;
+﻿namespace Sample.Hotel.Contracts.Commands;
 
 public interface IBookHotel
 {

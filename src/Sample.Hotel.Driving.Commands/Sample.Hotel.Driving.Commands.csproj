@@ -20,6 +20,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Sample.Hotel.Commands\Sample.Hotel.Commands.csproj" />
+	  <ProjectReference Include="..\Sample.Hotel.Commands\Sample.Hotel.Contracts.csproj" />
 	</ItemGroup>
 </Project>

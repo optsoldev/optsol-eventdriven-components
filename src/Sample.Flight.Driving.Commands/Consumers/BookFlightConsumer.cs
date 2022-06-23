@@ -1,6 +1,6 @@
 ﻿using MassTransit;
-using Sample.Flight.Core.Application.Commands;
-using Sample.Flight.Core.Events;
+using Sample.Flight.Contracts.Commands;
+using Sample.Flight.Contracts.Events;
 
 namespace Sample.Flight.Driving.Commands.Consumers;
 

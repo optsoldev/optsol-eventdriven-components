@@ -32,6 +32,10 @@ IHost host = Host.CreateDefaultBuilder(args)
 
             bus.UsingRabbitMq((context, configurator) =>
             {
+                configurator.Host("localhost", "/", h => {
+                    h.Username("guest");
+                    h.Password("guest");
+                });
                 configurator.ConfigureEndpoints(context);
             });
         });

@@ -1,4 +1,4 @@
-﻿namespace Sample.Hotel.Events;
+﻿namespace Sample.Hotel.Contracts.Events;
 
 public interface IHotelBooked
 {

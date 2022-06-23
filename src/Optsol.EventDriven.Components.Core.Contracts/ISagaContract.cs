@@ -1,6 +1,6 @@
 ﻿namespace Sample.Saga.Contracts;
 
-public interface ISaga
+public interface ISagaContract
 {
     Guid CorrelationId { get; }
 }

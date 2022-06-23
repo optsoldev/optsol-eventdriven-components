@@ -1,6 +1,6 @@
 ﻿namespace Sample.Saga.Contracts;
 
-public interface ITravelBookingSubmitted : ISaga
+public interface ITravelBookingSubmitted : ISagaContracts
 {
     Guid TravelId { get; }
     Guid UserId { get; }

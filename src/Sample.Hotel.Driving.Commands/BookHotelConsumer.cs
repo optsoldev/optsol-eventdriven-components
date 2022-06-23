@@ -1,5 +1,5 @@
 ﻿using MassTransit;
-using Sample.Hotel.Commands;
+using Sample.Hotel.Contracts.Commands;
 
 namespace Sample.Hotel.Driving.Commands;
 

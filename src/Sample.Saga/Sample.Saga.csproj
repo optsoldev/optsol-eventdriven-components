@@ -20,9 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sample.Flight.Core.Application.Commands\Sample.Flight.Commands.csproj" />
-    <ProjectReference Include="..\Sample.Flight.Core.Events\Sample.Flight.Events.csproj" />
-    <ProjectReference Include="..\Sample.Hotel.Commands\Sample.Hotel.Commands.csproj" />
+    <ProjectReference Include="..\Sample.Flight.Core.Application.Commands\Sample.Flight.Contracts.csproj" />
+    <ProjectReference Include="..\Sample.Hotel.Commands\Sample.Hotel.Contracts.csproj" />
     <ProjectReference Include="..\Sample.Saga.Contracts\Sample.Saga.Contracts.csproj" />
   </ItemGroup>
 </Project>
