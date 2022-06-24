@@ -2,7 +2,9 @@
 
 namespace Sample.Flight.Contracts.Events;
 
-public interface IFlightBooked : ISagaContract
+public record IFlightBooked : ISagaContract
 {
-    public Guid TravelId { get; }
+    public Guid TravelId { get; set; }
+
+    public Guid CorrelationId { get; set; }
 }

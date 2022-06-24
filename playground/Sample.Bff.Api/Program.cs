@@ -1,6 +1,5 @@
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Sample.Saga.Contracts;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);

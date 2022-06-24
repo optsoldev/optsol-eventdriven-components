@@ -85,7 +85,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Flight.Core.Applicat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Flight.Core.Domain", "playground\Sample.Flight.Core.Domain\Sample.Flight.Core.Domain.csproj", "{B36B5777-031B-4AAB-AB2F-13BDD445DBD5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Flight.Driven.Infra.Data.MongoDb", "playground\Sample.Flight.Driven.Infra.Data.MongoDb\Sample.Flight.Driven.Infra.Data.MongoDb.csproj", "{230F929C-A520-477F-9CE5-37F7ED66C11F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Flight.Driven.Infra.Data", "playground\Sample.Flight.Driven.Infra.Data.MongoDb\Sample.Flight.Driven.Infra.Data.csproj", "{230F929C-A520-477F-9CE5-37F7ED66C11F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Flight.Driving.Commands", "playground\Sample.Flight.Driving.Commands\Sample.Flight.Driving.Commands.csproj", "{7CCCEBE8-9CA8-46D2-AAEA-D11AC2C3AF99}"
 EndProject

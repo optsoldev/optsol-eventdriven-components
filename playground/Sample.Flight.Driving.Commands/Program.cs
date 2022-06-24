@@ -6,6 +6,9 @@ using Sample.Flight.Driving.Commands.Consumers;
 using Serilog;
 using Serilog.Events;
 using MediatR;
+using Optsol.EventDriven.Components.Core.Domain;
+using Optsol.EventDriven.Components.Driven.Infra.Notification;
+using Sample.Flight.Driven.Infra.Data;
 
 Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -23,13 +26,14 @@ var configuration = new ConfigurationBuilder()
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
+        services.AddDataMongoModule(configuration);
+        services.AddScoped<INotificator, Notificator>();
         services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
 
         services.AddHostedService<Worker>();
 
         services.AddMassTransit(bus =>
         {
-
             bus.AddConsumer<BookFlightConsumer>();
             bus.SetKebabCaseEndpointNameFormatter();
 

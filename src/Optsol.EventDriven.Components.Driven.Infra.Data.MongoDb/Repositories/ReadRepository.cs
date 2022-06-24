@@ -10,17 +10,13 @@ public abstract class ReadRepository<T> : IReadRepository<T> where T : IAggregat
 {
     protected readonly IMongoCollection<PersistentEvent<IDomainEvent>> Set;
 
-    protected readonly ITransactionService TransactionService;
-
-    protected ReadRepository(MongoContext context, ITransactionService transactionService, string collectionName)
+    protected ReadRepository(MongoContext context, string collectionName)
     {
         Set = context.GetCollection<PersistentEvent<IDomainEvent>>(collectionName);
-        TransactionService = transactionService;
     }
 
     public virtual IEnumerable<IDomainEvent> GetById(Guid id) {
-        return Set.Find(e => e.ModelId == id && e.IsStaging == false ||
-        e.TransactionId == TransactionService.GetTransactionId() && e.ModelId == id)
+        return Set.Find(e => e.ModelId == id && e.ModelId == id)
             .SortBy(e => e.ModelVersion).Project(e => e.Data).ToList().AsEnumerable();
 }
 }

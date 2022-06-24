@@ -18,15 +18,8 @@ public class BookFlightConsumer : IConsumer<BookFlight>
 
     public async Task Consume(ConsumeContext<BookFlight> context)
     {
-
         _logger.LogDebug("BookFlightConsumer {0}", context.Message.CorrelationId);
 
         await _mediator.Send(context.Message);
-
-        await context.Publish<IFlightBooked>(new
-        {
-            context.Message.CorrelationId,
-            context.Message.TravelId
-        });
     }
 }

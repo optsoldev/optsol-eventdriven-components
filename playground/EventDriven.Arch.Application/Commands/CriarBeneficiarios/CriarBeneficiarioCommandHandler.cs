@@ -23,7 +23,7 @@ public class CriarBeneficiarioCommandHandler : IRequestHandler<CriarBeneficiario
         }
         else
         {
-            _beneficiarioRepository.Commit(beneficiario);
+            _beneficiarioRepository.Commit(request.CorrelationId, beneficiario);
         }
 
         return Task.FromResult(new Unit());

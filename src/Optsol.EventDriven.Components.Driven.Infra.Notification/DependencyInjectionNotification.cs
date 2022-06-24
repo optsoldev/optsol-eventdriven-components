@@ -12,7 +12,7 @@ public static class DependencyInjectionNotification
     {
         
         services.AddSingleton(configuration.GetSection(nameof(ServiceBusSettings)).Get<ServiceBusSettings>());
-        services.AddScoped<IMessageBus, MessageBus>();
+        //services.AddScoped<IMessageBus, Notificator>();
 
         return services;
     }
