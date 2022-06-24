@@ -22,17 +22,23 @@ IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
         services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
-        
+
         services.AddHostedService<Worker>();
 
-        services.AddMassTransit(bus =>
+        services.AddMassTransit(cfg =>
         {
-            bus.AddSagaStateMachine<TravelStateMachine, TravelState>()
-            .InMemoryRepository();
+            cfg.AddSagaStateMachine<TravelStateMachine, TravelState>()
+             .MongoDbRepository(r =>
+             {
+                 r.Connection = "mongodb://127.0.0.1";
+                 r.DatabaseName = "saga-db";
+                 r.CollectionName = "travel-state";
+             });
 
-            bus.UsingRabbitMq((context, configurator) =>
+            cfg.UsingRabbitMq((context, configurator) =>
             {
-                configurator.Host("localhost", "/", h => {
+                configurator.Host("localhost", "/", h =>
+                {
                     h.Username("guest");
                     h.Password("guest");
                 });
