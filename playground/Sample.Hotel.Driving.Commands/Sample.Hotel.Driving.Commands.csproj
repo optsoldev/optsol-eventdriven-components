@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Worker">
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -20,6 +20,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Driven.Infra.Notification\Optsol.EventDriven.Components.Driven.Infra.Notification.csproj" />
+	  <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Driving.Worker\Optsol.EventDriven.Components.Driving.Worker.csproj" />
 	  <ProjectReference Include="..\Sample.Hotel.Contracts\Sample.Hotel.Contracts.csproj" />
+	  <ProjectReference Include="..\Sample.Hotel.Core.Application\Sample.Hotel.Core.Application.csproj" />
 	</ItemGroup>
 </Project>

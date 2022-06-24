@@ -41,7 +41,8 @@ public class BookFlightCommandHandler : IRequestHandler<BookFlight, Unit>
             var flightBooked = new FlightBooked
             {
                 CorrelationId = request.CorrelationId,
-                TravelId = request.TravelId
+                TravelId = request.TravelId,
+                ModelId = flightBook.Id
             };
 
             await notificator.Publish(flightBooked);

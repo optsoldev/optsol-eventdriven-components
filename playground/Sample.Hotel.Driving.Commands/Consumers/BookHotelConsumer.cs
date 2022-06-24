@@ -6,18 +6,28 @@ namespace Sample.Hotel.Driving.Commands.Consumers;
 
 public class BookHotelConsumer : IConsumer<BookHotel>
 {
-    public Task Consume(ConsumeContext<BookHotel> context)
+    public async Task Consume(ConsumeContext<BookHotel> context)
     {
         Console.WriteLine("BookHotelConsumer {0}", context.Message.CorrelationId);
 
-        var hotelBooked = new HotelBooked
+        if(context.Message.HotelId == 1)
         {
-            CorrelationId = context.Message.CorrelationId,
-            TravelId = context.Message.TravelId,
-        };
+            var failed = new HotelBookedFailed
+            {
+                CorrelationId = context.Message.CorrelationId
+            };
 
-        context.Publish(hotelBooked);
+            await context.Publish(failed);
+        }
+        else
+        {
+            var hotelBooked = new HotelBooked
+            {
+                CorrelationId = context.Message.CorrelationId,
+                TravelId = context.Message.TravelId,
+            };
 
-        return Task.CompletedTask;
+            await context.Publish(hotelBooked);
+        }
     }
 }

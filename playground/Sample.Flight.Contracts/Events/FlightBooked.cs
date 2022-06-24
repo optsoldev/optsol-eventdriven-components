@@ -7,4 +7,6 @@ public record FlightBooked : ISagaContract
     public Guid TravelId { get; set; }
 
     public Guid CorrelationId { get; set; }
+
+    public Guid ModelId { get; set; }
 }

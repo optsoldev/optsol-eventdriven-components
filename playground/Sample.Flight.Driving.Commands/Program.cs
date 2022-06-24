@@ -28,6 +28,8 @@ IHost host = Host.CreateDefaultBuilder(args)
     {
         services.AddDataMongoModule(configuration);
         services.AddScoped<INotificator, Notificator>();
+        services.AddMediatR(typeof(ApplicationMediatREntryPoint).Assembly);
+
         services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
 
         services.AddHostedService<Worker>();
@@ -35,6 +37,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         services.AddMassTransit(bus =>
         {
             bus.AddConsumer<BookFlightConsumer>();
+            bus.AddConsumer<UnbookFlightConsumer>();
             bus.SetKebabCaseEndpointNameFormatter();
 
             bus.UsingRabbitMq((context, configurator) =>
@@ -43,7 +46,7 @@ IHost host = Host.CreateDefaultBuilder(args)
             });
         });
 
-        services.AddMediatR(typeof(ApplicationMediatREntryPoint).Assembly);
+
     })
     .Build();
 

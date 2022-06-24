@@ -8,3 +8,8 @@ public record HotelBooked : ISagaContract
 
     public Guid CorrelationId { get; set; }
 }
+
+public record HotelBookedFailed : ISagaContract
+{
+    public Guid CorrelationId { get; set; }
+}
