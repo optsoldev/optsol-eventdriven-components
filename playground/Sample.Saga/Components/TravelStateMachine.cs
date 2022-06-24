@@ -1,0 +1,73 @@
+﻿using MassTransit;
+using MongoDB.Bson.Serialization.Attributes;
+using Sample.Flight.Contracts.Commands;
+using Sample.Flight.Contracts.Events;
+using Sample.Hotel.Contracts.Commands;
+using Sample.Saga.Contracts.Events;
+
+namespace Sample.Saga.Components
+{
+    public partial class TravelStateMachine : MassTransitStateMachine<TravelState>
+    {
+        public TravelStateMachine()
+        {
+            Event(() => TravelBookingSubmitted, context => context.CorrelateById(m => m.Message.CorrelationId));
+            Event(() => FlightBooked, context => context.CorrelateById(m => m.Message.CorrelationId));
+
+            InstanceState(x => x.CurrentState);
+
+            Initially(
+                When(TravelBookingSubmitted)
+                .Then(context =>
+                {
+                    Console.WriteLine("TravelBookingSubmited");                    
+                })
+                .Then(context =>
+                {
+                    context.Saga.CorrelationId = context.Message.CorrelationId;
+                    context.Saga.HotelId = context.Message.HotelId;                    
+                })
+                .SendAsync(new Uri("queue:book-flight"), 
+                    context => context.Init<BookFlight>(new
+                    {
+                        context.Message.CorrelationId,
+                        context.Message.From,
+                        context.Message.To,
+                        context.Message.Departure,
+                        context.Message.TravelId
+                    }))
+                .TransitionTo(FlightBookingRequested));
+
+            During(FlightBookingRequested,
+                When(FlightBooked)
+                .Then(_ => Console.WriteLine("Flight Booked"))
+                .SendAsync(new Uri("queue:book-hotel"), context => context.Init<IBookHotel>(new
+                {
+                    context.Saga.HotelId,
+                    context.Message.TravelId
+                }))
+                    .TransitionTo(HotelBookingRequested));
+        }
+
+        public Event<ITravelBookingSubmitted> TravelBookingSubmitted { get; set; }
+        public Event<IFlightBooked> FlightBooked { get; set; }
+
+        public State HotelBookingRequested { get; set; }
+        public State FlightBookingRequested { get; set; }
+        public State Finalized { get; set; }
+
+    }
+
+    public class TravelState : SagaStateMachineInstance,
+        ISagaVersion
+    {
+        [BsonId]
+        public Guid CorrelationId { get; set; }
+
+        public string? CurrentState { get; set; }
+
+        public int HotelId { get; set; }
+
+        public int Version { get; set; }
+    }
+}
