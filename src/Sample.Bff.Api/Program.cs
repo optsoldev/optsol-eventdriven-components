@@ -1,6 +1,6 @@
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Sample.Saga.Contracts;
+using Sample.Bff.Api.Hubs;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +21,18 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSignalR();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ClientPermission", policy =>
+    {
+        policy.AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithOrigins("http://localhost:3000")
+            .AllowCredentials();
+    });
+});
 
 //Colocar numa extension.
 builder.Services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
@@ -46,6 +58,10 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.UseCors("ClientPermission");
+
 app.MapControllers();
+
+app.MapHub<BookingNotificationHub>("/hubs/bookingNotification");
 
 app.Run();
