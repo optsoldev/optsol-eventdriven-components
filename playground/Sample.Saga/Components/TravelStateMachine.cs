@@ -65,7 +65,7 @@ namespace Sample.Saga.Components
                     .SendAsync(new Uri("queue:unbook-flight"), context => context.Init<UnbookFlight>(new
                     {
                         context.Saga.CorrelationId,
-                        context.Saga.FlightBookId,                        
+                        ModelId = context.Saga.FlightBookId,                        
                     }))
                     .Finalize());
         }

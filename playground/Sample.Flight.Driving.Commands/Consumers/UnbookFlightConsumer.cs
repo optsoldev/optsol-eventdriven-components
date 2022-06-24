@@ -19,7 +19,7 @@ namespace Sample.Flight.Driving.Commands.Consumers
         {
             _logger.LogDebug("UnbookFlightConsumer {0}", context.Message.CorrelationId);
 
-            //await _mediator.Send(context.Message);
+            await _mediator.Send(context.Message);
         }
     }
 }

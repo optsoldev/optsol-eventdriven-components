@@ -27,6 +27,8 @@ namespace Sample.Flight.Core.Application.Commands
 
             var flightBook = new FlightBook(flightBookReadRepository.GetById(request.ModelId));
 
+            flightBook.Unbook();
+
             if (flightBook.Invalid)
             {
                 //rollback

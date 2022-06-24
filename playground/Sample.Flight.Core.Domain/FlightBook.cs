@@ -25,6 +25,13 @@ public class FlightBook : Aggregate
     {
     }
 
+    public void Unbook()
+    {
+        RaiseEvent(new FlightUnbooked(Id, NextVersion));
+
+        Validate();
+    }
+
     protected override void Apply(IDomainEvent @event)
     {
         switch (@event)
@@ -32,10 +39,16 @@ public class FlightBook : Aggregate
             case FlightBookCreated created:
                 Apply(created);
                 break;
+            case FlightUnbooked unbooked:
+                Apply(unbooked);
+                break;
             default:
                 throw new NotImplementedException();
         }
     }
+
+    private void Apply(FlightUnbooked unbooked) => (Id, Version, Canceled) =
+        (unbooked.ModelId, unbooked.ModelVersion, true);
 
     private void Apply(FlightBookCreated criado) => (Id, Version, UserId, From, To, Canceled) =
         (criado.ModelId, criado.ModelVersion, criado.UserId, criado.From, criado.To, false);
