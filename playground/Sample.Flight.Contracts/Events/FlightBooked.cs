@@ -2,7 +2,7 @@
 
 namespace Sample.Flight.Contracts.Events;
 
-public record IFlightBooked : ISagaContract
+public record FlightBooked : ISagaContract
 {
     public Guid TravelId { get; set; }
 

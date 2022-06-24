@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using Sample.Flight.Contracts.Commands;
 using Sample.Flight.Contracts.Events;
 using Sample.Hotel.Contracts.Commands;
+using Sample.Hotel.Contracts.Events;
 using Sample.Saga.Contracts.Events;
 
 namespace Sample.Saga.Components
@@ -13,6 +14,7 @@ namespace Sample.Saga.Components
         {
             Event(() => TravelBookingSubmitted, context => context.CorrelateById(m => m.Message.CorrelationId));
             Event(() => FlightBooked, context => context.CorrelateById(m => m.Message.CorrelationId));
+            Event(() => HotelBooked, context => context.CorrelateById(m => m.Message.CorrelationId));
 
             InstanceState(x => x.CurrentState);
 
@@ -41,20 +43,25 @@ namespace Sample.Saga.Components
             During(FlightBookingRequested,
                 When(FlightBooked)
                 .Then(_ => Console.WriteLine("Flight Booked"))
-                .SendAsync(new Uri("queue:book-hotel"), context => context.Init<IBookHotel>(new
+                .SendAsync(new Uri("queue:book-hotel"), context => context.Init<BookHotel>(new
                 {
                     context.Saga.HotelId,
                     context.Message.TravelId
                 }))
                     .TransitionTo(HotelBookingRequested));
+
+            During(HotelBookingRequested,
+                When(HotelBooked)
+                .Then(_ => Console.WriteLine("Hotel Booked"))
+                .TransitionTo(TravelBooked));
         }
 
         public Event<ITravelBookingSubmitted> TravelBookingSubmitted { get; set; }
-        public Event<IFlightBooked> FlightBooked { get; set; }
-
+        public Event<FlightBooked> FlightBooked { get; set; }
+        public Event<HotelBooked> HotelBooked { get; set; }
         public State HotelBookingRequested { get; set; }
         public State FlightBookingRequested { get; set; }
-        public State Finalized { get; set; }
+        public State TravelBooked { get; set; }
 
     }
 

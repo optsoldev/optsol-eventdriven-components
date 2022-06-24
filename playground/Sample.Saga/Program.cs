@@ -30,7 +30,7 @@ IHost host = Host.CreateDefaultBuilder(args)
             cfg.AddSagaStateMachine<TravelStateMachine, TravelState>()
              .MongoDbRepository(r =>
              {
-                 r.Connection = "mongodb://127.0.0.1";
+                 r.Connection = "mongodb://localhost:30001";
                  r.DatabaseName = "saga-db";
                  r.CollectionName = "travel-state";
              });

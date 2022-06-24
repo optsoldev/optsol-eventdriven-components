@@ -38,7 +38,7 @@ public class BookFlightCommandHandler : IRequestHandler<BookFlight, Unit>
             //commit
             flightBookWriteRepository.Commit(request.CorrelationId, flightBook);
 
-            var flightBooked = new IFlightBooked
+            var flightBooked = new FlightBooked
             {
                 CorrelationId = request.CorrelationId,
                 TravelId = request.TravelId

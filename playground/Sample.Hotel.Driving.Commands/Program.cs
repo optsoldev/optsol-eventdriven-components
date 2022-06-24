@@ -1,6 +1,7 @@
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Sample.Hotel.Driving.Commands;
+using Sample.Hotel.Driving.Commands.Consumers;
 using Serilog;
 using Serilog.Events;
 
