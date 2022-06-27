@@ -1,5 +1,4 @@
 using MassTransit;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Sample.Flight.Core.Application;
 using Sample.Flight.Driving.Commands;
 using Sample.Flight.Driving.Commands.Consumers;
@@ -30,23 +29,9 @@ IHost host = Host.CreateDefaultBuilder(args)
         services.AddScoped<INotificator, Notificator>();
         services.AddMediatR(typeof(ApplicationMediatREntryPoint).Assembly);
 
-        services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
-
         services.AddHostedService<Worker>();
 
-        services.AddMassTransit(bus =>
-        {
-            bus.AddConsumer<BookFlightConsumer>();
-            bus.AddConsumer<UnbookFlightConsumer>();
-            bus.SetKebabCaseEndpointNameFormatter();
-
-            bus.UsingRabbitMq((context, configurator) =>
-            {
-                configurator.ConfigureEndpoints(context);
-            });
-        });
-
-
+        services.AddOptsolMassTransit<BookFlightConsumer>();
     })
     .Build();
 

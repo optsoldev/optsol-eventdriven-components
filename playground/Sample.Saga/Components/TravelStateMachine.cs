@@ -56,7 +56,7 @@ namespace Sample.Saga.Components
                     }))
                     .TransitionTo(HotelBookingRequested));
 
-            During(HotelBookingRequested,               
+            During(HotelBookingRequested,
                 When(HotelBooked)
                     .Then(_ => Console.WriteLine("Hotel Booked"))
                     .TransitionTo(TravelBooked),
@@ -68,6 +68,10 @@ namespace Sample.Saga.Components
                         ModelId = context.Saga.FlightBookId,                        
                     }))
                     .Finalize());
+
+            //Exemplo de CurrentState.
+            //Exemplo de Projecao.
+            //Exemplo de mais de um consumer para projecao.
         }
 
         public Event<ITravelBookingSubmitted> TravelBookingSubmitted { get; set; }

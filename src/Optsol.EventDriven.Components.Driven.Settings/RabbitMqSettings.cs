@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sample.Saga;
+﻿
+namespace Optsol.EventDriven.Components.Driven.Settings;
 
 public class RabbitMqSettings
 {

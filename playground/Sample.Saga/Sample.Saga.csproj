@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Driven.Settings\Optsol.EventDriven.Components.Driven.Settings.csproj" />
     <ProjectReference Include="..\Sample.Flight.Contracts\Sample.Flight.Contracts.csproj" />
     <ProjectReference Include="..\Sample.Hotel.Contracts\Sample.Hotel.Contracts.csproj" />
     <ProjectReference Include="..\Sample.Saga.Contracts\Sample.Saga.Contracts.csproj" />

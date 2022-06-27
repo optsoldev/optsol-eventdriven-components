@@ -1,5 +1,6 @@
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Optsol.EventDriven.Components.Driven.Settings;
 using Sample.Saga;
 using Sample.Saga.Components;
 using Serilog;
@@ -21,7 +22,7 @@ var configuration = new ConfigurationBuilder()
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
-        var mongoSettings = configuration.GetSection(nameof(SagaMongoSettings)).Get<SagaMongoSettings>();
+        var mongoSettings = configuration.GetSection(nameof(MongoSettings)).Get<MongoSettings>();
         var rabbitMqSettings = configuration.GetSection(nameof(RabbitMqSettings)).Get<RabbitMqSettings>();
 
         services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
@@ -33,7 +34,7 @@ IHost host = Host.CreateDefaultBuilder(args)
             cfg.AddSagaStateMachine<TravelStateMachine, TravelState>()
              .MongoDbRepository(r =>
              {
-                 r.Connection = mongoSettings.Connection; ;
+                 r.Connection = mongoSettings.Connection;
                  r.DatabaseName = mongoSettings.DatabaseName;
                  r.CollectionName = "travel-state";
              });
