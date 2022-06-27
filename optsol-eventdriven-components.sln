@@ -85,7 +85,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Flight.Core.Applicat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Flight.Core.Domain", "playground\Sample.Flight.Core.Domain\Sample.Flight.Core.Domain.csproj", "{B36B5777-031B-4AAB-AB2F-13BDD445DBD5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Flight.Driven.Infra.Data.MongoDb", "playground\Sample.Flight.Driven.Infra.Data.MongoDb\Sample.Flight.Driven.Infra.Data.MongoDb.csproj", "{230F929C-A520-477F-9CE5-37F7ED66C11F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Flight.Driven.Infra.Data", "playground\Sample.Flight.Driven.Infra.Data.MongoDb\Sample.Flight.Driven.Infra.Data.csproj", "{230F929C-A520-477F-9CE5-37F7ED66C11F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Flight.Driving.Commands", "playground\Sample.Flight.Driving.Commands\Sample.Flight.Driving.Commands.csproj", "{7CCCEBE8-9CA8-46D2-AAEA-D11AC2C3AF99}"
 EndProject
@@ -108,6 +108,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Saga.Contracts", "playground\Sample.Saga.Contracts\Sample.Saga.Contracts.csproj", "{84A59B58-0993-440C-A0AF-8238309A0E0E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Flight.Contracts", "playground\Sample.Flight.Contracts\Sample.Flight.Contracts.csproj", "{FD9D6656-4DCA-45CB-B366-348760DA5502}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Optsol.EventDriven.Components.Driving.Worker", "src\Optsol.EventDriven.Components.Driving.Worker\Optsol.EventDriven.Components.Driving.Worker.csproj", "{52F8BE15-11FE-464E-AD77-D98AFA2DF665}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -235,6 +237,10 @@ Global
 		{FD9D6656-4DCA-45CB-B366-348760DA5502}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD9D6656-4DCA-45CB-B366-348760DA5502}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD9D6656-4DCA-45CB-B366-348760DA5502}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52F8BE15-11FE-464E-AD77-D98AFA2DF665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52F8BE15-11FE-464E-AD77-D98AFA2DF665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52F8BE15-11FE-464E-AD77-D98AFA2DF665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52F8BE15-11FE-464E-AD77-D98AFA2DF665}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -288,6 +294,7 @@ Global
 		{695CF360-0691-4FEA-8A42-D33070362508} = {FE0FBD55-57AF-4686-8E71-D7FC5FD02F81}
 		{84A59B58-0993-440C-A0AF-8238309A0E0E} = {FE0FBD55-57AF-4686-8E71-D7FC5FD02F81}
 		{FD9D6656-4DCA-45CB-B366-348760DA5502} = {0156638B-EB92-4391-9D02-5E7749F79901}
+		{52F8BE15-11FE-464E-AD77-D98AFA2DF665} = {71A4C664-2972-4143-95A8-FDF25D631A48}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CEB4F9A4-FE35-4F6F-9543-265AF7C84D23}

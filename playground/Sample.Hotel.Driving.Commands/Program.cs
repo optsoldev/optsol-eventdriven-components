@@ -1,6 +1,11 @@
 using MassTransit;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Optsol.EventDriven.Components.Core.Domain;
+using Optsol.EventDriven.Components.Driven.Infra.Notification;
+using Sample.Hotel.Core.Application;
 using Sample.Hotel.Driving.Commands;
+using Sample.Hotel.Driving.Commands.Consumers;
 using Serilog;
 using Serilog.Events;
 
@@ -20,6 +25,9 @@ var configuration = new ConfigurationBuilder()
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
+        services.AddScoped<INotificator, Notificator>();
+        services.AddMediatR(typeof(ApplicationMediatREntryPoint).Assembly);
+
         services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
 
         services.AddHostedService<Worker>();

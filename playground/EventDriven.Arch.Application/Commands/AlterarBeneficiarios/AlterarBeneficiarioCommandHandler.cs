@@ -1,4 +1,3 @@
-using EventDriven.Arch.Domain;
 using EventDriven.Arch.Domain.Beneficiarios;
 using EventDriven.Arch.Domain.Beneficiarios.Repositories;
 using MediatR;
@@ -28,7 +27,7 @@ public class AlterarBeneficiarioCommandHandler : IRequestHandler<AlterarBenefici
         }
         else
         {
-            _beneficiarioWriteRepository.Commit(beneficiario);
+            _beneficiarioWriteRepository.Commit(request.CorrelationId, beneficiario);
         }
 
         return Task.FromResult(new Unit());

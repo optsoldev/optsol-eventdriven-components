@@ -56,6 +56,12 @@ public abstract class Aggregate : IAggregate
         _failureEvents.Clear();
     }
 
+    public void Clear()
+    {
+        _pendingEvents.Clear();
+        _failureEvents.Clear();
+    }
+
     public bool Valid => ValidationResult.IsValid;
     
     public bool Invalid => Valid is false;

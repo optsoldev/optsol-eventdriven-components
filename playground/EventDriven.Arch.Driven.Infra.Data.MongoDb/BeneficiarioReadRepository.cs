@@ -8,7 +8,7 @@ namespace EventDriven.Arch.Driven.Infra.Data.MongoDb;
 
 public class BeneficiarioReadRepository : ReadRepository<Beneficiario>, IBeneficiarioReadRepository
 {
-    public BeneficiarioReadRepository(MongoContext context, ITransactionService transactionService) : base(context, transactionService, nameof(Beneficiario))
+    public BeneficiarioReadRepository(MongoContext context) : base(context, nameof(Beneficiario))
     {
        
     }
