@@ -5,7 +5,7 @@ namespace Sample.Bff.Api.Hubs
     public class BookingNotificationHub : Hub
     {
         public void FlightBooked(object message)
-        {
+        {            
             Clients.All.SendAsync("FlightBooked", message);
         }
 
