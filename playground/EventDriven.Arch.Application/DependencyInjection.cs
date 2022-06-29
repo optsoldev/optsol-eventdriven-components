@@ -16,7 +16,6 @@ namespace EventDriven.Arch.Application
 
             services.AddSingleton<IDomainEventRegister>(register);
             services.AddSingleton<IDomainEventConverter, DomainEventConverter>();
-            services.AddScoped<ITransactionService, TransactionService>();
             return services;
         }
     }
