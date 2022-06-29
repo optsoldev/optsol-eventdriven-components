@@ -1,5 +1,4 @@
-﻿
-namespace Optsol.EventDriven.Components.Driven.Settings;
+﻿namespace Optsol.EventDriven.Components.Driven.Settings;
 
 public class RabbitMqSettings
 {

@@ -34,7 +34,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Solution Items", "0 - Solution Items", "{41186282-35D7-4558-AFF8-133D4B70D977}"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines.yml = azure-pipelines.yml
-		playground\docker-compose.yml = playground\docker-compose.yml
+		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{049423B0-3979-42A7-9263-553B643781D4}"
@@ -109,7 +109,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Flight.Contracts", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Driving.Worker", "src\Optsol.EventDriven.Components.Driving.Worker\Optsol.EventDriven.Components.Driving.Worker.csproj", "{52F8BE15-11FE-464E-AD77-D98AFA2DF665}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Optsol.EventDriven.Components.Driven.Settings", "src\Optsol.EventDriven.Components.Driven.Settings\Optsol.EventDriven.Components.Driven.Settings.csproj", "{9D9546DC-1FC0-45CF-827E-16F7DF4B784C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Driven.Settings", "src\Optsol.EventDriven.Components.Driven.Settings\Optsol.EventDriven.Components.Driven.Settings.csproj", "{9D9546DC-1FC0-45CF-827E-16F7DF4B784C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Driving.Functions", "src\Optsol.EventDriven.Components.Driving.Functions\Optsol.EventDriven.Components.Driving.Functions.csproj", "{BA4F15ED-B58C-4131-A7BF-BB029E0A48D0}"
 EndProject
