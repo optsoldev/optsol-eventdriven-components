@@ -8,7 +8,6 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\EventDriven.Arch.Application\EventDriven.Arch.Application.csproj" />
     <ProjectReference Include="..\Sample.Flight.Contracts\Sample.Flight.Contracts.csproj" />
     <ProjectReference Include="..\Sample.Flight.Core.Domain\Sample.Flight.Core.Domain.csproj" />
   </ItemGroup>

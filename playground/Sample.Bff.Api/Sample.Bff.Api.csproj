@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Driven.Settings\Optsol.EventDriven.Components.Driven.Settings.csproj" />
     <ProjectReference Include="..\Sample.Saga.Contracts\Sample.Saga.Contracts.csproj" />
   </ItemGroup>
 
