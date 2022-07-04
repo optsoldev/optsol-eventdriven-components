@@ -1,6 +1,5 @@
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Optsol.EventDriven.Components.Driven.Settings;
 using Sample.Bff.Api.Hubs;
 using Serilog;
 
@@ -41,17 +40,7 @@ builder.Services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
 //Colocar numa extension.
 builder.Services.AddMassTransit(bus =>
 {
-    var rabbitMqSettings = builder.Configuration.GetSection(nameof(RabbitMqSettings)).Get<RabbitMqSettings>();
-
-    bus.UsingRabbitMq((context, configurator) =>
-    {
-        configurator.Host(rabbitMqSettings.Host, rabbitMqSettings.Vhost, h =>
-        {
-            h.Username(rabbitMqSettings.Username);
-            h.Password(rabbitMqSettings.Password);
-        });
-        configurator.ConfigureEndpoints(context);
-    });
+    bus.OptsolUsingRabbitMq(builder.Configuration);
 });
 
 var app = builder.Build();

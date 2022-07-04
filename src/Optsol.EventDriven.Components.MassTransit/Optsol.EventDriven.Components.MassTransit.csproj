@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <Version>1.0.29</Version>
+	<Version>1.0.01</Version>
   </PropertyGroup>
 
 	<ItemGroup>
@@ -23,5 +23,9 @@
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.16.1" />
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />		
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <ProjectReference Include="..\Optsol.EventDriven.Components.Settings\Optsol.EventDriven.Components.Settings.csproj" />
 	</ItemGroup>
 </Project>

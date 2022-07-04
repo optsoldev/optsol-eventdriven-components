@@ -1,6 +1,6 @@
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Optsol.EventDriven.Components.Driven.Settings;
+using Optsol.EventDriven.Components.Settings;
 using Sample.Saga;
 using Sample.Saga.Components;
 using Serilog;
@@ -23,7 +23,6 @@ IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
         var mongoSettings = configuration.GetSection(nameof(MongoSettings)).Get<MongoSettings>();
-        var rabbitMqSettings = configuration.GetSection(nameof(RabbitMqSettings)).Get<RabbitMqSettings>();
 
         services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
 
@@ -33,11 +32,11 @@ IHost host = Host.CreateDefaultBuilder(args)
             new BookingHubNotificator(
                 context.Configuration.GetValue<string>("Websocket:BookingNotificationHub")));
 
-        services.AddMassTransit(cfg =>
+        services.AddMassTransit(bus =>
         {
-            cfg.AddConsumer<BookingNotificationConsumer>();
+            bus.AddConsumersFromNamespaceContaining<BookingNotificationConsumer>();
 
-            cfg.AddSagaStateMachine<TravelStateMachine, TravelState>()
+            bus.AddSagaStateMachine<TravelStateMachine, TravelState>()            
             .MongoDbRepository(r =>
              {
                  r.Connection = mongoSettings.Connection;
@@ -45,15 +44,7 @@ IHost host = Host.CreateDefaultBuilder(args)
                  r.CollectionName = "travel-state";
              });
 
-            cfg.UsingRabbitMq((context, configurator) =>
-            {                
-                configurator.Host(rabbitMqSettings.Host, rabbitMqSettings.Vhost, h =>
-                {
-                    h.Username(rabbitMqSettings.Username);
-                    h.Password(rabbitMqSettings.Password);
-                });
-                configurator.ConfigureEndpoints(context);
-            });
+            bus.OptsolUsingRabbitMq(configuration);
         });
     })
     .Build();
