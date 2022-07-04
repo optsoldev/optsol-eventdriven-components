@@ -38,15 +38,13 @@ IHost host = Host.CreateDefaultBuilder(args)
             cfg.AddConsumer<BookingNotificationConsumer>();
 
             cfg.AddSagaStateMachine<TravelStateMachine, TravelState>()
-            .InMemoryRepository();
-            /* 
             .MongoDbRepository(r =>
              {
                  r.Connection = mongoSettings.Connection;
                  r.DatabaseName = mongoSettings.DatabaseName;
                  r.CollectionName = "travel-state";
              });
-            */
+
             cfg.UsingRabbitMq((context, configurator) =>
             {                
                 configurator.Host(rabbitMqSettings.Host, rabbitMqSettings.Vhost, h =>

@@ -29,10 +29,6 @@ namespace Sample.Saga.Components
                         context.Saga.CorrelationId = context.Message.CorrelationId;
                         context.Saga.HotelId = context.Message.HotelId;
                     })
-                    .SendAsync(new Uri("queue:booking-notification"),
-                    context => context.Init<BookingNotification>(new BookingNotification()
-                    { CorrelationId = context.Message.CorrelationId 
-                    }))
                     .SendAsync(new Uri("queue:book-flight"), 
                         context => context.Init<BookFlight>(new
                         {
@@ -62,6 +58,11 @@ namespace Sample.Saga.Components
             During(HotelBookingRequested,
                 When(HotelBooked)
                     .Then(_ => Console.WriteLine("Hotel Booked"))
+                    .SendAsync(new Uri("queue:booking-notification"),
+                    context => context.Init<BookingNotification>(new BookingNotification()
+                    {
+                        CorrelationId = context.Message.CorrelationId
+                    }))
                     .TransitionTo(TravelBooked),
                 When(HotelBookedFailed)
                     .Then(_ => Console.WriteLine("Hotel Booked Failed"))
@@ -71,6 +72,7 @@ namespace Sample.Saga.Components
                         ModelId = context.Saga.FlightBookId,                        
                     }))
                     .Finalize());
+
 
             //Exemplo de CurrentState.
             //Exemplo de Projecao.

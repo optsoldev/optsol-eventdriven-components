@@ -40,8 +40,10 @@ namespace Sample.Flight.Driven.Infra.Data
             var pack = new ConventionPack();
             pack.Add(new IgnoreExtraElementsConvention(true));
             ConventionRegistry.Register("OptsolConvention", pack, t => true);
-            //BeneficiarioCriado
+
             BsonClassMap.RegisterClassMap<FlightBookCreated>();
+            BsonClassMap.RegisterClassMap<FlightUnbooked>();
+
             services.AddScoped<IMongoClient>(impl => new MongoClient(impl.GetService<MongoClientSettings>()));
             services.AddScoped<MongoContext>();
 
