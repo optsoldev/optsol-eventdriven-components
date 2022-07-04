@@ -14,12 +14,10 @@ var host = new HostBuilder()
     .ConfigureServices((context, services) =>
     {
         services.AddMediatR(typeof(ApplicationMediatREntryPoint).Assembly);
-        services.RegisterNotification(context.Configuration);
         services.AddDataMongoModule(context.Configuration);
         services.AddApplicationModule();
         services.AddFunctionContextAccessor();
         services.AddOptsolLogging();
-        services.RegisterNotificationQueue(context.Configuration, "saga-response-projection");
     })
     .Build();
     

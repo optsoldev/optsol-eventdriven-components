@@ -40,9 +40,8 @@ builder.Services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
 //Colocar numa extension.
 builder.Services.AddMassTransit(bus =>
 {
-    
+    //bus.AddConsumer<>
     bus.UsingRabbitMq();
-
 });
 
 var app = builder.Build();

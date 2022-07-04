@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using Optsol.EventDriven.Components.Core.Domain;
-using Sample.Flight.Contracts.Commands;
+using Sample.Flight.Contracts;
 using Sample.Flight.Core.Domain;
 
 namespace Sample.Flight.Core.Application.Commands
@@ -23,7 +23,7 @@ namespace Sample.Flight.Core.Application.Commands
 
         public Task<Unit> Handle(UnbookFlight request, CancellationToken cancellationToken)
         {
-            logger.LogDebug("BookFlight request {0}", request);
+            logger.LogDebug("UnbookFlight request {0}", request);
 
             var flightBook = new FlightBook(flightBookReadRepository.GetById(request.ModelId));
 

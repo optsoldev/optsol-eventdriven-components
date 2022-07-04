@@ -29,16 +29,24 @@ IHost host = Host.CreateDefaultBuilder(args)
 
         services.AddHostedService<Worker>();
 
+        services.AddSingleton<IBookingHubNotificator>(
+            new BookingHubNotificator(
+                context.Configuration.GetValue<string>("Websocket:BookingNotificationHub")));
+
         services.AddMassTransit(cfg =>
         {
+            cfg.AddConsumer<BookingNotificationConsumer>();
+
             cfg.AddSagaStateMachine<TravelStateMachine, TravelState>()
-             .MongoDbRepository(r =>
+            .InMemoryRepository();
+            /* 
+            .MongoDbRepository(r =>
              {
                  r.Connection = mongoSettings.Connection;
                  r.DatabaseName = mongoSettings.DatabaseName;
                  r.CollectionName = "travel-state";
              });
-
+            */
             cfg.UsingRabbitMq((context, configurator) =>
             {                
                 configurator.Host(rabbitMqSettings.Host, rabbitMqSettings.Vhost, h =>

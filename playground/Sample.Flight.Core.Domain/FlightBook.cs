@@ -6,11 +6,11 @@ namespace Sample.Flight.Core.Domain;
 public class FlightBook : Aggregate
 {
     public Guid UserId { get; private set; }
-    public string? From { get; private set; }
-    public string? To { get; private set; }
+    public string From { get; private set; }
+    public string To { get; private set; }
     public bool Canceled { get; private set; }
 
-    public static FlightBook Create(Guid userId, string? from, string? to)
+    public static FlightBook Create(Guid userId, string from, string to)
     {
         var flightBook = new FlightBook(Enumerable.Empty<IDomainEvent>());
 

@@ -1,6 +1,6 @@
 ﻿using Optsol.EventDriven.Components.Core.Contracts;
 
-namespace Sample.Flight.Contracts.Events;
+namespace Sample.Flight.Contracts;
 
 public record FlightBooked : ISagaContract
 {
@@ -9,4 +9,8 @@ public record FlightBooked : ISagaContract
     public Guid CorrelationId { get; set; }
 
     public Guid ModelId { get; set; }
+
+    public string From { get; set; }
+
+    public string To { get; set; }
 }
