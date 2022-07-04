@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Core.Domain\Optsol.EventDriven.Components.Core.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb\Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.csproj" />
   </ItemGroup>
 
 </Project>
