@@ -22,8 +22,6 @@ var configuration = new ConfigurationBuilder()
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
-        var mongoSettings = configuration.GetSection(nameof(MongoSettings)).Get<MongoSettings>();
-
         services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
 
         services.AddHostedService<Worker>();
@@ -37,14 +35,9 @@ IHost host = Host.CreateDefaultBuilder(args)
             bus.AddConsumersFromNamespaceContaining<BookingNotificationConsumer>();
 
             bus.AddSagaStateMachine<TravelStateMachine, TravelState>()            
-            .MongoDbRepository(r =>
-             {
-                 r.Connection = mongoSettings.Connection;
-                 r.DatabaseName = mongoSettings.DatabaseName;
-                 r.CollectionName = "travel-state";
-             });
+            .MongoDbRepository(configuration, "travel-state");
 
-            bus.OptsolUsingRabbitMq(configuration);
+            bus.UsingRabbitMq(configuration);
         });
     })
     .Build();

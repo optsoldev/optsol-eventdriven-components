@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Optsol.EventDriven.Components.Settings;
 
 public static class MassTransitExtensions {
-    public static IBusRegistrationConfigurator OptsolUsingRabbitMq(this IBusRegistrationConfigurator bus, IConfiguration configuration)
+    public static IBusRegistrationConfigurator UsingRabbitMq(this IBusRegistrationConfigurator bus, IConfiguration configuration)
     {
         var rabbitMqSettings = configuration.GetSection(nameof(RabbitMqSettings)).Get<RabbitMqSettings>();
 
@@ -18,5 +18,21 @@ public static class MassTransitExtensions {
         });
 
         return bus;
+    }
+
+    public static ISagaRegistrationConfigurator<TSaga> MongoDbRepository<TSaga>(this ISagaRegistrationConfigurator<TSaga> configurator,
+            IConfiguration configuration, string collectionName)
+            where TSaga : class, ISagaVersion
+    {
+        var mongoSettings = configuration.GetSection(nameof(MongoSettings)).Get<MongoSettings>();
+
+        configurator.MongoDbRepository(r =>
+         {
+             r.Connection = mongoSettings.Connection;
+             r.DatabaseName = mongoSettings.DatabaseName;
+             r.CollectionName = collectionName;
+         });
+
+        return configurator;
     }
 }

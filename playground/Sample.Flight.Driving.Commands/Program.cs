@@ -40,7 +40,7 @@ IHost host = Host.CreateDefaultBuilder(args)
 
             bus.AddConsumersFromNamespaceContaining(typeof(BookFlightConsumer));
 
-            bus.OptsolUsingRabbitMq(configuration);
+            bus.UsingRabbitMq(configuration);
         });
     })
     .Build();
