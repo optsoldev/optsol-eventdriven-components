@@ -37,10 +37,12 @@ namespace Sample.Flight.Driven.Infra.Data
                 return settings;
             });
 
-            var pack = new ConventionPack();
-            pack.Add(new IgnoreExtraElementsConvention(true));
+            var pack = new ConventionPack
+            {
+                new IgnoreExtraElementsConvention(true)
+            };
             ConventionRegistry.Register("OptsolConvention", pack, t => true);
-
+            
             BsonClassMap.RegisterClassMap<FlightBookCreated>();
             BsonClassMap.RegisterClassMap<FlightUnbooked>();
 

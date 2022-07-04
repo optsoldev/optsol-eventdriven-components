@@ -1,10 +1,9 @@
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Optsol.EventDriven.Components.Core.Domain;
 
 namespace Optsol.EventDriven.Components.Driven.Infra.Notification;
 
-public static class DependencyInjectionNotification
+public static class RegisterInfraNotification
 {
     public static IServiceCollection RegisterNotification(this IServiceCollection services)
     {
