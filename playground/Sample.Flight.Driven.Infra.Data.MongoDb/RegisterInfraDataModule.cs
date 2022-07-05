@@ -7,6 +7,7 @@ using MongoDB.Driver;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
 using Sample.Flight.Core.Domain;
+using Sample.Flight.Core.Domain.Projections;
 
 namespace Sample.Flight.Driven.Infra.Data
 {
@@ -57,7 +58,7 @@ namespace Sample.Flight.Driven.Infra.Data
             //Repositories
             services.AddScoped<IFlightBookReadRepository, FlightBookReadRepository>();
             services.AddScoped<IFlightBookWriteRepository, FlightBookWriteRepository>();
-            
+            services.AddScoped<IFlightBookListReadRepository, FlightBookListReadRepository>();
             return services;
         }
     }
