@@ -16,6 +16,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Driven.Infra.Notification\Optsol.EventDriven.Components.Driven.Infra.Notification.csproj" />
 	  <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Driving.Worker\Optsol.EventDriven.Components.Driving.Worker.csproj" />
+	  <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.MassTransit\Optsol.EventDriven.Components.MassTransit.csproj" />
 	  <ProjectReference Include="..\Sample.Flight.Contracts\Sample.Flight.Contracts.csproj" />
 	  <ProjectReference Include="..\Sample.Flight.Core.Application\Sample.Flight.Core.Application.csproj" />
 	  <ProjectReference Include="..\Sample.Flight.Driven.Infra.Data.MongoDb\Sample.Flight.Driven.Infra.Data.csproj" />

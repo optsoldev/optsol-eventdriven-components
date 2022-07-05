@@ -1,7 +1,6 @@
 ﻿using MassTransit;
 using MongoDB.Bson.Serialization.Attributes;
-using Sample.Flight.Contracts.Commands;
-using Sample.Flight.Contracts.Events;
+using Sample.Flight.Contracts;
 using Sample.Hotel.Contracts.Commands;
 using Sample.Hotel.Contracts.Events;
 using Sample.Saga.Contracts.Events;
@@ -23,12 +22,12 @@ namespace Sample.Saga.Components
                 When(TravelBookingSubmitted)
                     .Then(context =>
                     {
-                        Console.WriteLine("TravelBookingSubmited");                    
+                        Console.WriteLine("TravelBookingSubmited");
                     })
                     .Then(context =>
                     {
                         context.Saga.CorrelationId = context.Message.CorrelationId;
-                        context.Saga.HotelId = context.Message.HotelId;                    
+                        context.Saga.HotelId = context.Message.HotelId;
                     })
                     .SendAsync(new Uri("queue:book-flight"), 
                         context => context.Init<BookFlight>(new
@@ -59,6 +58,11 @@ namespace Sample.Saga.Components
             During(HotelBookingRequested,
                 When(HotelBooked)
                     .Then(_ => Console.WriteLine("Hotel Booked"))
+                    .SendAsync(new Uri("queue:booking-notification"),
+                    context => context.Init<BookingNotification>(new BookingNotification()
+                    {
+                        CorrelationId = context.Message.CorrelationId
+                    }))
                     .TransitionTo(TravelBooked),
                 When(HotelBookedFailed)
                     .Then(_ => Console.WriteLine("Hotel Booked Failed"))
@@ -68,6 +72,7 @@ namespace Sample.Saga.Components
                         ModelId = context.Saga.FlightBookId,                        
                     }))
                     .Finalize());
+
 
             //Exemplo de CurrentState.
             //Exemplo de Projecao.

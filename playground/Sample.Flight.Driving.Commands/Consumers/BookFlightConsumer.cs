@@ -1,7 +1,6 @@
 ﻿using MassTransit;
 using MediatR;
-using Sample.Flight.Contracts.Commands;
-using Sample.Flight.Contracts.Events;
+using Sample.Flight.Contracts;
 
 namespace Sample.Flight.Driving.Commands.Consumers;
 

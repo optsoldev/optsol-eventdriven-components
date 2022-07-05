@@ -1,8 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using Optsol.EventDriven.Components.Core.Domain;
-using Sample.Flight.Contracts.Commands;
-using Sample.Flight.Contracts.Events;
+using Sample.Flight.Contracts;
 using Sample.Flight.Core.Domain;
 
 namespace Sample.Flight.Core.Application.Commands;
@@ -42,7 +41,9 @@ public class BookFlightCommandHandler : IRequestHandler<BookFlight, Unit>
             {
                 CorrelationId = request.CorrelationId,
                 TravelId = request.TravelId,
-                ModelId = flightBook.Id
+                ModelId = flightBook.Id,
+                From = flightBook.From,
+                To = flightBook.To
             };
 
             await notificator.Publish(flightBooked);

@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 using MediatR;
-using Sample.Flight.Contracts.Commands;
+using Sample.Flight.Contracts;
 
 namespace Sample.Flight.Driving.Commands.Consumers
 {
@@ -17,7 +17,7 @@ namespace Sample.Flight.Driving.Commands.Consumers
 
         public async Task Consume(ConsumeContext<UnbookFlight> context)
         {
-            _logger.LogDebug("UnbookFlightConsumer {0}", context.Message.CorrelationId);
+            _logger.LogDebug(message: "UnbookFlightConsumer {0}", args: context.Message.CorrelationId);
 
             await _mediator.Send(context.Message);
         }

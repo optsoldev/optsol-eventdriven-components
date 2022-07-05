@@ -8,6 +8,7 @@ using MediatR;
 using Optsol.EventDriven.Components.Core.Domain;
 using Optsol.EventDriven.Components.Driven.Infra.Notification;
 using Sample.Flight.Driven.Infra.Data;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -31,7 +32,16 @@ IHost host = Host.CreateDefaultBuilder(args)
 
         services.AddHostedService<Worker>();
 
-        services.AddOptsolMassTransit<BookFlightConsumer>();
+        services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
+
+        services.AddMassTransit(bus =>
+        {
+            bus.SetKebabCaseEndpointNameFormatter();
+
+            bus.AddConsumersFromNamespaceContaining(typeof(BookFlightConsumer));
+
+            bus.UsingRabbitMq(configuration);
+        });
     })
     .Build();
 

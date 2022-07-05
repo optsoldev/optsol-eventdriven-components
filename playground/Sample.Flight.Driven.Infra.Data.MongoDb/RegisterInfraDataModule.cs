@@ -7,6 +7,7 @@ using MongoDB.Driver;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
 using Sample.Flight.Core.Domain;
+using Sample.Flight.Core.Domain.Projections;
 
 namespace Sample.Flight.Driven.Infra.Data
 {
@@ -37,11 +38,15 @@ namespace Sample.Flight.Driven.Infra.Data
                 return settings;
             });
 
-            var pack = new ConventionPack();
-            pack.Add(new IgnoreExtraElementsConvention(true));
+            var pack = new ConventionPack
+            {
+                new IgnoreExtraElementsConvention(true)
+            };
             ConventionRegistry.Register("OptsolConvention", pack, t => true);
-            //BeneficiarioCriado
+            
             BsonClassMap.RegisterClassMap<FlightBookCreated>();
+            BsonClassMap.RegisterClassMap<FlightUnbooked>();
+
             services.AddScoped<IMongoClient>(impl => new MongoClient(impl.GetService<MongoClientSettings>()));
             services.AddScoped<MongoContext>();
 
@@ -53,7 +58,7 @@ namespace Sample.Flight.Driven.Infra.Data
             //Repositories
             services.AddScoped<IFlightBookReadRepository, FlightBookReadRepository>();
             services.AddScoped<IFlightBookWriteRepository, FlightBookWriteRepository>();
-            
+            services.AddScoped<IFlightBookListReadRepository, FlightBookListReadRepository>();
             return services;
         }
     }
