@@ -89,13 +89,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Flight.Contracts", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Driving.Worker", "src\Optsol.EventDriven.Components.Driving.Worker\Optsol.EventDriven.Components.Driving.Worker.csproj", "{52F8BE15-11FE-464E-AD77-D98AFA2DF665}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Driving.Functions", "src\Optsol.EventDriven.Components.Driving.Functions\Optsol.EventDriven.Components.Driving.Functions.csproj", "{BA4F15ED-B58C-4131-A7BF-BB029E0A48D0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Component.Driven.Infra.Notification.Hubs", "src\Optsol.EventDriven.Component.Driven.Infra.Notification.Hubs\Optsol.EventDriven.Component.Driven.Infra.Notification.Hubs.csproj", "{C25A7398-835D-430F-8890-FAC622054A19}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.MassTransit", "src\Optsol.EventDriven.Components.MassTransit\Optsol.EventDriven.Components.MassTransit.csproj", "{BE38664B-2D7B-45FD-A578-B2980E818DE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Optsol.EventDriven.Components.Settings", "src\Optsol.EventDriven.Components.Settings\Optsol.EventDriven.Components.Settings.csproj", "{2FFEE165-1909-4643-B620-9584CEC43C5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Settings", "src\Optsol.EventDriven.Components.Settings\Optsol.EventDriven.Components.Settings.csproj", "{2FFEE165-1909-4643-B620-9584CEC43C5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -199,10 +197,6 @@ Global
 		{52F8BE15-11FE-464E-AD77-D98AFA2DF665}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52F8BE15-11FE-464E-AD77-D98AFA2DF665}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52F8BE15-11FE-464E-AD77-D98AFA2DF665}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA4F15ED-B58C-4131-A7BF-BB029E0A48D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA4F15ED-B58C-4131-A7BF-BB029E0A48D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA4F15ED-B58C-4131-A7BF-BB029E0A48D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA4F15ED-B58C-4131-A7BF-BB029E0A48D0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C25A7398-835D-430F-8890-FAC622054A19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C25A7398-835D-430F-8890-FAC622054A19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C25A7398-835D-430F-8890-FAC622054A19}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -258,7 +252,6 @@ Global
 		{84A59B58-0993-440C-A0AF-8238309A0E0E} = {FE0FBD55-57AF-4686-8E71-D7FC5FD02F81}
 		{FD9D6656-4DCA-45CB-B366-348760DA5502} = {0156638B-EB92-4391-9D02-5E7749F79901}
 		{52F8BE15-11FE-464E-AD77-D98AFA2DF665} = {71A4C664-2972-4143-95A8-FDF25D631A48}
-		{BA4F15ED-B58C-4131-A7BF-BB029E0A48D0} = {71A4C664-2972-4143-95A8-FDF25D631A48}
 		{C25A7398-835D-430F-8890-FAC622054A19} = {F3553D96-6EE2-4F54-8299-8B166DA4FE0D}
 		{BE38664B-2D7B-45FD-A578-B2980E818DE3} = {9E653BCC-D992-44D4-BA54-1279D88188B6}
 		{2FFEE165-1909-4643-B620-9584CEC43C5F} = {9E653BCC-D992-44D4-BA54-1279D88188B6}
