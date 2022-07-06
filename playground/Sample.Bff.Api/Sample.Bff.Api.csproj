@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.MassTransit\Optsol.EventDriven.Components.MassTransit.csproj" />
+    <ProjectReference Include="..\Sample.Flight.Contracts\Sample.Flight.Contracts.csproj" />
     <ProjectReference Include="..\Sample.Saga.Contracts\Sample.Saga.Contracts.csproj" />
   </ItemGroup>
 

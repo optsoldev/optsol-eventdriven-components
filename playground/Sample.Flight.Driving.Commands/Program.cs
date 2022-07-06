@@ -5,7 +5,6 @@ using Sample.Flight.Driving.Commands.Consumers;
 using Serilog;
 using Serilog.Events;
 using MediatR;
-using Optsol.EventDriven.Components.Core.Domain;
 using Optsol.EventDriven.Components.Driven.Infra.Notification;
 using Sample.Flight.Driven.Infra.Data;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -27,21 +26,14 @@ IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         services.AddDataMongoModule(configuration);
-        services.AddScoped<INotificator, Notificator>();
+        
+        services.RegisterNotification();
+
         services.AddMediatR(typeof(ApplicationMediatREntryPoint).Assembly);
 
+        services.RegisterMassTransit<BookFlightConsumer>(configuration);
+
         services.AddHostedService<Worker>();
-
-        services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
-
-        services.AddMassTransit(bus =>
-        {
-            bus.SetKebabCaseEndpointNameFormatter();
-
-            bus.AddConsumersFromNamespaceContaining(typeof(BookFlightConsumer));
-
-            bus.UsingRabbitMq(configuration);
-        });
     })
     .Build();
 

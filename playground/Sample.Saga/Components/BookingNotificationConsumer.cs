@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using Sample.Saga.Contracts.Events;
 
 namespace Sample.Saga.Components;
 
@@ -16,3 +17,4 @@ public class BookingNotificationConsumer : IConsumer<BookingNotification>
         await hubNotificator.NotifyAsync("TravelBooked", context.Message);
     }
 }
+
