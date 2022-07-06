@@ -31,16 +31,7 @@ IHost host = Host.CreateDefaultBuilder(args)
 
         services.AddMediatR(typeof(ApplicationMediatREntryPoint).Assembly);
 
-        services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
-
-        services.AddMassTransit(bus =>
-        {
-            bus.SetKebabCaseEndpointNameFormatter();
-
-            bus.AddConsumersFromNamespaceContaining(typeof(BookFlightConsumer));
-
-            bus.UsingRabbitMq(configuration);
-        });
+        services.RegisterMassTransit<BookFlightConsumer>(configuration);
 
         services.AddHostedService<Worker>();
     })
