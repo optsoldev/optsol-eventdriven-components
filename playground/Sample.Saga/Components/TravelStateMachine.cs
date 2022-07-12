@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using Sample.Flight.Contracts;
 using Sample.Hotel.Contracts.Commands;
 using Sample.Hotel.Contracts.Events;
+using Sample.Saga.Contracts.Commands;
 using Sample.Saga.Contracts.Events;
 
 namespace Sample.Saga.Components
@@ -42,6 +43,7 @@ namespace Sample.Saga.Components
 
             During(FlightBookingRequested,
                 When(FlightBooked)
+                    .TransitionTo(HotelBookingRequested)
                     .Then(_ => Console.WriteLine("Flight Booked"))
                     .Then(context =>
                     {
@@ -49,11 +51,10 @@ namespace Sample.Saga.Components
                     })
                     .SendAsync(new Uri("queue:book-hotel"), context => context.Init<BookHotel>(new
                     {
-                        context.Saga.CorrelationId,
-                        context.Saga.HotelId,
-                        context.Message.TravelId
-                    }))
-                    .TransitionTo(HotelBookingRequested));
+                        CorrelationId = context.Saga.CorrelationId,
+                        HotelId = context.Saga.HotelId,
+                        TravelId = context.Message.TravelId
+                    })));
 
             During(HotelBookingRequested,
                 When(HotelBooked)
@@ -73,7 +74,6 @@ namespace Sample.Saga.Components
                     }))
                     .Finalize());
 
-
             //Exemplo de CurrentState.
             //Exemplo de Projecao.
             //Exemplo de mais de um consumer para projecao.
@@ -83,6 +83,7 @@ namespace Sample.Saga.Components
         public Event<FlightBooked> FlightBooked { get; set; }
         public Event<HotelBooked> HotelBooked { get; set; }
         public Event<HotelBookedFailed> HotelBookedFailed { get; set; }
+
 
         public State HotelBookingRequested { get; set; }
         public State FlightBookingRequested { get; set; }
