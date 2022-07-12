@@ -11,3 +11,20 @@ public interface ITravelBookingSubmitted : ISagaContract
     public DateTime Departure { get; }
     int HotelId { get; }
 }
+
+public record TravelBookStatusRequested
+{
+    public Guid TravelId { get; set; }
+}
+
+public record TravelBookStatus
+{
+    public Guid TravelId {get;set;}
+    public string CurrentState { get; set; }
+}
+
+public record TravelBookNotFound
+{
+    public Guid TravelId { get; set; }
+    public string CurrentState { get; set; }
+}

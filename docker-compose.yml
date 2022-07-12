@@ -5,7 +5,13 @@ services:
     image: mongo:latest
     container_name: mongodb_cluster_1
     restart: on-failure
-    entrypoint: ["/usr/bin/mongod", "--replSet", "rs0", "--bind_ip_all"]
+    entrypoint:
+      [
+        "/usr/bin/mongod",
+        "--replSet",
+        "rs0",
+        "--bind_ip_all"
+      ]
     volumes:
       - mongodata:/data/db
       - mongoconfig:/data/configdb
@@ -17,7 +23,13 @@ services:
     image: mongo:latest
     container_name: mongodb_cluster_2
     restart: on-failure
-    entrypoint: ["/usr/bin/mongod", "--replSet", "rs0", "--bind_ip_all"]
+    entrypoint:
+      [
+        "/usr/bin/mongod",
+        "--replSet",
+        "rs0",
+        "--bind_ip_all"
+      ]
     ports:
       - 30002:27017
     expose:
@@ -28,7 +40,13 @@ services:
     image: mongo:latest
     container_name: mongodb_cluster_3
     restart: on-failure
-    entrypoint: ["/usr/bin/mongod", "--replSet", "rs0", "--bind_ip_all"]
+    entrypoint:
+      [
+        "/usr/bin/mongod",
+        "--replSet",
+        "rs0",
+        "--bind_ip_all"
+      ]
     ports:
       - 30003:27017
     expose:
@@ -45,21 +63,22 @@ services:
       - mongodb3
     volumes:
       - ./deployment_scripts:/deployment_scripts
-    entrypoint: ["sh", "deployment_scripts/iniciate_replica.sh"]
+    entrypoint: [ "sh", "deployment_scripts/iniciate_replica.sh" ]
   rabbitmq:
-    image: rabbitmq:3-management-alpine
+    image: rabbitmq:latest
     container_name: 'rabbitmq'
     ports:
-        - 5672:5672
-        - 15672:15672
+      - 5672:5672
+      - 15672:15672
     volumes:
-        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
-        - rabbitmq_go_net
+      - rabbitmq_go_net
 volumes:
   mongodata:
   mongoconfig:
+
 
 networks:
   rabbitmq_go_net:
