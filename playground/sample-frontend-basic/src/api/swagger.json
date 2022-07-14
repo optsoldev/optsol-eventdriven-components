@@ -1,0 +1,70 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "Sample.Bff.Api",
+      "version": "1.0"
+    },
+    "paths": {
+      "/BookingService": {
+        "post": {
+          "tags": [
+            "BookingService"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmitTravel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmitTravel"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmitTravel"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "SubmitTravel": {
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "from": {
+              "type": "string",
+              "nullable": true
+            },
+            "to": {
+              "type": "string",
+              "nullable": true
+            },
+            "hotelId": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "departure": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  }
