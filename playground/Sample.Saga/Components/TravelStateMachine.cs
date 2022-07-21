@@ -3,7 +3,6 @@ using MongoDB.Bson.Serialization.Attributes;
 using Sample.Flight.Contracts;
 using Sample.Hotel.Contracts.Commands;
 using Sample.Hotel.Contracts.Events;
-using Sample.Saga.Contracts.Commands;
 using Sample.Saga.Contracts.Events;
 
 namespace Sample.Saga.Components

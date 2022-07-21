@@ -16,5 +16,4 @@ public interface IReadProjectionRepository<T> where T : IProjection
 
     SearchResult<T> GetAll<TSearch>(SearchRequest<TSearch> searchRequest) where TSearch : class;
 
-
 }

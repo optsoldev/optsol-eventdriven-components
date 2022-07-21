@@ -65,7 +65,7 @@ services:
       - ./deployment_scripts:/deployment_scripts
     entrypoint: [ "sh", "deployment_scripts/iniciate_replica.sh" ]
   rabbitmq:
-    image: rabbitmq:latest
+    image: masstransit/rabbitmq
     container_name: 'rabbitmq'
     ports:
       - 5672:5672

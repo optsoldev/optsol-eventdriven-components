@@ -1,9 +1,8 @@
-﻿using Optsol.EventDriven.Components.Core.Contracts;
+﻿namespace Sample.Saga.Contracts.Events;
 
-namespace Sample.Saga.Contracts.Events;
-
-public interface ITravelBookingSubmitted : ISagaContract
+public interface ITravelBookingSubmitted
 {
+    Guid CorrelationId { get; }
     Guid TravelId { get; }
     Guid UserId { get; }
     public string From { get; }

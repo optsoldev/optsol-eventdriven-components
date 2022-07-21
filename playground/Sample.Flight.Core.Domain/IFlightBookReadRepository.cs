@@ -2,7 +2,7 @@
 
 namespace Sample.Flight.Core.Domain;
 
-public interface IFlightBookReadRepository : IReadRepository<FlightBook>
+public interface IFlightBookReadRepository : IReadEventRepository<FlightBook>
 {
 
 }

@@ -28,7 +28,7 @@ namespace Sample.Flight.Core.Application
 
         public Task<SearchResult<FlightBookList>> Handle(BookFlightListQuery request, CancellationToken cancellationToken)
         {
-           return Task.FromResult(readRepository.GetAll(request.Request));
+            throw new NotImplementedException();
         }
     }
 }

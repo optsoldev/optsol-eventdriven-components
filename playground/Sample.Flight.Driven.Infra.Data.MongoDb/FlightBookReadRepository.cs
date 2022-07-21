@@ -4,7 +4,7 @@ using Sample.Flight.Core.Domain;
 
 namespace Sample.Flight.Driven.Infra.Data;
 
-public class FlightBookReadRepository : ReadRepository<FlightBook>, IFlightBookReadRepository
+public class FlightBookReadRepository : ReadEventRepository<FlightBook>, IFlightBookReadRepository
 {
     public FlightBookReadRepository(MongoContext context) : base(context, nameof(FlightBook))
     {

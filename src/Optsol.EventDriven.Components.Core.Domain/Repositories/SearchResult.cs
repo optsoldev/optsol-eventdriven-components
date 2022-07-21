@@ -1,9 +1,6 @@
-﻿using Optsol.EventDriven.Components.Core.Domain.Entities;
-
-namespace Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Repositories;
+﻿namespace Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Repositories;
 
 public class SearchResult<T>
-        where T : IProjection
 {
     public int Page { get; private set; }
 

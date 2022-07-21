@@ -38,9 +38,9 @@ public class FlightBook : Aggregate
         {
             case FlightBookCreated created:
                 Apply(created);
-                break;
+                break;                
             case FlightUnbooked unbooked:
-                Apply(unbooked);
+                Apply(unbooked);            
                 break;
             default:
                 throw new NotImplementedException();
