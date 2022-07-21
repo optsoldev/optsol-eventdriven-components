@@ -5,12 +5,12 @@ using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
 
 namespace Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Repositories;
 
-public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggregate
+public abstract class WriteEventRepository<T> : IWriteEventRepository<T> where T : IAggregate
 {
     private readonly MongoContext _context;
 
     private readonly IMongoCollection<PersistentEvent<IDomainEvent>> _set;
-    protected WriteRepository(MongoContext context, string collectionName)
+    protected WriteEventRepository(MongoContext context, string collectionName)
     {
         _context = context;
         _set = context.GetCollection<PersistentEvent<IDomainEvent>>(collectionName);

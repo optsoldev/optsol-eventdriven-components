@@ -1,8 +1,14 @@
-using Optsol.EventDriven.Components.Core.Domain.Entities;
+﻿using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Repositories;
+using System.Linq.Expressions;
 
 namespace Optsol.EventDriven.Components.Core.Domain.Repositories;
 
-public interface IReadRepository<T> where T : IAggregate
+public interface IReadRepository<T>
 {
-    public IEnumerable<IDomainEvent> GetById(Guid id);
+    IEnumerable<T> GetAll();
+
+    IEnumerable<T> GetAll(Expression<Func<T, bool>> filterExpression);
+
+    SearchResult<T> GetAll<TSearch>(SearchRequest<TSearch> searchRequest) where TSearch : class;
 }
+

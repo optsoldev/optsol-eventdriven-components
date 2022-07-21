@@ -1,8 +1,6 @@
-﻿using Optsol.EventDriven.Components.Core.Contracts;
+﻿namespace Sample.Hotel.Contracts.Events;
 
-namespace Sample.Hotel.Contracts.Events;
-
-public record HotelBooked : ISagaContract
+public record HotelBooked
 {
     public Guid TravelId { get; set; }
 

@@ -2,7 +2,7 @@
 
 namespace Sample.Flight.Core.Domain;
 
-public interface IFlightBookWriteRepository : IWriteRepository<FlightBook>
+public interface IFlightBookWriteRepository : IWriteEventRepository<FlightBook>
 {
 
 }
