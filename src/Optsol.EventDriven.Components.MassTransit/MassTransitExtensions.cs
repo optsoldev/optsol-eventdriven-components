@@ -94,4 +94,23 @@ public static class MassTransitExtensions {
 
         return configurator;
     }
+
+    /// <summary>
+    /// Extension method to return Subtypes of an Message.    
+    /// </summary>
+    /// <example>
+    /// class abstract Animal
+    /// classe Dog : Animal 
+    /// class Duck : Animal
+    /// 
+    /// Message is of type Animal but send to MassTransit the specific subtype.
+    /// </example>
+    /// <typeparam name="TMessage">Any type.</typeparam>
+    /// <param name="context">instance of <see cref="ConsumeContext"/></param>
+    /// <param name="message">instance of any type TMessage</param>
+    /// <returns>Task</returns>
+    public static Task RespondSubTypeAsync<TMessage>(this ConsumeContext context, TMessage message)
+    {
+        return Task.FromResult(context.RespondAsync(message, message.GetType()));
+    }
 }
