@@ -9,6 +9,7 @@ public abstract class WriteEventRepository<T> : IWriteEventRepository<T> where T
 {
     private readonly MongoContext _context;
 
+    private readonly List<Action<IDomainEvent>> _projectionCallbacks = new();
     private readonly IMongoCollection<PersistentEvent<IDomainEvent>> _set;
     protected WriteEventRepository(MongoContext context, string collectionName)
     {
@@ -30,10 +31,22 @@ public abstract class WriteEventRepository<T> : IWriteEventRepository<T> where T
         _context.AddTransaction(() => _set.InsertManyAsync(events));
         _context.SaveChanges();
 
+        foreach (var @event in model.PendingEvents)
+        {
+            foreach (var callback in _projectionCallbacks)
+            {
+                callback(@event);
+            }
+        }
     }
 
     public virtual void Rollback(T model)
     {
         model.Clear();
+    }
+
+    public void Subscribe(Action<IDomainEvent> callback)
+    {
+       _projectionCallbacks.Add(callback);
     }
 }
