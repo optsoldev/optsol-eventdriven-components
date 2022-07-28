@@ -11,10 +11,11 @@ public abstract class WriteEventRepository<T> : IWriteEventRepository<T> where T
 
     private readonly List<Action<IDomainEvent>> _projectionCallbacks = new();
     private readonly IMongoCollection<PersistentEvent<IDomainEvent>> _set;
-    protected WriteEventRepository(MongoContext context, string collectionName)
+    protected WriteEventRepository(MongoContext context, string collectionName, IProjectionWriteRepositoryCollection collection)
     {
         _context = context;
         _set = context.GetCollection<PersistentEvent<IDomainEvent>>(collectionName);
+        Subscribe(collection.Actions.ToArray());
     }
 
     public virtual void Commit(Guid correlationId, T model)
@@ -45,8 +46,13 @@ public abstract class WriteEventRepository<T> : IWriteEventRepository<T> where T
         model.Clear();
     }
 
-    public void Subscribe(Action<IDomainEvent> callback)
+    public void Subscribe(params Action<IDomainEvent>[] callback)
     {
-       _projectionCallbacks.Add(callback);
+       _projectionCallbacks.AddRange(callback);
     }
+}
+
+public interface IProjectionWriteRepositoryCollection
+{
+    public IList<Action<IDomainEvent>> Actions { get; } 
 }

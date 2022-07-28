@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit.Analyzers" Version="8.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Core.Contracts\Optsol.EventDriven.Components.Core.Contracts.csproj" />
   </ItemGroup>
 

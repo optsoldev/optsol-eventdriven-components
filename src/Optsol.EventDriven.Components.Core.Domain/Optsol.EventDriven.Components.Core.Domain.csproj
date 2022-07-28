@@ -9,8 +9,8 @@
 
     <ItemGroup>
       <PackageReference Include="DevBetter.JsonExtensions" Version="0.1.5" />
-      <PackageReference Include="FluentValidation" Version="11.0.2" />
-      <PackageReference Include="MongoDB.Bson" Version="2.15.1" />
+      <PackageReference Include="FluentValidation" Version="11.1.0" />
+      <PackageReference Include="MongoDB.Bson" Version="2.17.0" />
       <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.14" />
     </ItemGroup>
 

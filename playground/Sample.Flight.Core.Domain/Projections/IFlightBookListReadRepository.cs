@@ -7,12 +7,8 @@ public interface IFlightBookListReadRepository : IReadProjectionRepository<Fligh
 {
 }
 
-public interface IFlightBookListWriteRepository : IFlightBookProjectionRepository<FlightBookList>
-{
-    
-}
 
-public interface IFlightBookProjectionRepository<T> : IWriteProjectionRepository<T> where T : IFlightBookProjection
+public interface IFlightBookWriteProjectionRepository : IWriteProjectionRepository<IFlightBookProjection>
 {
     
 }
