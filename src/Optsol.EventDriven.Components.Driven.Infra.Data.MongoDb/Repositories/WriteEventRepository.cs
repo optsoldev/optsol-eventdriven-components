@@ -11,11 +11,15 @@ public abstract class WriteEventRepository<T> : IWriteEventRepository<T> where T
 
     private readonly List<Action<IDomainEvent>> _projectionCallbacks = new();
     private readonly IMongoCollection<PersistentEvent<IDomainEvent>> _set;
-    protected WriteEventRepository(MongoContext context, string collectionName, IProjectionWriteRepositoryCollection collection)
+    protected WriteEventRepository(MongoContext context, string collectionName, IProjectionWriteRepositoryCollection collection) : this(context, collectionName)
+    {
+        Subscribe(collection.Actions.ToArray());
+    }
+    
+    protected WriteEventRepository(MongoContext context, string collectionName)
     {
         _context = context;
         _set = context.GetCollection<PersistentEvent<IDomainEvent>>(collectionName);
-        Subscribe(collection.Actions.ToArray());
     }
 
     public virtual void Commit(Guid correlationId, T model)
