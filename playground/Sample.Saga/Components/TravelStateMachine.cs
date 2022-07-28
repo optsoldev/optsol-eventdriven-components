@@ -35,8 +35,8 @@ namespace Sample.Saga.Components
                             context.Message.CorrelationId,
                             context.Message.From,
                             context.Message.To,
-                            context.Message.Departure,
-                            context.Message.TravelId
+                            context.Message.TravelId,
+                            UserId = default(Guid)
                         }))
                     .TransitionTo(FlightBookingRequested));
 

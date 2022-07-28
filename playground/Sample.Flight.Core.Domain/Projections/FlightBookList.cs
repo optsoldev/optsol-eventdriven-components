@@ -4,7 +4,10 @@ using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Repositories;
 
 namespace Sample.Flight.Core.Domain.Projections;
 
-public class FlightBookList : IProjection
+public interface  IFlightBookProjection : IProjection
+{}
+
+public class FlightBookList : IFlightBookProjection
 {
     public string From { get; set; }
     public string To { get; set; }

@@ -15,8 +15,10 @@ public abstract class ReadEventRepository<T> : IReadEventRepository<T> where T :
         Set = context.GetCollection<PersistentEvent<IDomainEvent>>(collectionName);
     }
 
-    public virtual IEnumerable<IDomainEvent> GetById(Guid id) {
+    public virtual IEnumerable<IDomainEvent> GetById(Guid id)
+    {
         return Set.Find(e => e.ModelId == id && e.ModelId == id)
             .SortBy(e => e.ModelVersion).Project(e => e.Data).ToList().AsEnumerable();
-}
+
+    }
 }
