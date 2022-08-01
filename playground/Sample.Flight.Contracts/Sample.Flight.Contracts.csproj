@@ -1,14 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Core.Application\Optsol.EventDriven.Components.Core.Application.csproj" />
-    <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Core.Contracts\Optsol.EventDriven.Components.Core.Contracts.csproj" />
-  </ItemGroup>
-
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Core.Application\Optsol.EventDriven.Components.Core.Application.csproj" />
+		<ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Core.Contracts\Optsol.EventDriven.Components.Core.Contracts.csproj" />
+	</ItemGroup>
 </Project>

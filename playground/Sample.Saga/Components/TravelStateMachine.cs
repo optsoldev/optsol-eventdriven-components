@@ -29,7 +29,7 @@ namespace Sample.Saga.Components
                         context.Saga.CorrelationId = context.Message.CorrelationId;
                         context.Saga.HotelId = context.Message.HotelId;
                     })
-                    .SendAsync(new Uri("queue:book-flight"), 
+                    .SendAsync(MessageBusUri.GetUri("book-flight", ExchangeType.Queue),
                         context => context.Init<BookFlight>(new
                         {
                             context.Message.CorrelationId,
@@ -48,7 +48,7 @@ namespace Sample.Saga.Components
                     {
                         context.Saga.FlightBookId = context.Message.ModelId;
                     })
-                    .SendAsync(new Uri("queue:book-hotel"), context => context.Init<BookHotel>(new
+                    .SendAsync(MessageBusUri.GetUri("book-hotel", ExchangeType.Queue), context => context.Init<BookHotel>(new
                     {
                         CorrelationId = context.Saga.CorrelationId,
                         HotelId = context.Saga.HotelId,
@@ -58,7 +58,7 @@ namespace Sample.Saga.Components
             During(HotelBookingRequested,
                 When(HotelBooked)
                     .Then(_ => Console.WriteLine("Hotel Booked"))
-                    .SendAsync(new Uri("queue:booking-notification"),
+                    .SendAsync(MessageBusUri.GetUri("booking-notification", ExchangeType.Exchange),
                     context => context.Init<BookingNotification>(new BookingNotification()
                     {
                         CorrelationId = context.Message.CorrelationId
@@ -66,10 +66,10 @@ namespace Sample.Saga.Components
                     .TransitionTo(TravelBooked),
                 When(HotelBookedFailed)
                     .Then(_ => Console.WriteLine("Hotel Booked Failed"))
-                    .SendAsync(new Uri("queue:unbook-flight"), context => context.Init<UnbookFlight>(new
+                    .SendAsync(MessageBusUri.GetUri("unbook-flight", ExchangeType.Queue), context => context.Init<UnbookFlight>(new
                     {
                         context.Saga.CorrelationId,
-                        ModelId = context.Saga.FlightBookId,                        
+                        ModelId = context.Saga.FlightBookId,
                     }))
                     .Finalize());
 

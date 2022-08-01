@@ -4,7 +4,64 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Optsol.EventDriven.Components.Settings;
 
-public static class MassTransitExtensions {
+public static class MassTransitExtensions
+{
+    public static IBusRegistrationConfigurator UsingMessageBus(this IBusRegistrationConfigurator bus,
+    IConfiguration configuration,
+    Action<IBusRegistrationContext, IServiceBusBusFactoryConfigurator>? actionAzureServiceBus = null,
+    Action<IBusRegistrationContext, IRabbitMqBusFactoryConfigurator>? actionRabbitMq = null)
+    {
+        var settings = new MessageBusSettings();
+        configuration.Bind(nameof(MessageBusSettings), settings);
+
+        if (settings is null)
+            throw new ArgumentNullException(nameof(MessageBusSettings), "MessageBusSettings in AppSettings needed");
+
+        switch (settings.MessageBusType)
+        {
+            case MessageBusType.AzureServiceBus:
+                bus.UsingAzureServiceBus(configuration, actionAzureServiceBus);
+                break;
+            case MessageBusType.RabbitMq:
+                bus.UsingRabbitMq(configuration, actionRabbitMq);
+                break;
+            default:
+                throw new NotImplementedException($"Message Buss Type: {settings.MessageBusType} not implemented.");
+        }
+
+        return bus;
+    }
+
+    /// <summary>
+    /// Extension method to add the use of AzureServiceBus for MassTransit with RabbitMqSettings configured.
+    /// </summary>
+    /// <param name="bus">instance of <see cref="IBusRegistrationConfigurator"/></param>
+    /// <param name="configuration">instance of <see cref="IConfiguration"/></param>
+    /// <param name="action">(Optional) action for adding specific parameters like ReceiveEndpoints.</param>
+    /// <returns>instance of <see cref="IBusRegistrationConfigurator"/></returns>
+    private static IBusRegistrationConfigurator UsingAzureServiceBus(this IBusRegistrationConfigurator bus,
+        IConfiguration configuration, Action<IBusRegistrationContext, IServiceBusBusFactoryConfigurator>? action = null)
+    {
+        var settings = new MessageBusSettings();
+        configuration.Bind(nameof(MessageBusSettings), settings);
+
+        if (settings is null)
+            throw new ArgumentNullException(nameof(MessageBusSettings), "MessageBusSettings in AppSettings needed");
+
+        if (settings?.AzureServiceBusSettings is null)
+            throw new ArgumentNullException(nameof(AzureServiceBusSettings), "AzureServiceBusSettings in MessageBusSettings needed");
+
+        bus.UsingAzureServiceBus((context, configurator) =>
+        {
+            configurator.Host(settings.AzureServiceBusSettings.ConnectionString);
+
+            configurator.ConfigureEndpoints(context);
+
+            action?.Invoke(context, configurator);
+        });
+
+        return bus;
+    }
 
     /// <summary>
     /// Extension method to add the use of RabbitMq for MassTransit with RabbitMqSettings configured.
@@ -13,20 +70,24 @@ public static class MassTransitExtensions {
     /// <param name="configuration">instance of <see cref="IConfiguration"/></param>
     /// <param name="action">(Optional) action for adding specific parameters like ReceiveEndpoints.</param>
     /// <returns>instance of <see cref="IBusRegistrationConfigurator"/></returns>
-    public static IBusRegistrationConfigurator UsingRabbitMq(this IBusRegistrationConfigurator bus, 
+    private static IBusRegistrationConfigurator UsingRabbitMq(this IBusRegistrationConfigurator bus,
         IConfiguration configuration, Action<IBusRegistrationContext, IRabbitMqBusFactoryConfigurator>? action = null)
     {
-        var rabbitMqSettings = configuration.GetSection(nameof(RabbitMqSettings)).Get<RabbitMqSettings>();
+        var settings = new MessageBusSettings();
+        configuration.Bind(nameof(MessageBusSettings), settings);
 
-        if (rabbitMqSettings == null)
-            throw new ArgumentNullException(nameof(RabbitMqSettings), "RabbitMqSettings in AppSettings needed");
+        if (settings is null)
+            throw new ArgumentNullException(nameof(MessageBusSettings), "MessageBusSettings in AppSettings needed");
+
+        if (settings.RabbitMqSettings is null)
+            throw new ArgumentNullException(nameof(RabbitMqSettings), "RabbitMqSettings in MessageBusSettings needed");
 
         bus.UsingRabbitMq((context, configurator) =>
         {
-            configurator.Host(rabbitMqSettings.Host, rabbitMqSettings.Vhost, h =>
+            configurator.Host(settings.RabbitMqSettings.Host, settings.RabbitMqSettings.Vhost, h =>
             {
-                h.Username(rabbitMqSettings.Username);
-                h.Password(rabbitMqSettings.Password);
+                h.Username(settings.RabbitMqSettings.Username);
+                h.Password(settings.RabbitMqSettings.Password);
             });
 
             configurator.ConfigureEndpoints(context);
@@ -48,10 +109,11 @@ public static class MassTransitExtensions {
     public static IServiceCollection RegisterMassTransit<TConsumer>(this IServiceCollection services, IConfiguration configuration, Action<IBusRegistrationConfigurator>? configure = null)
         where TConsumer : IConsumer
     {
-        var rabbitMqSettings = configuration.GetSection(nameof(RabbitMqSettings)).Get<RabbitMqSettings>();
+        var messageBusSettings = new MessageBusSettings();
+        configuration.Bind(nameof(MessageBusSettings), messageBusSettings);
 
-        if (rabbitMqSettings == null)
-            throw new ArgumentNullException(nameof(RabbitMqSettings), "RabbitMqSettings in AppSettings needed");
+        if (messageBusSettings is null)
+            throw new ArgumentNullException(nameof(MessageBusSettings), "MessageBusSettings in AppSettings needed");
 
         services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
 
@@ -61,24 +123,24 @@ public static class MassTransitExtensions {
 
             bus.AddConsumersFromNamespaceContaining(typeof(TConsumer));
 
-            bus.UsingRabbitMq((context, configurator) =>
+            switch (messageBusSettings.MessageBusType)
             {
-                configurator.Host(rabbitMqSettings.Host, rabbitMqSettings.Vhost, h =>
-                {
-                    h.Username(rabbitMqSettings.Username);
-                    h.Password(rabbitMqSettings.Password);
-                });
-
-                configurator.ConfigureEndpoints(context);
-
-            });
+                case MessageBusType.AzureServiceBus:
+                    bus.UsingAzureServiceBus(configuration);
+                    break;
+                case MessageBusType.RabbitMq:
+                    bus.UsingRabbitMq(configuration);
+                    break;
+                default:
+                    throw new NotImplementedException($"Message Buss Type: {messageBusSettings.MessageBusType} not implemented.");
+            }
 
             configure?.Invoke(bus);
         });
 
         return services;
     }
-    
+
     public static ISagaRegistrationConfigurator<TSaga> MongoDbRepository<TSaga>(this ISagaRegistrationConfigurator<TSaga> configurator,
             IConfiguration configuration, string collectionName)
             where TSaga : class, ISagaVersion
@@ -86,11 +148,11 @@ public static class MassTransitExtensions {
         var mongoSettings = configuration.GetSection(nameof(MongoSettings)).Get<MongoSettings>();
 
         configurator.MongoDbRepository(r =>
-         {
-             r.Connection = mongoSettings.Connection;
-             r.DatabaseName = mongoSettings.DatabaseName;
-             r.CollectionName = collectionName;
-         });
+        {
+            r.Connection = mongoSettings.Connection;
+            r.DatabaseName = mongoSettings.DatabaseName;
+            r.CollectionName = collectionName;
+        });
 
         return configurator;
     }

@@ -1,3 +1,4 @@
+using System.Reflection;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Sample.Bff.Api.Hubs;
@@ -15,6 +16,9 @@ builder.Host.UseSerilog((host, log) =>
 
     log.WriteTo.Console();
 });
+
+builder.Configuration
+    .AddUserSecrets(Assembly.GetExecutingAssembly(), true);
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -40,7 +44,7 @@ builder.Services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
 //Colocar numa extension.
 builder.Services.AddMassTransit(bus =>
 {
-    bus.UsingRabbitMq(builder.Configuration);
+    bus.UsingMessageBus(builder.Configuration);
 });
 
 var app = builder.Build();

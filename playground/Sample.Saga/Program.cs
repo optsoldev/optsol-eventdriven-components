@@ -1,6 +1,6 @@
+using System.Reflection;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Optsol.EventDriven.Components.Settings;
 using Sample.Saga;
 using Sample.Saga.Components;
 using Serilog;
@@ -16,6 +16,7 @@ Log.Logger = new LoggerConfiguration()
 var configuration = new ConfigurationBuilder()
     .AddEnvironmentVariables()
     .AddCommandLine(args)
+    .AddUserSecrets(Assembly.GetExecutingAssembly(), true)
     .AddJsonFile("appsettings.json")
     .Build();
 
@@ -30,6 +31,8 @@ IHost host = Host.CreateDefaultBuilder(args)
             new BookingHubNotificator(
                 context.Configuration.GetValue<string>("Websocket:BookingNotificationHub")));
 
+        services.AddSingleton(new MessageBusUri(configuration));
+
         services.AddMassTransit(bus =>
         {
             bus.AddConsumersFromNamespaceContaining<BookingNotificationConsumer>();
@@ -37,7 +40,7 @@ IHost host = Host.CreateDefaultBuilder(args)
             bus.AddSagaStateMachine<TravelStateMachine, TravelState>()            
             .MongoDbRepository(configuration, "travel-state");
 
-            bus.UsingRabbitMq(configuration);
+            bus.UsingMessageBus(configuration);
         });
     })
     .Build();
