@@ -1,13 +1,13 @@
-using MassTransit;
+using System.Reflection;
+using MediatR;
+using Optsol.EventDriven.Components.Driven.Infra.Notification;
+using Optsol.EventDriven.Components.MassTransit;
 using Sample.Flight.Core.Application;
+using Sample.Flight.Driven.Infra.Data;
 using Sample.Flight.Driving.Commands;
 using Sample.Flight.Driving.Commands.Consumers;
 using Serilog;
 using Serilog.Events;
-using MediatR;
-using Optsol.EventDriven.Components.Driven.Infra.Notification;
-using Sample.Flight.Driven.Infra.Data;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -19,6 +19,7 @@ Log.Logger = new LoggerConfiguration()
 var configuration = new ConfigurationBuilder()
     .AddEnvironmentVariables()
     .AddCommandLine(args)
+    .AddUserSecrets(Assembly.GetExecutingAssembly(), true)
     .AddJsonFile("appsettings.json")
     .Build();
 
