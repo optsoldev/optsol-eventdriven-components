@@ -13,6 +13,6 @@ public class FlightBookListWriteRepository : WriteProjectionRepository<FlightBoo
 
     public override void ReceiveEvent(IDomainEvent @event)
     {
-        throw new NotImplementedException();
+      //  throw new NotImplementedException();
     }
 }

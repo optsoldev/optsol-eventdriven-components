@@ -29,7 +29,7 @@ namespace Sample.Saga.Components
                         context.Saga.CorrelationId = context.Message.CorrelationId;
                         context.Saga.HotelId = context.Message.HotelId;
                     })
-                    .SendAsync(MessageBusUri.GetUri("book-flight", ExchangeType.Queue),
+                    .SendAsync(MessageBusUri.CreateUri(nameof(BookFlight), ExchangeType.Queue),
                         context => context.Init<BookFlight>(new
                         {
                             context.Message.CorrelationId,
@@ -48,7 +48,7 @@ namespace Sample.Saga.Components
                     {
                         context.Saga.FlightBookId = context.Message.ModelId;
                     })
-                    .SendAsync(MessageBusUri.GetUri("book-hotel", ExchangeType.Queue), context => context.Init<BookHotel>(new
+                    .SendAsync(MessageBusUri.CreateUri("book-hotel", ExchangeType.Queue), context => context.Init<BookHotel>(new
                     {
                         CorrelationId = context.Saga.CorrelationId,
                         HotelId = context.Saga.HotelId,
@@ -58,7 +58,7 @@ namespace Sample.Saga.Components
             During(HotelBookingRequested,
                 When(HotelBooked)
                     .Then(_ => Console.WriteLine("Hotel Booked"))
-                    .SendAsync(MessageBusUri.GetUri("booking-notification", ExchangeType.Exchange),
+                    .SendAsync(MessageBusUri.CreateUri(nameof(BookingNotification), ExchangeType.Exchange),
                     context => context.Init<BookingNotification>(new BookingNotification()
                     {
                         CorrelationId = context.Message.CorrelationId
@@ -66,7 +66,7 @@ namespace Sample.Saga.Components
                     .TransitionTo(TravelBooked),
                 When(HotelBookedFailed)
                     .Then(_ => Console.WriteLine("Hotel Booked Failed"))
-                    .SendAsync(MessageBusUri.GetUri("unbook-flight", ExchangeType.Queue), context => context.Init<UnbookFlight>(new
+                    .SendAsync(MessageBusUri.CreateUri(nameof(UnbookFlight), ExchangeType.Queue), context => context.Init<UnbookFlight>(new
                     {
                         context.Saga.CorrelationId,
                         ModelId = context.Saga.FlightBookId,
