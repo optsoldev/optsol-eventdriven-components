@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Optsol.EventDriven.Components.Settings;
 
 public static class StringExtension
 {
@@ -24,5 +25,20 @@ public static class StringExtension
         }
 
         return builder.ToString();
+    }
+
+    public static string ToString(this ExchangeType exchangeType, MessageBusType? messageBusType)
+    {
+        ArgumentNullException.ThrowIfNull(messageBusType);
+
+        return exchangeType switch
+        {
+            ExchangeType.Queue => "queue",
+            _ => messageBusType switch
+            {
+                MessageBusType.AzureServiceBus => "topic",
+                _ => "exchange",
+            },
+        };
     }
 }

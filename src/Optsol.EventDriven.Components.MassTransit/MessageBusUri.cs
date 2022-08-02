@@ -20,7 +20,6 @@ public class MessageBusUri
 
     public static Uri CreateUri(string name, ExchangeType exchangeType)
     {
-        var nameExchangeType = exchangeType == ExchangeType.Exchange ? settings?.MessageBusType == MessageBusType.RabbitMq ? "exchange" : "topic" : "queue";
-        return new Uri($"{nameExchangeType}:{name.ToKebabCase()}");
+        return new Uri($"{exchangeType.ToString(settings?.MessageBusType)}:{name.ToKebabCase()}");
     }
 }
