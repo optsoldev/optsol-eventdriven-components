@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Optsol.EventDriven.Components.MassTransit;
 using Optsol.EventDriven.Components.Settings;
 
 public static class StringExtension

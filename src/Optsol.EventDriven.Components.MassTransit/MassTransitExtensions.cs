@@ -4,12 +4,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Optsol.EventDriven.Components.Settings;
 
+namespace Optsol.EventDriven.Components.MassTransit;
+
 public static class MassTransitExtensions
 {
     public static IBusRegistrationConfigurator UsingMessageBus(this IBusRegistrationConfigurator bus,
-    IConfiguration configuration,
-    Action<IBusRegistrationContext, IServiceBusBusFactoryConfigurator>? actionAzureServiceBus = null,
-    Action<IBusRegistrationContext, IRabbitMqBusFactoryConfigurator>? actionRabbitMq = null)
+        IConfiguration configuration,
+        Action<IBusRegistrationContext, IServiceBusBusFactoryConfigurator>? actionAzureServiceBus = null,
+        Action<IBusRegistrationContext, IRabbitMqBusFactoryConfigurator>? actionRabbitMq = null)
     {
         var settings = new MessageBusSettings();
         configuration.Bind(nameof(MessageBusSettings), settings);
@@ -142,8 +144,8 @@ public static class MassTransitExtensions
     }
 
     public static ISagaRegistrationConfigurator<TSaga> MongoDbRepository<TSaga>(this ISagaRegistrationConfigurator<TSaga> configurator,
-            IConfiguration configuration, string collectionName)
-            where TSaga : class, ISagaVersion
+        IConfiguration configuration, string collectionName)
+        where TSaga : class, ISagaVersion
     {
         var mongoSettings = configuration.GetSection(nameof(MongoSettings)).Get<MongoSettings>();
 

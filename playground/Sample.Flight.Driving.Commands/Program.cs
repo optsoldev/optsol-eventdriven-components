@@ -1,6 +1,7 @@
 using System.Reflection;
 using MediatR;
 using Optsol.EventDriven.Components.Driven.Infra.Notification;
+using Optsol.EventDriven.Components.MassTransit;
 using Sample.Flight.Core.Application;
 using Sample.Flight.Driven.Infra.Data;
 using Sample.Flight.Driving.Commands;

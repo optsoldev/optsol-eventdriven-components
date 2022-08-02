@@ -1,5 +1,6 @@
 ﻿using MassTransit;
 using MongoDB.Bson.Serialization.Attributes;
+using Optsol.EventDriven.Components.MassTransit;
 using Sample.Flight.Contracts;
 using Sample.Hotel.Contracts.Commands;
 using Sample.Hotel.Contracts.Events;

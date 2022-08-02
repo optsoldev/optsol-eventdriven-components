@@ -1,6 +1,7 @@
 using System.Reflection;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Optsol.EventDriven.Components.MassTransit;
 using Sample.Bff.Api.Hubs;
 using Serilog;
 

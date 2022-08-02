@@ -38,7 +38,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         {
             bus.SetKebabCaseEndpointNameFormatter();
             bus.AddConsumer<BookHotelConsumer>();
-
+            
             bus.UsingRabbitMq((context, configurator) =>
             {
                 configurator.ConfigureEndpoints(context);

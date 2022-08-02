@@ -1,16 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Optsol.EventDriven.Components.Settings;
 
-public enum ExchangeType
-{
-    Queue,
-    Exchange
-}
-
+namespace Optsol.EventDriven.Components.MassTransit;
 
 public class MessageBusUri
 {
-    private static MessageBusSettings? settings { get; set; }
+    private static MessageBusSettings? settings;
 
     public MessageBusUri(IConfiguration configuration)
     {
@@ -20,6 +15,11 @@ public class MessageBusUri
 
     public static Uri CreateUri(string name, ExchangeType exchangeType)
     {
-        return new Uri($"{exchangeType.ToString(settings?.MessageBusType)}:{name.ToKebabCase()}");
+        return new Uri(FormatAddress(name, exchangeType));
+    }
+
+    public static string FormatAddress(string name, ExchangeType exchangeType)
+    {
+        return $"{exchangeType.ToString(settings?.MessageBusType)}:{name.ToKebabCase()}";
     }
 }

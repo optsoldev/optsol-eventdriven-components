@@ -1,6 +1,7 @@
 using System.Reflection;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Optsol.EventDriven.Components.MassTransit;
 using Sample.Saga;
 using Sample.Saga.Components;
 using Serilog;
