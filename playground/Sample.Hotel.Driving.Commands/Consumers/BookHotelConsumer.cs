@@ -9,6 +9,7 @@ public class BookHotelConsumer : IConsumer<BookHotel>
     public async Task Consume(ConsumeContext<BookHotel> context)
     {
         Console.WriteLine("BookHotelConsumer {0}", context.Message.CorrelationId);
+        Thread.Sleep(2000);
 
         if(context.Message.HotelId == 1)
         {

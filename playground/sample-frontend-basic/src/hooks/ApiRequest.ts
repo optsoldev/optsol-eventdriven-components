@@ -1,14 +1,14 @@
-import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ApiRequest } from "../api/requests";
+import { SignalRContext, SocketResponse } from "../context/signalR";
+import { useAxios } from "./axios";
 const BASE_URL = "https://localhost:7186";
 
 type Props<T> = {
   api: ApiRequest;
   baseURL?: string;
   onError?: (e: Error) => void;
-  onCompleted?: (e: T | undefined) => void;
+  onCompleted?: (e: T) => void;
 };
 
 type ApiRequestStatus =
@@ -18,96 +18,71 @@ type ApiRequestStatus =
   | "completed"
   | "error";
 
-type CorrelationIdApiResponse = {
+interface CorrelationIdApiResponse {
   correlationId: string;
-};
+}
 
-type SocketResponse = {
-  correlationId: string;
-};
-
-const axiosInstance = axios.create({
-  timeout: 30000,
-});
-
-const hubConnection = new HubConnectionBuilder()
-  .configureLogging(LogLevel.Debug)
-  .withUrl("https://localhost:7186/hubs/bookingNotification")
-  .withAutomaticReconnect()
-  .build();
-
-hubConnection.start();
-
-export function useApiRequest<T>({
+export function useApiRequest<T extends SocketResponse>({
   api,
   baseURL,
   onCompleted,
   onError,
 }: Props<T>) {
   const [status, setStatus] = useState<ApiRequestStatus>("not-started");
-  const [correlationId, setCorrelationId] = useState<string>();
-  const [response, setResponse] = useState<T>();
   const [error, setError] = useState<Error>();
+  const [response, setResponse] = useState<T>();
+
+  const comp = useRef(onCompleted);
+  const correlationId = useRef<string>("");
+
+  const axiosInstance = useAxios(BASE_URL);
+  const { hubConnection } = useContext(SignalRContext);
 
   function start<Body = undefined>(body?: Body) {
     setStatus("requesting");
 
     axiosInstance
-      .request<CorrelationIdApiResponse>({
+      .request<Body, CorrelationIdApiResponse>({
         method: api.method,
-        baseURL: !api.external ? baseURL ?? BASE_URL : undefined,
         url: api.url,
         data: body,
       })
       .then((response) => {
-        setCorrelationId(response.data.correlationId);
+        console.log({ response });
+
+        correlationId.current = response.correlationId;
         setStatus("waiting");
       })
       .catch((error) => {
+        correlationId.current = "";
         setResponse(undefined);
-        setCorrelationId(undefined);
-        setError(error);
         setStatus("error");
+        setError(error);
       });
   }
 
-  function fireObserverFunctions() {
-    switch (status) {
-      case "completed":
-        onCompleted && onCompleted(response);
-        break;
-      case "error":
-        onError && error && onError(error);
-        break;
-
-      default:
-        break;
-    }
-  }
-
-  const handleMessageReceived = (
-    message: SocketResponse,
-    correlationId: string | undefined
-  ) => {
-    if (message.correlationId === correlationId) {
-      setStatus("completed");
-      setResponse(message as any as T);
-    }
-  };
+  useEffect(() => {
+    comp.current = onCompleted;
+  }, [onCompleted]);
 
   useEffect(() => {
-    fireObserverFunctions();
-  }, [status]);
+    console.log("effect II", correlationId.current);
+
+    onError && error && onError(error);
+  }, [error, onError, status]);
 
   useEffect(() => {
-    hubConnection.on(api.hubMethod, (message) =>
-      handleMessageReceived(message, correlationId)
-    );
+    console.log("effect", api.hubMethod, correlationId.current);
 
-    return () => {
-      hubConnection.off(api.hubMethod);
-    };
-  }, [correlationId]);
+    hubConnection?.on(api.hubMethod, (message: T) => {
+      console.log("on Called", message.correlationId, correlationId.current);
+      if (message.correlationId === correlationId.current) {
+        comp.current && comp.current(message);
+        setStatus("completed");
+        setResponse(message);
+      }
+    });
+  }, [api.hubMethod, hubConnection]);
 
-  return { start, status, correlationId, response };
+  return { start, status, correlationId: correlationId.current, response };
 }
