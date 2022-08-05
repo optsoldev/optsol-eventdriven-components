@@ -108,7 +108,11 @@ public static class MassTransitExtensions
     /// <param name="configuration">instance of <see cref="IConfiguration"/></param>
     /// <param name="configure">(Optional) to add specific parameters like Activies</param>
     /// <returns>instance of <see cref="IServiceCollection"/></returns>
-    public static IServiceCollection RegisterMassTransit<TConsumer>(this IServiceCollection services, IConfiguration configuration, Action<IBusRegistrationConfigurator>? configure = null)
+    public static IServiceCollection RegisterMassTransit<TConsumer>(this IServiceCollection services,
+        IConfiguration configuration,
+        Action<IBusRegistrationConfigurator>? configure = null,
+        Action<IBusRegistrationContext, IRabbitMqBusFactoryConfigurator>? actionRabbitMq = null,
+        Action<IBusRegistrationContext, IServiceBusBusFactoryConfigurator>? actionAzureServiceBus = null)
         where TConsumer : IConsumer
     {
         var messageBusSettings = new MessageBusSettings();
@@ -128,10 +132,10 @@ public static class MassTransitExtensions
             switch (messageBusSettings.MessageBusType)
             {
                 case MessageBusType.AzureServiceBus:
-                    bus.UsingAzureServiceBus(configuration);
+                    bus.UsingAzureServiceBus(configuration, actionAzureServiceBus);
                     break;
                 case MessageBusType.RabbitMq:
-                    bus.UsingRabbitMq(configuration);
+                    bus.UsingRabbitMq(configuration, actionRabbitMq);
                     break;
                 default:
                     throw new NotImplementedException($"Message Buss Type: {messageBusSettings.MessageBusType} not implemented.");
