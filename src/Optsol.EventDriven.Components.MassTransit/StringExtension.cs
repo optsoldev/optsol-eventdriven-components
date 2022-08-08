@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using MassTransit;
 using Optsol.EventDriven.Components.MassTransit;
 using Optsol.EventDriven.Components.Settings;
 
@@ -41,5 +42,17 @@ public static class StringExtension
                 _ => "exchange",
             },
         };
+    }
+
+    public static string GetConsumerdName<T>() where T : IConsumer
+    {
+        const string consumer = "Consumer";
+        var consumerName = typeof(T).Name;
+
+        if (consumerName.EndsWith(consumer, StringComparison.InvariantCultureIgnoreCase))
+            return consumerName[..^consumer.Length];
+
+        return consumerName;
+
     }
 }

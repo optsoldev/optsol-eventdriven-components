@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MassTransit;
+using Microsoft.Extensions.Configuration;
 using Optsol.EventDriven.Components.Settings;
 
 namespace Optsol.EventDriven.Components.MassTransit;
