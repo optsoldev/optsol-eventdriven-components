@@ -1,4 +1,5 @@
 ﻿using Optsol.EventDriven.Components.Core.Domain.Entities;
+using Optsol.EventDriven.Components.Core.Domain.Entities.Events;
 
 namespace Sample.Flight.Core.Domain;
 

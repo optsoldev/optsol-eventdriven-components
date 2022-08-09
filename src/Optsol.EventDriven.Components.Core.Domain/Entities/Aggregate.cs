@@ -1,42 +1,47 @@
 using FluentValidation.Results;
+using Optsol.EventDriven.Components.Core.Domain.Entities.Events;
 
 namespace Optsol.EventDriven.Components.Core.Domain.Entities;
 
 public abstract class Aggregate : IAggregate 
 {
-    private readonly Queue<IDomainEvent> _pendingEvents = new();
-    protected readonly Queue<IFailureEvent> _failureEvents = new();
-
-    public Guid Id { get; protected set; }
-
-    protected long Version { get; set; } = 0;
-    protected long NextVersion
-    {
-        get => Version + 1;
-    }
-    public IEnumerable<IDomainEvent> PendingEvents
-    {
-        get => _pendingEvents.AsEnumerable();
-    }
-
-    public IEnumerable<IFailureEvent> FailureEvents
-    {
-        get => _failureEvents.AsEnumerable();
-    }
+    private readonly Queue<IDomainEvent> pendingEvents = new();
+    private readonly Queue<IFailedEvent> failureEvents = new();
+    private readonly Queue<ISuccessEvent> successEvents = new();
     
-    public Aggregate(IEnumerable<IDomainEvent> persistedEvents)
+    public Guid Id { get; protected set; }
+    protected long Version { get; set; }
+    protected long NextVersion => Version + 1;
+    public IEnumerable<IDomainEvent> PendingEvents => pendingEvents.AsEnumerable();
+    public IEnumerable<IFailedEvent> FailedEvents => failureEvents.AsEnumerable();
+    public IEnumerable<ISuccessEvent> SuccessEvents => successEvents.AsEnumerable();
+    
+    protected Aggregate(IEnumerable<IDomainEvent> persistedEvents)
     {
-        if (persistedEvents.Any())
+        var domainEvents = persistedEvents.ToList();
+        if (domainEvents.Any())
         {
-            ApplyPersistedEvents(persistedEvents);
+            ApplyPersistedEvents(domainEvents);
         }
     }
     
     protected void RaiseEvent<TEvent>(TEvent pendingEvent) where TEvent : IDomainEvent
     {
-        _pendingEvents.Enqueue(pendingEvent);
+        pendingEvents.Enqueue(pendingEvent);
         Apply(pendingEvent);
         Version = pendingEvent.ModelVersion;
+    }
+
+    public virtual void RaiseSuccessEvent()
+    {
+        var @event = new SuccessEvent(Id, Version);
+        successEvents.Enqueue(@event);
+    }
+
+    public virtual void RaiseFailedEvent()
+    {
+        var failureEvent = new FailedEvent(Id, ValidationResult.Errors);
+        failureEvents.Enqueue(failureEvent);
     }
 
     protected abstract void Apply(IDomainEvent @event);
@@ -49,25 +54,17 @@ public abstract class Aggregate : IAggregate
             Version = e.ModelVersion;
         }
     }
-    
-    public void Commit()
-    {
-        _pendingEvents.Clear();
-        _failureEvents.Clear();
-    }
 
     public void Clear()
     {
-        _pendingEvents.Clear();
-        _failureEvents.Clear();
+        pendingEvents.Clear();
+        failureEvents.Clear();
+        successEvents.Clear();
     }
 
-    public bool Valid => ValidationResult.IsValid;
-    
-    public bool Invalid => Valid is false;
-    
-    public ValidationResult ValidationResult { get; protected set; } = new();
+    public bool Invalid => ValidationResult.IsValid is false;
 
+    protected ValidationResult ValidationResult { get; set; } = new();
 
     protected abstract void Validate();
 }

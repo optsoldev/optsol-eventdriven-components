@@ -1,6 +1,7 @@
 using MongoDB.Driver;
 using Optsol.EventDriven.Components.Core.Domain;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
+using Optsol.EventDriven.Components.Core.Domain.Entities.Events;
 using Optsol.EventDriven.Components.Core.Domain.Repositories;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
 

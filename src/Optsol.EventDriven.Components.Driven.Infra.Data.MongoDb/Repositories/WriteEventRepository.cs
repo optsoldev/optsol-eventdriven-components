@@ -1,5 +1,6 @@
 using MongoDB.Driver;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
+using Optsol.EventDriven.Components.Core.Domain.Entities.Events;
 using Optsol.EventDriven.Components.Core.Domain.Repositories;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
 
@@ -30,10 +31,11 @@ public abstract class WriteEventRepository<T> : IWriteEventRepository<T> where T
         _context.AddTransaction(() => _set.InsertManyAsync(events));
         _context.SaveChanges();
 
+        model.RaiseSuccessEvent();
     }
 
     public virtual void Rollback(T model)
     {
-        model.Clear();
+        model.RaiseFailedEvent();
     }
 }
