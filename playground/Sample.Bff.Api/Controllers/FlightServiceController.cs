@@ -4,6 +4,8 @@ using Sample.Flight.Contracts;
 
 namespace Sample.Bff.Api.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class FlightServiceController : ControllerBase
     {
         private readonly ILogger<BookingServiceController> logger;

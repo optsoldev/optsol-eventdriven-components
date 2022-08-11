@@ -1,3 +1,4 @@
+using System.Reflection;
 using MassTransit;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -18,6 +19,7 @@ Log.Logger = new LoggerConfiguration()
 var configuration = new ConfigurationBuilder()
     .AddEnvironmentVariables()
     .AddCommandLine(args)
+    .AddUserSecrets(Assembly.GetExecutingAssembly(), true)
     .AddJsonFile("appsettings.json")
     .Build();
 
@@ -36,7 +38,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         {
             bus.SetKebabCaseEndpointNameFormatter();
             bus.AddConsumer<BookHotelConsumer>();
-
+            
             bus.UsingRabbitMq((context, configurator) =>
             {
                 configurator.ConfigureEndpoints(context);

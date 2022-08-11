@@ -7,7 +7,7 @@ namespace Sample.Flight.Driven.Infra.Data;
 
 public class FlightBookWriteRepository : WriteEventRepository<FlightBook>, IFlightBookWriteRepository
 {
-    public FlightBookWriteRepository(MongoContext context, INotificator notificator) : base(context, nameof(FlightBook), notificator)
+    public FlightBookWriteRepository(MongoContext context,  INotificator notificator,  FlightBookProjectionRepositoryCollection? collection) : base(context, nameof(FlightBook), notificator, collection)
     {
     }
 }

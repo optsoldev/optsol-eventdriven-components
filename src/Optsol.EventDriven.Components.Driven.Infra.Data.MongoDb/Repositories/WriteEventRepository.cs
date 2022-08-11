@@ -12,9 +12,11 @@ public abstract class WriteEventRepository<T> : IWriteEventRepository<T> where T
     private readonly MongoContext context;
     private readonly INotificator notificator;
 
+    private readonly List<Action<IDomainEvent>> _projectionCallbacks = new();
     private readonly IMongoCollection<PersistentEvent<IDomainEvent>> _set;
-    protected WriteEventRepository(MongoContext context, string collectionName, INotificator notificator)
+    protected WriteEventRepository(MongoContext context, string collectionName,INotificator notificator, IProjectionWriteRepositoryCollection? collection)
     {
+        Subscribe(collection?.Actions.ToArray());
         this.context = context;
         this.notificator = notificator;
         _set = context.GetCollection<PersistentEvent<IDomainEvent>>(collectionName);
@@ -34,6 +36,13 @@ public abstract class WriteEventRepository<T> : IWriteEventRepository<T> where T
         context.AddTransaction(() => _set.InsertManyAsync(events));
         return context.SaveChanges();
 
+        foreach (var @event in model.PendingEvents)
+        {
+            foreach (var callback in _projectionCallbacks)
+            {
+                callback(@event);
+            }
+        }
     }
 
     public virtual void Rollback(T model)
@@ -62,4 +71,14 @@ public abstract class WriteEventRepository<T> : IWriteEventRepository<T> where T
 
         return result;
     }
+
+    public void Subscribe(params Action<IDomainEvent>[]? callback)
+    {
+       _projectionCallbacks.AddRange(callback);
+    }
+}
+
+public interface IProjectionWriteRepositoryCollection
+{
+    public IList<Action<IDomainEvent>> Actions { get; } 
 }

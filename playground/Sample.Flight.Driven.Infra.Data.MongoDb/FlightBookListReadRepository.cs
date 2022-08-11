@@ -9,5 +9,6 @@ namespace Sample.Flight.Driven.Infra.Data
         public FlightBookListReadRepository(MongoContext context) : base(context, "FlightBookList")
         {
         }
+
     }
 }
