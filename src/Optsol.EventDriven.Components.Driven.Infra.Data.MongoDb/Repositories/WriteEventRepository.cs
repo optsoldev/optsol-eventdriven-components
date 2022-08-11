@@ -34,8 +34,7 @@ public abstract class WriteEventRepository<T> : IWriteEventRepository<T> where T
             e));
         
         context.AddTransaction(() => _set.InsertManyAsync(events));
-        return context.SaveChanges();
-
+        
         foreach (var @event in model.PendingEvents)
         {
             foreach (var callback in _projectionCallbacks)
@@ -43,6 +42,8 @@ public abstract class WriteEventRepository<T> : IWriteEventRepository<T> where T
                 callback(@event);
             }
         }
+        
+        return context.SaveChanges();
     }
 
     public virtual void Rollback(T model)

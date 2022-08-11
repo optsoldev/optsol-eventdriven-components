@@ -9,9 +9,9 @@ public abstract record DomainEvent() : IDomainEvent
         When = when;
     }
 
-    public Guid ModelId { get; }
+    public Guid ModelId { get; set; }
 
-    public long ModelVersion { get; }
+    public long ModelVersion { get; set; }
 
-    public DateTime When { get; }
+    public DateTime When { get; set; }
 }
