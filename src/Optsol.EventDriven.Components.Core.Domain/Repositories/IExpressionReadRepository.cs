@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Optsol.EventDriven.Components.Core.Domain.Repositories;
 
-public interface IExpressionReadRepository<T> : IReadProjectionRepository<T>
+public interface IExpressionReadRepository<T>
     where T : IProjection
 {
     IEnumerable<T> GetAll(Expression<Func<T, bool>> filterExpression);
