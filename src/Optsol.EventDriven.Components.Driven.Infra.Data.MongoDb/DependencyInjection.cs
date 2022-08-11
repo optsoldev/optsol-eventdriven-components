@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
 
-namespace Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Configurations;
+namespace Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb;
 
 public static class DependencyInjection
 {

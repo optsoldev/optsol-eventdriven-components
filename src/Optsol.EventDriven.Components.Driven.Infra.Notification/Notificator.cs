@@ -15,5 +15,13 @@ public class Notificator : INotificator
     public async Task Publish<T>(T @event)
     {
         await _endpoint.Publish(@event);        
-    }    
+    }
+
+    public async Task Publish<T>(params T[] events)
+    {
+        foreach (var @event in events)
+        {
+            await _endpoint.Publish(@event);
+        }
+    }
 }

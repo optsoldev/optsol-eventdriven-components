@@ -1,4 +1,4 @@
-using Optsol.EventDriven.Components.Core.Domain.Entities;
+using Optsol.EventDriven.Components.Core.Domain.Entities.Events;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Repositories;
 using Sample.Flight.Core.Domain.Projections;
 

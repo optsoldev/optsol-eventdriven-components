@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Newtonsoft.Json;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
+using Optsol.EventDriven.Components.Core.Domain.Entities.Events;
 
 namespace Optsol.EventDriven.Components.Driven.Infra.Notification.Unit.Tests
 {

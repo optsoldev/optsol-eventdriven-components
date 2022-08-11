@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using FluentValidation.Results;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
+using Optsol.EventDriven.Components.Core.Domain.Entities.Events;
 
 namespace Sample.Flight.Core.Domain;
 
@@ -67,3 +69,8 @@ public sealed class FlightBookValidator : AbstractValidator<FlightBook>
 
     }
 }
+
+public record FlightBookSuccessEvent(Guid Id, long Version) : SuccessEvent(Id, Version);
+
+public record FlightBookFailureEvent(Guid Id, IEnumerable<ValidationFailure> ValidationFailures) 
+    : FailedEvent(Id, ValidationFailures);
