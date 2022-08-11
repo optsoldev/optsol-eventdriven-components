@@ -127,7 +127,14 @@ public static class MassTransitExtensions
         {
             bus.SetKebabCaseEndpointNameFormatter();
 
-            bus.AddConsumersFromNamespaceContaining(typeof(TConsumer));
+            var typeConsumer = typeof(IConsumer);
+            var consumers = typeof(TConsumer)
+                            .Assembly
+                            .GetTypes()
+                            .Where(w => typeConsumer.IsAssignableFrom(w))
+                            .ToArray();
+
+            bus.AddConsumers(consumers);
 
             switch (messageBusSettings.MessageBusType)
             {
