@@ -7,11 +7,10 @@ using Sample.Flight.Core.Domain;
 
 namespace Sample.Flight.Core.Application.Commands;
 
-public class BookFlightCommandHandler : BaseCommandHandler<FlightBook,BookFlightSucessEvent,BookFlightFailedEvent>, IRequestHandler<BookFlight, Unit>
+public class BookFlightCommandHandler : BaseCommandHandler<FlightBook>, IRequestHandler<BookFlight, Unit>
 {
-    public BookFlightCommandHandler(ILogger<BookFlightCommandHandler> logger, 
-        INotificator notificator,
-        IFlightBookWriteRepository flightBookWriteRepository) : base(logger,flightBookWriteRepository, notificator)
+    public BookFlightCommandHandler(ILogger<BookFlightCommandHandler> logger,
+        IFlightBookWriteRepository flightBookWriteRepository) : base(logger,flightBookWriteRepository)
     {
     }
 
@@ -21,6 +20,8 @@ public class BookFlightCommandHandler : BaseCommandHandler<FlightBook,BookFlight
 
         var flightBook = FlightBook.Create(request.UserId, request.From, request.To);
 
-        return await HandleValidation(request.CorrelationId, flightBook);
+        await SaveChanges<BookFlightSucessEvent,BookFlightFailedEvent>(request.CorrelationId, flightBook);
+
+        return new Unit();
     }
 }

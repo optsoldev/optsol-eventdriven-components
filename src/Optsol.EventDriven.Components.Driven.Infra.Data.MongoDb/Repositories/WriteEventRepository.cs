@@ -1,4 +1,5 @@
 using MongoDB.Driver;
+using Optsol.EventDriven.Components.Core.Domain;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
 using Optsol.EventDriven.Components.Core.Domain.Entities.Events;
 using Optsol.EventDriven.Components.Core.Domain.Repositories;
@@ -8,16 +9,18 @@ namespace Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Repositories;
 
 public abstract class WriteEventRepository<T> : IWriteEventRepository<T> where T : IAggregate
 {
-    private readonly MongoContext _context;
+    private readonly MongoContext context;
+    private readonly INotificator notificator;
 
     private readonly IMongoCollection<PersistentEvent<IDomainEvent>> _set;
-    protected WriteEventRepository(MongoContext context, string collectionName)
+    protected WriteEventRepository(MongoContext context, string collectionName, INotificator notificator)
     {
-        _context = context;
+        this.context = context;
+        this.notificator = notificator;
         _set = context.GetCollection<PersistentEvent<IDomainEvent>>(collectionName);
     }
 
-    public virtual void Commit(Guid correlationId, T model)
+    public virtual int Commit(Guid correlationId, T model)
     {
         var events = model.PendingEvents.Select(e => new PersistentEvent<IDomainEvent>(
             correlationId,
@@ -28,14 +31,35 @@ public abstract class WriteEventRepository<T> : IWriteEventRepository<T> where T
             e.GetType().AssemblyQualifiedName,
             e));
         
-        _context.AddTransaction(() => _set.InsertManyAsync(events));
-        _context.SaveChanges();
+        context.AddTransaction(() => _set.InsertManyAsync(events));
+        return context.SaveChanges();
 
-        model.RaiseSuccessEvent();
     }
 
     public virtual void Rollback(T model)
     {
-        model.RaiseFailedEvent();
+        model.Clear();
+    }
+
+    public virtual async Task Rollback<TFailedEvent>(T entity) where TFailedEvent : FailedEvent
+    {
+        Rollback(entity);
+
+        var @event = new FailedEvent(entity.Id, entity.ValidationResult.Errors) as TFailedEvent;
+        
+        await notificator.Publish(@event);
+    }
+
+    public async Task<int> Commit<TSucessEvent>(Guid correlationId, T entity) where TSucessEvent : SuccessEvent
+    {
+        var result = Commit(correlationId, entity);
+        if (result > 0)
+        {
+            var @event = new SuccessEvent(entity.Id, entity.Version) as TSucessEvent;
+            
+            await notificator.Publish(@event);
+        }
+
+        return result;
     }
 }
