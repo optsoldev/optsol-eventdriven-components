@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
-import { useCallback, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 
 export const useAxios = (url: string) => {
   const ref = useRef(0);
@@ -42,6 +42,9 @@ export const useAxios = (url: string) => {
     return api;
   }, [token, url]);
 
-  const axiosInstance = useRef<AxiosInstance>(initAxios());
+  const axiosInstance = useRef<AxiosInstance>(
+    useMemo(() => initAxios(), [initAxios])
+  );
+
   return axiosInstance.current;
 };

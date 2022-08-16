@@ -3,42 +3,40 @@ import {
   HubConnectionBuilder,
   LogLevel,
 } from "@microsoft/signalr";
-import {
-  createContext,
-  PropsWithChildren,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { createContext, PropsWithChildren } from "react";
 
 export type SocketResponse = {
   correlationId: string;
 };
 
+export enum HubConnectionName {
+  Booking = "booking",
+}
 interface Context {
-  hubConnection?: HubConnection;
+  getConnection: () => HubConnection;
 }
 
-export const SignalRContext = createContext<Context>({});
-
+export const SignalRContext = createContext<Context>({
+  getConnection: () => ({} as HubConnection),
+});
 export const SignalRProvider = ({ children }: PropsWithChildren) => {
-  const [ready, setReady] = useState(false);
-  const connectionRef = useRef<HubConnection>();
+  console.log("SignalRProvider");
 
-  useEffect(() => {
-    connectionRef.current = new HubConnectionBuilder()
-      .configureLogging(LogLevel.Debug)
-      .withUrl("https://localhost:7186/hubs/bookingNotification")
-      .withAutomaticReconnect()
-      .build();
+  const hubConnection = new HubConnectionBuilder()
+    .configureLogging(LogLevel.Debug)
+    .withUrl("https://localhost:7186/hubs/bookingNotification")
+    .withAutomaticReconnect()
+    .build();
 
-    connectionRef.current.start().then(() => setReady(true));
-  }, []);
+  hubConnection.start();
 
-  if (!ready) return null;
+  const getConnection = () => {
+    console.log("getConnection");
+    return hubConnection;
+  };
 
   return (
-    <SignalRContext.Provider value={{ hubConnection: connectionRef.current }}>
+    <SignalRContext.Provider value={{ getConnection }}>
       {children}
     </SignalRContext.Provider>
   );
