@@ -1,10 +1,9 @@
 ﻿using MassTransit;
-using MassTransit.Scheduling;
-using Sample.Saga.Contracts.Events;
+using Sample.Saga.Contracts.Commands;
 
 namespace Sample.Saga.Components;
 
-public class BookingNotificationConsumer : IConsumer<BookingNotification>
+public class BookingNotificationConsumer : IConsumer<BookingNotification>, IBookingNotificationConsumerAddress
 {
     private readonly IBookingHubNotificator hubNotificator;
 
@@ -15,7 +14,6 @@ public class BookingNotificationConsumer : IConsumer<BookingNotification>
 
     public async Task Consume(ConsumeContext<BookingNotification> context)
     {
-
         await hubNotificator.NotifyAsync("TravelBooked", context.Message);
     }
 }

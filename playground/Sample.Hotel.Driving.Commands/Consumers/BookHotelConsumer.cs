@@ -4,7 +4,7 @@ using Sample.Hotel.Contracts.Events;
 
 namespace Sample.Hotel.Driving.Commands.Consumers;
 
-public class BookHotelConsumer : IConsumer<BookHotel>
+public class BookHotelConsumer : IConsumer<BookHotel>, IBookHotelConsumerAddress
 {
     public async Task Consume(ConsumeContext<BookHotel> context)
     {
