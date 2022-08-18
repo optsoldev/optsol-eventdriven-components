@@ -19,7 +19,7 @@
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\Optsol.EventDriven.Components.Core.Contracts\Optsol.EventDriven.Components.Core.Contracts.csproj" />
-		<ProjectReference Include="..\Optsol.EventDriven.Components.Settings\Optsol.EventDriven.Components.Settings.csproj" />
+	  <ProjectReference Include="..\Optsol.EventDriven.Components.Core.Contracts\Optsol.EventDriven.Components.Core.Contracts.csproj" />
+	  <ProjectReference Include="..\Optsol.EventDriven.Components.Settings\Optsol.EventDriven.Components.Settings.csproj" />
 	</ItemGroup>
 </Project>
