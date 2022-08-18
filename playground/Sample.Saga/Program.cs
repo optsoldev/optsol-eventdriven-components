@@ -32,16 +32,10 @@ IHost host = Host.CreateDefaultBuilder(args)
             new BookingHubNotificator(
                 context.Configuration.GetValue<string>("Websocket:BookingNotificationHub")));
 
-        services.AddSingleton(new MessageBusUri(configuration));
-
-        services.AddMassTransit(bus =>
+        services.RegisterMassTransit<BookingNotificationConsumer>(configuration, bus =>
         {
-            bus.AddConsumersFromNamespaceContaining<BookingNotificationConsumer>();
-
-            bus.AddSagaStateMachine<TravelStateMachine, TravelState>()            
-            .MongoDbRepository(configuration, "travel-state");
-
-            bus.UsingMessageBus(configuration);
+            bus.AddSagaStateMachine<TravelStateMachine, TravelState>()
+                .MongoDbRepository(configuration, "travel-state");
         });
     })
     .Build();

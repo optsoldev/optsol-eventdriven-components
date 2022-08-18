@@ -4,13 +4,14 @@ using Optsol.EventDriven.Components.MassTransit;
 using Sample.Flight.Contracts;
 using Sample.Hotel.Contracts.Commands;
 using Sample.Hotel.Contracts.Events;
+using Sample.Saga.Contracts.Commands;
 using Sample.Saga.Contracts.Events;
 
 namespace Sample.Saga.Components
 {
     public partial class TravelStateMachine : MassTransitStateMachine<TravelState>
     {
-        public TravelStateMachine()
+        public TravelStateMachine(MessageBusUri uri)
         {
             Event(() => TravelBookingSubmitted, context => context.CorrelateById(m => m.Message.CorrelationId));
             Event(() => FlightBooked, context => context.CorrelateById(m => m.Message.CorrelationId));
@@ -30,7 +31,7 @@ namespace Sample.Saga.Components
                         context.Saga.CorrelationId = context.Message.CorrelationId;
                         context.Saga.HotelId = context.Message.HotelId;
                     })
-                    .SendAsync(MessageBusUri.CreateUri(nameof(BookFlight), ExchangeType.Queue),
+                    .SendAsync(typeof(IBookFlightConsumerAddress),
                         context => context.Init<BookFlight>(new
                         {
                             context.Message.CorrelationId,
@@ -49,7 +50,7 @@ namespace Sample.Saga.Components
                     {
                         context.Saga.FlightBookId = context.Message.ModelId;
                     })
-                    .SendAsync(MessageBusUri.CreateUri("book-hotel", ExchangeType.Queue), context => context.Init<BookHotel>(new
+                    .SendAsync( typeof(IBookHotelConsumerAddress),context => context.Init<BookHotel>(new
                     {
                         CorrelationId = context.Saga.CorrelationId,
                         HotelId = context.Saga.HotelId,
@@ -59,15 +60,15 @@ namespace Sample.Saga.Components
             During(HotelBookingRequested,
                 When(HotelBooked)
                     .Then(_ => Console.WriteLine("Hotel Booked"))
-                    .SendAsync(MessageBusUri.CreateUri(nameof(BookingNotification), ExchangeType.Exchange),
-                    context => context.Init<BookingNotification>(new BookingNotification()
+                    .SendAsync(typeof(IBookingNotificationConsumerAddress),
+                    context => context.Init<BookingNotification>(new BookingNotification
                     {
                         CorrelationId = context.Message.CorrelationId
-                    }))
+                    }),ExchangeType.Exchange)
                     .TransitionTo(TravelBooked),
                 When(HotelBookedFailed)
                     .Then(_ => Console.WriteLine("Hotel Booked Failed"))
-                    .SendAsync(MessageBusUri.CreateUri(nameof(UnbookFlight), ExchangeType.Queue), context => context.Init<UnbookFlight>(new
+                    .SendAsync(typeof(IUnbookFlightConsumerAddress), context => context.Init<UnbookFlight>(new
                     {
                         context.Saga.CorrelationId,
                         ModelId = context.Saga.FlightBookId,

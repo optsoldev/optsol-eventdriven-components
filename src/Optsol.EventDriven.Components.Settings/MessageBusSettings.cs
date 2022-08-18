@@ -9,6 +9,7 @@ public enum MessageBusType
 
 public class MessageBusSettings
 {
+    public string? Prefix { get; set; }
     public MessageBusType? MessageBusType { get; set; }
     public RabbitMqSettings? RabbitMqSettings { get; set; }
     public AzureServiceBusSettings? AzureServiceBusSettings { get; set; }

@@ -3,6 +3,7 @@ using MassTransit;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Optsol.EventDriven.Components.Driven.Infra.Notification;
+using Optsol.EventDriven.Components.MassTransit;
 using Sample.Hotel.Core.Application;
 using Sample.Hotel.Driving.Commands;
 using Sample.Hotel.Driving.Commands.Consumers;
@@ -34,16 +35,7 @@ IHost host = Host.CreateDefaultBuilder(args)
 
         services.AddHostedService<Worker>();
 
-        services.AddMassTransit(bus =>
-        {
-            bus.SetKebabCaseEndpointNameFormatter();
-            bus.AddConsumer<BookHotelConsumer>();
-            
-            bus.UsingRabbitMq((context, configurator) =>
-            {
-                configurator.ConfigureEndpoints(context);
-            });
-        });
+        services.RegisterMassTransit<BookHotelConsumer>(configuration);
     })
     .Build();
 
