@@ -1,7 +1,7 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Optsol.EventDriven.Components.Core.Domain.Unit.Tests;
+namespace Optsol.EventDriven.Components.Unit.Tests;
 
 public class ProjectionRepositoryInjectionSpec
 {

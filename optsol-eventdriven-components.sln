@@ -30,7 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Solution Items", "0 - S
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Core.Domain.Unit.Tests", "test\Optsol.EventDriven.Components.Core.Domain.Unit.Tests\Optsol.EventDriven.Components.Core.Domain.Unit.Tests.csproj", "{1BCB0772-0139-4D00-B2AA-8672FDA42823}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Unit.Tests", "test\Optsol.EventDriven.Components.Unit.Tests\Optsol.EventDriven.Components.Unit.Tests.csproj", "{1BCB0772-0139-4D00-B2AA-8672FDA42823}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Driven.Infra.Notification", "src\Optsol.EventDriven.Components.Driven.Infra.Notification\Optsol.EventDriven.Components.Driven.Infra.Notification.csproj", "{2AFD335E-9119-4E92-83E5-DBEBF187F61D}"
 EndProject
@@ -91,8 +91,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.MassTransit", "src\Optsol.EventDriven.Components.MassTransit\Optsol.EventDriven.Components.MassTransit.csproj", "{BE38664B-2D7B-45FD-A578-B2980E818DE3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optsol.EventDriven.Components.Settings", "src\Optsol.EventDriven.Components.Settings\Optsol.EventDriven.Components.Settings.csproj", "{2FFEE165-1909-4643-B620-9584CEC43C5F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Optsol.EventDriven.Components.Unit.Tests", "src\Optsol.EventDriven.Components.Unit.Tests\Optsol.EventDriven.Components.Unit.Tests.csproj", "{A8790113-46A5-4B84-A531-D06941A2FA12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -200,10 +198,6 @@ Global
 		{2FFEE165-1909-4643-B620-9584CEC43C5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FFEE165-1909-4643-B620-9584CEC43C5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FFEE165-1909-4643-B620-9584CEC43C5F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A8790113-46A5-4B84-A531-D06941A2FA12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8790113-46A5-4B84-A531-D06941A2FA12}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A8790113-46A5-4B84-A531-D06941A2FA12}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A8790113-46A5-4B84-A531-D06941A2FA12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -248,7 +242,6 @@ Global
 		{C25A7398-835D-430F-8890-FAC622054A19} = {F3553D96-6EE2-4F54-8299-8B166DA4FE0D}
 		{BE38664B-2D7B-45FD-A578-B2980E818DE3} = {9E653BCC-D992-44D4-BA54-1279D88188B6}
 		{2FFEE165-1909-4643-B620-9584CEC43C5F} = {9E653BCC-D992-44D4-BA54-1279D88188B6}
-		{A8790113-46A5-4B84-A531-D06941A2FA12} = {4311E281-DC20-400C-BD0A-B582D711B873}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CEB4F9A4-FE35-4F6F-9543-265AF7C84D23}
