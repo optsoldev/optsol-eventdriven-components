@@ -2,11 +2,12 @@ using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Optsol.EventDriven.Components.Core.Application;
+using Optsol.EventDriven.Components.Core.Domain;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
 using Optsol.EventDriven.Components.Core.Domain.Entities.Events;
 using Optsol.EventDriven.Components.Core.Domain.Repositories;
 
-namespace Optsol.EventDriven.Components.Core.Domain.Unit.Tests;
+namespace Optsol.EventDriven.Components.Unit.Tests;
 
 public class BaseCommandHandlerSpec
 {
