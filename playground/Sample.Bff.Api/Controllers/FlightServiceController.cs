@@ -8,7 +8,7 @@ namespace Sample.Bff.Api.Controllers
     [Route("[controller]")]
     public class FlightServiceController : ControllerBase
     {
-        private readonly ILogger<BookingServiceController> logger;
+        private readonly ILogger logger;
         private readonly ISendEndpointProvider sendEndpointProvider;
 
         public FlightServiceController(ILogger<BookingServiceController> logger, ISendEndpointProvider sendEndpointProvider)

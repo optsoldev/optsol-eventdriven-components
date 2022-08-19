@@ -1,9 +1,8 @@
 ﻿using MassTransit;
-using Sample.Saga.Contracts.Commands;
 
 namespace Sample.Saga.Components;
 
-public class BookingNotificationConsumer : IConsumer<BookingNotification>, IBookingNotificationConsumerAddress
+public class BookingNotificationConsumer : IConsumer<BookingNotification>
 {
     private readonly IBookingHubNotificator hubNotificator;
 

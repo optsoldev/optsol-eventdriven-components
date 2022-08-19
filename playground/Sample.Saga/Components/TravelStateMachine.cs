@@ -31,7 +31,7 @@ namespace Sample.Saga.Components
                         context.Saga.CorrelationId = context.Message.CorrelationId;
                         context.Saga.HotelId = context.Message.HotelId;
                     })
-                    .SendAsync(typeof(IBookFlightConsumerAddress),
+                    .ExecuteAsync(
                         context => context.Init<BookFlight>(new
                         {
                             context.Message.CorrelationId,
@@ -50,7 +50,7 @@ namespace Sample.Saga.Components
                     {
                         context.Saga.FlightBookId = context.Message.ModelId;
                     })
-                    .SendAsync( typeof(IBookHotelConsumerAddress),context => context.Init<BookHotel>(new
+                    .ExecuteAsync(context => context.Init<BookHotel>(new
                     {
                         CorrelationId = context.Saga.CorrelationId,
                         HotelId = context.Saga.HotelId,
@@ -60,7 +60,7 @@ namespace Sample.Saga.Components
             During(HotelBookingRequested,
                 When(HotelBooked)
                     .Then(_ => Console.WriteLine("Hotel Booked"))
-                    .SendAsync(typeof(IBookingNotificationConsumerAddress),
+                    .ExecuteAsync(
                     context => context.Init<BookingNotification>(new BookingNotification
                     {
                         CorrelationId = context.Message.CorrelationId
@@ -68,7 +68,7 @@ namespace Sample.Saga.Components
                     .TransitionTo(TravelBooked),
                 When(HotelBookedFailed)
                     .Then(_ => Console.WriteLine("Hotel Booked Failed"))
-                    .SendAsync(typeof(IUnbookFlightConsumerAddress), context => context.Init<UnbookFlight>(new
+                    .ExecuteAsync(context => context.Init<UnbookFlight>(new
                     {
                         context.Saga.CorrelationId,
                         ModelId = context.Saga.FlightBookId,

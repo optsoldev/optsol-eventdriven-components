@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Optsol.EventDriven.Components.Core.Contracts;
-using Optsol.EventDriven.Components.Settings;
+﻿using Optsol.EventDriven.Components.Settings;
 
 namespace Optsol.EventDriven.Components.MassTransit;
 
@@ -25,12 +23,12 @@ public class MessageBusUri
     
     public Uri CreateUri(Type uriName, ExchangeType exchangeType = ExchangeType.Queue)
     {
-        if (!uriName.GetInterfaces().Any(x => typeof(IConsumerAddress).IsAssignableFrom(uriName)))
-        {
-            throw new ArgumentException($"Type {uriName} must be assignable to {nameof(IConsumerAddress)}");
-        }
-        
         return new Uri(FormatAddress(uriName.Name, exchangeType));
+    }
+    
+    public Uri CreateUri(string uriName, ExchangeType exchangeType = ExchangeType.Queue)
+    {
+        return new Uri(FormatAddress(uriName, exchangeType));
     }
 
     /// <summary>
@@ -52,7 +50,9 @@ public class MessageBusUri
     /// <returns>name formated.</returns>
     public string FormatName(string name)
     {
-        name = name.Replace("I", "").Replace("ConsumerAddress", "").ToKebabCase();
-        return string.IsNullOrWhiteSpace(settings?.Prefix) ? name : $"{settings.Prefix}-{name}";
+        name = string.IsNullOrWhiteSpace(settings?.Prefix) ? name.ToKebabCase() : $"{settings.Prefix}-{name}".ToKebabCase();
+
+        return name.Replace("-command","").Replace("-query", "").Replace("-event", "");
+        
     }
 }
