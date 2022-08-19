@@ -9,7 +9,7 @@ namespace Sample.Bff.Api.Controllers;
 [Route("[controller]")]
 public class BookingServiceController : ControllerBase
 {
-    private readonly ILogger<BookingServiceController> logger;
+    private readonly ILogger logger;
     private readonly IPublishEndpoint publishEndpoint;
     private readonly IRequestClient<TravelBookStatusRequested> requestClient;
 
