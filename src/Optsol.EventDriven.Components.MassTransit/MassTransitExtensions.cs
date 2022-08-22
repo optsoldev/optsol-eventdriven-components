@@ -154,7 +154,7 @@ public static partial class MassTransitExtensions
         if (messageBusSettings is null)
             throw new ArgumentNullException(nameof(MessageBusSettings), "MessageBusSettings in AppSettings needed");
 
-        var kebab = new KebabCaseEndpointNameFormatter("Teste", false);
+        var kebab = new KebabCaseEndpointNameFormatter(messageBusSettings.Prefix, false);
         
         services.TryAddSingleton(kebab);
 
