@@ -11,7 +11,10 @@ public record FailedEvent : IFailedEvent
     public FailedEvent(Guid id, IEnumerable<ValidationFailure> validationFailures)
     {
         Id = id;
-        Messages = (IDictionary<string, string>?)validationFailures.Select(s => new KeyValuePair<string, string>(s.ErrorCode, s.ErrorMessage));
+
+        var messages = validationFailures.ToDictionary(failure => failure.ErrorCode, failure => failure.ErrorMessage);
+
+        Messages = messages;
     }
 
     public FailedEvent(Guid id, IEnumerable<ValidationFailure> validationFailures, Guid? userId)

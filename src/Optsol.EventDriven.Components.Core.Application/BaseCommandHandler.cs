@@ -45,19 +45,19 @@ public abstract class BaseCommandHandler<TEntity> where TEntity : IAggregate
     /// <param name="entity">instance of <see cref="IAggregate"/></param>
     /// <param name="userId">Guid that represent user logged</param>
     /// <returns>True if success or False if failure.</returns>
-    protected virtual Task<bool> SaveChanges<TSuccessEvent, TFailedEvent>(Guid correlationid, TEntity entity)
+    protected virtual async Task<bool> SaveChanges<TSuccessEvent, TFailedEvent>(Guid correlationid, TEntity entity)
         where TSuccessEvent : SuccessEvent
         where TFailedEvent : FailedEvent
     {
         if (entity.Invalid)
         {
-            writeEventRepository.Rollback<TFailedEvent>(entity);
+            await writeEventRepository.Rollback<TFailedEvent>(entity);
         }
         else
         {
-            writeEventRepository.Commit<TSuccessEvent>(correlationid, entity);
+            await writeEventRepository.Commit<TSuccessEvent>(correlationid, entity);
         }
-        
-        return Task.FromResult(!entity.Invalid);
+
+        return !entity.Invalid;
     }
 }
