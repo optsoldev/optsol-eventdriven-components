@@ -1,3 +1,4 @@
+using FluentAssertions;
 using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -22,7 +23,7 @@ public class BaseCommandHandlerSpec
 
         var handler = new TestCommandHandler(logger.Object, mockRepo.Object, Guid.NewGuid(), entity);
         
-        mockRepo.Verify(v => v.Commit(It.IsAny<Guid>(), It.IsAny<TesteEntity>()), Times.Once);
+        mockRepo.Verify(v => v.Commit<SuccessEvent>(It.IsAny<Guid>(), It.IsAny<TesteEntity>()), Times.Once);
     }
     
     [Fact]
@@ -35,12 +36,24 @@ public class BaseCommandHandlerSpec
         var logger = new Mock<ILogger<BaseCommandHandler<TesteEntity>>>();
 
         var mockRepo = new Mock<IWriteEventRepository<TesteEntity>>();
-        
+
         var mockNotificator = new Mock<INotificator>();
         
         var handler = new TestCommandHandler(logger.Object, mockRepo.Object , Guid.NewGuid(), entity);
         
-        mockRepo.Verify(v => v.Rollback( It.IsAny<TesteEntity>()), Times.Once);
+        mockRepo.Verify(v => v.Rollback<FailedEvent>( It.IsAny<TesteEntity>()), Times.Once);
+    }
+
+    [Fact]
+    public void DeveCriarFailedEvent()
+    {
+        var entity = new TesteEntity(Enumerable.Empty<IDomainEvent>());
+        
+        entity.SetEntityInvalid();
+
+        var failedEvent = new FailedEvent(entity.Id, entity.ValidationResult.Errors);
+
+        failedEvent.Should().NotBeNull();
     }
 
     public class TestCommandHandler : BaseCommandHandler<TesteEntity>
@@ -55,11 +68,12 @@ public class BaseCommandHandlerSpec
             //pega entiddade
             //faz o que tem que fazer
             
-            SaveChanges(correlationId, entity).Wait();
+            SaveChanges<SuccessEvent, FailedEvent>(correlationId, entity).Wait();
             
             //return task.
         }
     }
+    
 
     public record TestFailedEvent(Guid Id, IEnumerable<ValidationFailure>  ValidationFailures) : FailedEvent(Id, ValidationFailures);
     public record TestSuccessEvent(Guid Id, long Version) : SuccessEvent(Id, Version);
@@ -72,7 +86,11 @@ public class BaseCommandHandlerSpec
 
         public void SetEntityInvalid()
         {
-            ValidationResult = new ValidationResult(new[] {new ValidationFailure("teste", "teste message")});
+            var validationFailure = new ValidationFailure("teste", "teste message");
+            validationFailure.ErrorCode = "Teste";
+            
+            ValidationResult = 
+                new ValidationResult(new[] {validationFailure});
         }
 
         protected override void Apply(IDomainEvent @event)

@@ -6,6 +6,7 @@ namespace Optsol.EventDriven.Components.Core.Domain.Entities;
 public interface IAggregate
 {
     public Guid Id { get; }
+    public Guid? UserId { get; }
     public long Version { get; }
     public bool Invalid { get; }
     public ValidationResult ValidationResult { get; }
