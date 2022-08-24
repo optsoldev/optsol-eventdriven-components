@@ -13,7 +13,12 @@ public abstract class HubNotificator : IHubNotificator
             .WithAutomaticReconnect()
             .Build();
 
-
+        hubConnection.Closed += async (error) =>
+        {
+            await Task.Delay(new Random().Next(0, 5) * 1000);
+            await hubConnection.StartAsync();
+        };
+        
     }
     public async Task NotifyAsync<T>(string method, T message)
     {
