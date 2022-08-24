@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 
-namespace Optsol.EventDriven.Component.Infra.Hubs;
+namespace Optsol.EventDriven.Components.Infra.NotificationHub;
 
 public abstract class HubNotificator : IHubNotificator
 {

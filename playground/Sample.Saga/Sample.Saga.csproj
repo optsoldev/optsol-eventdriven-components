@@ -21,8 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Optsol.EventDriven.Component.Infra.Hubs\Optsol.EventDriven.Component.Infra.Hubs.csproj" />
     <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Driven.Infra.Notification\Optsol.EventDriven.Components.Driven.Infra.Notification.csproj" />
+    <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Infra.NotificationHub\Optsol.EventDriven.Components.Infra.NotificationHub.csproj" />
     <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.MassTransit\Optsol.EventDriven.Components.MassTransit.csproj" />
     <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Settings\Optsol.EventDriven.Components.Settings.csproj" />
     <ProjectReference Include="..\Sample.Flight.Contracts\Sample.Flight.Contracts.csproj" />
