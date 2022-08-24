@@ -6,13 +6,13 @@ public class FailedEvent : IFailedEvent
 {
     public Guid Id { get; }
     public Guid? UserId { get; }
-    public IDictionary<string, string>? Messages { get; }
+    public IEnumerable<string> Messages { get; }
 
     public FailedEvent(Guid id, IEnumerable<ValidationFailure> validationFailures)
     {
         Id = id;
 
-        var messages = validationFailures.ToDictionary(failure => failure.ErrorCode, failure => failure.ErrorMessage);
+        var messages = validationFailures.Select(failure => failure.ErrorMessage);
 
         Messages = messages;
     }

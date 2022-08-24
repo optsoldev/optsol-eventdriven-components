@@ -4,5 +4,5 @@ public interface IFailedEvent : IIntegrationEvent
 {
     public Guid Id { get; }
     public Guid? UserId { get; }
-    public IDictionary<string, string>? Messages { get;  }
+    public IEnumerable<string> Messages { get;  }
 }

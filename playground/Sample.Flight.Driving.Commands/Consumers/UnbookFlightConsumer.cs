@@ -1,13 +1,11 @@
 ﻿using MassTransit;
 using MediatR;
-using Optsol.EventDriven.Components.Core.Contracts;
-using Optsol.EventDriven.Components.MassTransit;
 using Sample.Flight.Contracts;
 
 namespace Sample.Flight.Driving.Commands.Consumers
 {
  
-    public class UnbookFlightConsumer : IConsumer<UnbookFlight>, IUnbookFlightConsumerAddress
+    public class UnbookFlightConsumer : IConsumer<UnbookFlight>
     {
         private readonly IMediator _mediator;
         private readonly ILogger<UnbookFlightConsumer> _logger;
