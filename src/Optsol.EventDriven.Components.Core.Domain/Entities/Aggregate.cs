@@ -11,6 +11,7 @@ public abstract class Aggregate : IAggregate
     public long Version { get; protected set; }
     protected long NextVersion => Version + 1;
     public IEnumerable<IDomainEvent> PendingEvents => pendingEvents.AsEnumerable();
+    public Guid? UserId { get; protected set; }
 
     protected Aggregate(IEnumerable<IDomainEvent> persistedEvents)
     {

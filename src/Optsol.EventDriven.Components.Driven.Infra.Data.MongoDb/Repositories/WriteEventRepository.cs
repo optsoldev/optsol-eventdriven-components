@@ -55,7 +55,7 @@ public abstract class WriteEventRepository<T> : IWriteEventRepository<T> where T
     {
         Rollback(entity);
 
-        var @event = new FailedEvent(entity.Id, entity.ValidationResult.Errors) as TFailedEvent;
+        var @event = new FailedEvent(entity.Id, entity.ValidationResult.Errors, entity.UserId) as TFailedEvent;
         
         await notificator.Publish(@event);
     }
@@ -63,9 +63,10 @@ public abstract class WriteEventRepository<T> : IWriteEventRepository<T> where T
     public async Task<int> Commit<TSucessEvent>(Guid correlationId, T entity) where TSucessEvent : SuccessEvent
     {
         var result = Commit(correlationId, entity);
+
         if (result > 0)
         {
-            var @event = new SuccessEvent(entity.Id, entity.Version) as TSucessEvent;
+            var @event = new SuccessEvent(entity.Id, entity.Version, entity.UserId) as TSucessEvent;
             
             await notificator.Publish(@event);
         }

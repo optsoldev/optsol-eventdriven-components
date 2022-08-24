@@ -2,13 +2,14 @@
   "profiles": {
     "Sample.Flight.Driving.Commands": {
       "commandName": "Project",
+      "launchBrowser": true,
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": true
+      }
     },
     "Docker": {
-      "commandName": "Docker"
+      "commandName": "Docker",
+      "environmentVariables": {}
     }
   }
 }

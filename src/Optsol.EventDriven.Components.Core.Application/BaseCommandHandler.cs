@@ -37,15 +37,16 @@ public abstract class BaseCommandHandler<TEntity> where TEntity : IAggregate
         
         return Task.FromResult(!entity.Invalid);
     }
-    
+
     /// <summary>
     /// Save changes if entity is valid or rollback otherwise. With Success and Failed events published.
     /// </summary>
     /// <param name="correlationid">Guid that represent the transaction.</param>
     /// <param name="entity">instance of <see cref="IAggregate"/></param>
+    /// <param name="userId">Guid that represent user logged</param>
     /// <returns>True if success or False if failure.</returns>
     protected virtual Task<bool> SaveChanges<TSuccessEvent, TFailedEvent>(Guid correlationid, TEntity entity)
-        where TSuccessEvent : SuccessEvent 
+        where TSuccessEvent : SuccessEvent
         where TFailedEvent : FailedEvent
     {
         if (entity.Invalid)
