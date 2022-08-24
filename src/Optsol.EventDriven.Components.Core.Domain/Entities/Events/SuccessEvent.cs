@@ -6,6 +6,7 @@ public class SuccessEvent : ISuccessEvent
     public long Version { get; }
     public Guid? UserId { get; }
 
+    public SuccessEvent() {}
     public SuccessEvent(Guid id, long version)
     {
         Id = id;

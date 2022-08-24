@@ -8,6 +8,8 @@ public class FailedEvent : IFailedEvent
     public Guid? UserId { get; }
     public IEnumerable<string> Messages { get; }
 
+    public FailedEvent() {}
+    
     public FailedEvent(Guid id, IEnumerable<ValidationFailure> validationFailures)
     {
         Id = id;
