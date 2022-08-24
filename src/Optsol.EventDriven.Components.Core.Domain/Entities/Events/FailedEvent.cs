@@ -2,7 +2,7 @@ using FluentValidation.Results;
 
 namespace Optsol.EventDriven.Components.Core.Domain.Entities.Events;
 
-public record FailedEvent : IFailedEvent
+public class FailedEvent : IFailedEvent
 {
     public Guid Id { get; }
     public Guid? UserId { get; }

@@ -1,6 +1,6 @@
 namespace Optsol.EventDriven.Components.Core.Domain.Entities.Events;
 
-public record SuccessEvent : ISuccessEvent
+public class SuccessEvent : ISuccessEvent
 {
     public Guid Id { get; }
     public long Version { get; }
