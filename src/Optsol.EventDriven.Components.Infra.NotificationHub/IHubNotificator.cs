@@ -1,4 +1,4 @@
-﻿namespace Optsol.EventDriven.Components.Infra.NotificationHub;
+namespace Optsol.EventDriven.Components.Infra.NotificationHub;
 
 public interface IHubNotificator
 {

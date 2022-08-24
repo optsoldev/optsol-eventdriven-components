@@ -73,6 +73,7 @@ public class BaseCommandHandlerSpec
             //return task.
         }
     }
+    
 
 
     public class TestFailedEvent : FailedEvent

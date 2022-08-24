@@ -9,9 +9,9 @@ public abstract class HubNotificator : IHubNotificator
     public HubNotificator(string url)
     {
         this.hubConnection = new HubConnectionBuilder()
-                                .WithUrl(url)
-                                .WithAutomaticReconnect()
-                                .Build();
+            .WithUrl(url)
+            .WithAutomaticReconnect()
+            .Build();
 
 
     }
