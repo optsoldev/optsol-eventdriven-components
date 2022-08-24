@@ -75,8 +75,17 @@ public class BaseCommandHandlerSpec
     }
     
 
-    public record TestFailedEvent(Guid Id, IEnumerable<ValidationFailure>  ValidationFailures) : FailedEvent(Id, ValidationFailures);
-    public record TestSuccessEvent(Guid Id, long Version) : SuccessEvent(Id, Version);
+
+    public class TestFailedEvent : FailedEvent
+    {
+        public TestFailedEvent(Guid Id, IEnumerable<ValidationFailure> ValidationFailures)
+        : base(Id,  ValidationFailures){}
+    }
+
+    public class TestSuccessEvent : SuccessEvent
+    {
+        public TestSuccessEvent(Guid Id, long Version) : base(Id, Version) {}
+    }
    
     public class TesteEntity : Aggregate
     {

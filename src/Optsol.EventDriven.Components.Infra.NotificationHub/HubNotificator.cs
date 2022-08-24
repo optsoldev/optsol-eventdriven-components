@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 
-namespace Optsol.EventDriven.Component.Infra.Hubs;
+namespace Optsol.EventDriven.Components.Infra.NotificationHub;
 
 public abstract class HubNotificator : IHubNotificator
 {
@@ -9,11 +9,16 @@ public abstract class HubNotificator : IHubNotificator
     public HubNotificator(string url)
     {
         this.hubConnection = new HubConnectionBuilder()
-                                .WithUrl(url)
-                                .WithAutomaticReconnect()
-                                .Build();
+            .WithUrl(url)
+            .WithAutomaticReconnect()
+            .Build();
 
-
+        hubConnection.Closed += async (error) =>
+        {
+            await Task.Delay(new Random().Next(0, 5) * 1000);
+            await hubConnection.StartAsync();
+        };
+        
     }
     public async Task NotifyAsync<T>(string method, T message)
     {

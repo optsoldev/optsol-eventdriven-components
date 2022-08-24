@@ -70,7 +70,19 @@ public sealed class FlightBookValidator : AbstractValidator<FlightBook>
     }
 }
 
-public record FlightBookSuccessEvent(Guid Id, long Version) : SuccessEvent(Id, Version);
+public class FlightBookSuccessEvent : SuccessEvent
+{
+    public FlightBookSuccessEvent(Guid Id, long Version) : base(Id, Version)
+    {
+        
+    }
+}
 
-public record FlightBookFailureEvent(Guid Id, IEnumerable<ValidationFailure> ValidationFailures) 
-    : FailedEvent(Id, ValidationFailures);
+public class FlightBookFailureEvent : FailedEvent
+{
+    public FlightBookFailureEvent(Guid Id, IEnumerable<ValidationFailure> ValidationFailures)
+    : base (Id, ValidationFailures)
+    {
+        
+    }
+}

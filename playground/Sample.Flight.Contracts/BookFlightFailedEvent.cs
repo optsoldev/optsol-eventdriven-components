@@ -3,5 +3,9 @@ using Optsol.EventDriven.Components.Core.Domain.Entities.Events;
 
 namespace Sample.Flight.Contracts;
 
-public record BookFlightFailedEvent(Guid Id, IEnumerable<ValidationFailure> ValidationFailures) : FailedEvent(Id,
-    ValidationFailures);
+public class BookFlightFailedEvent : FailedEvent
+{
+    public BookFlightFailedEvent(Guid Id, IEnumerable<ValidationFailure> ValidationFailures) : base(Id,
+        ValidationFailures)
+    {}
+}
