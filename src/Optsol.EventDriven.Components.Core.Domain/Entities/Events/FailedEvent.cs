@@ -4,9 +4,9 @@ namespace Optsol.EventDriven.Components.Core.Domain.Entities.Events;
 
 public class FailedEvent : IFailedEvent
 {
-    public Guid Id { get; }
-    public Guid? UserId { get; }
-    public IEnumerable<string> Messages { get; }
+    public Guid Id { get; set; }
+    public Guid? UserId { get; set; }
+    public IEnumerable<string> Messages { get; set; }
 
     public FailedEvent() {}
     
