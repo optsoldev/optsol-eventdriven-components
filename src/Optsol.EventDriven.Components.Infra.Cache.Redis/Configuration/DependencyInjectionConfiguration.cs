@@ -7,7 +7,7 @@ namespace Optsol.EventDriven.Components.Infra.Cache.Redis.Configuration;
 
 public static class DependencyInjectionConfiguration
 {
-    public static IServiceCollection AddRedisodule(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddRedisModule(this IServiceCollection services, IConfiguration configuration)
     {
         var settings = new RedisSettings();
         configuration.Bind(nameof(RedisSettings), settings);
