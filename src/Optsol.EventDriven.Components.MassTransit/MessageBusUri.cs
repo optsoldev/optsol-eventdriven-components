@@ -50,7 +50,7 @@ public class MessageBusUri
     /// <returns>name formated.</returns>
     public string FormatName(string name)
     {
-        name = string.IsNullOrWhiteSpace(settings?.Prefix) ? name.ToKebabCase() : $"{settings.Prefix}-{name}".ToKebabCase();
+        name = string.IsNullOrWhiteSpace(settings?.Prefix) ? name.ToKebabCase() : $"{settings.Prefix}{name}".ToKebabCase();
 
         return name.Replace("-command","").Replace("-query", "").Replace("-event", "");
         
