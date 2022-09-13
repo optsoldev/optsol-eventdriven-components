@@ -47,7 +47,6 @@ builder.Services.TryAddSingleton(new KebabCaseEndpointNameFormatter("Teste", fal
 builder.Services.RegisterMassTransit(builder.Configuration, bus =>
 {
     bus.AddRequestClient<RequestClientSampleQuery>();
-    bus.UsingMessageBus(builder.Configuration);
 });
 
 var app = builder.Build();
