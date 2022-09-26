@@ -56,9 +56,18 @@ namespace Sample.Flight.Driven.Infra.Data
         private static IServiceCollection AddRepositories(IServiceCollection services)
         {
             //Repositories
+            
+            //Events
             services.AddScoped<IFlightBookReadRepository, FlightBookReadRepository>();
             services.AddScoped<IFlightBookWriteRepository, FlightBookWriteRepository>();
+            
+            //Projections
             services.AddScoped<IFlightBookListReadRepository, FlightBookListReadRepository>();
+            services.AddScoped<IFlightBookWriteProjectionRepository, FlightBookListWriteRepository>();
+            services.AddScoped(impl =>
+                new FlightBookProjectionRepositoryCollection(impl
+                    .GetServices<IFlightBookWriteProjectionRepository>().ToList()));
+            
             return services;
         }
     }

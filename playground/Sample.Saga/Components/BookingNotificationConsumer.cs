@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using Sample.Saga.Contracts.Events;
 
 namespace Sample.Saga.Components;
 

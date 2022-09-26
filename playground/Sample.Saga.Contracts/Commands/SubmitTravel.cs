@@ -9,3 +9,4 @@ public class SubmitTravel
 
     public DateTime Departure { get; set; }
 }
+

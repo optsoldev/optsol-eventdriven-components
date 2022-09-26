@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Optsol.EventDriven.Components.Core.Domain.Repositories;
 
-public interface IReadProjectionRepository<T> where T : IProjection
+public interface IReadProjectionRepository<T> : IExpressionReadRepository<T> where T : IProjection
 { 
     T GetById(Guid id);
 
@@ -12,9 +12,6 @@ public interface IReadProjectionRepository<T> where T : IProjection
 
     IEnumerable<T> GetAllByIds(params Guid[] ids);
 
-    IEnumerable<T> GetAll(Expression<Func<T, bool>> filterExpression);
-
     SearchResult<T> GetAll<TSearch>(SearchRequest<TSearch> searchRequest) where TSearch : class;
-
 
 }

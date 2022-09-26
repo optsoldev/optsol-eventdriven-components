@@ -1,20 +1,17 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <Version>1.0.32</Version>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Functions.Worker.ContextAccessor" Version="1.0.0" />
-      <PackageReference Include="MediatR" Version="10.0.1" />
-      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Optsol.EventDriven.Components.Core.Domain\Optsol.EventDriven.Components.Core.Domain.csproj" />
-    </ItemGroup>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Version>1.0.51</Version>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Functions.Worker.ContextAccessor" Version="1.0.0" />
+		<PackageReference Include="MediatR" Version="10.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Optsol.EventDriven.Components.Core.Domain\Optsol.EventDriven.Components.Core.Domain.csproj" />
+	</ItemGroup>
 </Project>

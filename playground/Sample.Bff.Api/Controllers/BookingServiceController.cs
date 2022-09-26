@@ -9,20 +9,42 @@ namespace Sample.Bff.Api.Controllers;
 [Route("[controller]")]
 public class BookingServiceController : ControllerBase
 {
-    private readonly ILogger<BookingServiceController> _logger;
+    private readonly ILogger logger;
     private readonly IPublishEndpoint publishEndpoint;
+    private readonly IRequestClient<TravelBookStatusRequested> requestClient;
 
     public BookingServiceController(ILogger<BookingServiceController> logger,
-        IPublishEndpoint publishEndpoint)
+        IPublishEndpoint publishEndpoint,
+        IRequestClient<TravelBookStatusRequested> requestClient)
     {
-        _logger = logger;
+        this.logger = logger;
         this.publishEndpoint = publishEndpoint;
+        this.requestClient = requestClient;
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetStatusAsync(Guid id)
+    {
+        logger.LogInformation("Travel Book Status {0}", id);
+
+        var (status, notFound) = await requestClient.GetResponse<TravelBookStatus, TravelBookNotFound>(new { TravelId = id });
+
+        if (status.IsCompletedSuccessfully)
+        {
+            var response = await status;
+            return Ok(response.Message);
+        }
+        else
+        {
+            var response = await notFound;
+            return NotFound(response.Message);
+        }
     }
 
     [HttpPost]
     public async Task<IActionResult> Post(SubmitTravel submitTravel)
     {
-        _logger.LogInformation(message: "SubmitTravel for UserId {0}", submitTravel.UserId);
+        logger.LogInformation(message: "SubmitTravel for UserId {0}", submitTravel.UserId);
 
         var correlationId = await PublishSaga(submitTravel);
 
@@ -32,7 +54,7 @@ public class BookingServiceController : ControllerBase
 
     private async Task<Guid> PublishSaga(SubmitTravel submitTravel)
     {
-        var correlationId = Guid.NewGuid();
+        var correlationId = InVar.CorrelationId;
 
         await publishEndpoint.Publish<ITravelBookingSubmitted>(new
         {

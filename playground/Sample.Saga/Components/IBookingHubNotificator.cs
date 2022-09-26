@@ -1,4 +1,4 @@
-﻿using Optsol.EventDriven.Components.Driven.Infra.Notification.Hubs;
+﻿using Optsol.EventDriven.Components.Infra.NotificationHub;
 
 namespace Sample.Saga.Components;
 

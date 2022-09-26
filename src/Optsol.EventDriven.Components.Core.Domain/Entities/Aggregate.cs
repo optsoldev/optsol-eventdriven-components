@@ -1,40 +1,30 @@
 using FluentValidation.Results;
+using Optsol.EventDriven.Components.Core.Domain.Entities.Events;
 
 namespace Optsol.EventDriven.Components.Core.Domain.Entities;
 
 public abstract class Aggregate : IAggregate 
 {
-    private readonly Queue<IDomainEvent> _pendingEvents = new();
-    protected readonly Queue<IFailureEvent> _failureEvents = new();
+    private readonly Queue<IDomainEvent> pendingEvents = new();
 
     public Guid Id { get; protected set; }
+    public long Version { get; protected set; }
+    protected long NextVersion => Version + 1;
+    public IEnumerable<IDomainEvent> PendingEvents => pendingEvents.AsEnumerable();
+    public Guid? UserId { get; protected set; }
 
-    protected long Version { get; set; } = 0;
-    protected long NextVersion
+    protected Aggregate(IEnumerable<IDomainEvent> persistedEvents)
     {
-        get => Version + 1;
-    }
-    public IEnumerable<IDomainEvent> PendingEvents
-    {
-        get => _pendingEvents.AsEnumerable();
-    }
-
-    public IEnumerable<IFailureEvent> FailureEvents
-    {
-        get => _failureEvents.AsEnumerable();
-    }
-    
-    public Aggregate(IEnumerable<IDomainEvent> persistedEvents)
-    {
-        if (persistedEvents.Any())
+        var domainEvents = persistedEvents.ToList();
+        if (domainEvents.Any())
         {
-            ApplyPersistedEvents(persistedEvents);
+            ApplyPersistedEvents(domainEvents);
         }
     }
     
     protected void RaiseEvent<TEvent>(TEvent pendingEvent) where TEvent : IDomainEvent
     {
-        _pendingEvents.Enqueue(pendingEvent);
+        pendingEvents.Enqueue(pendingEvent);
         Apply(pendingEvent);
         Version = pendingEvent.ModelVersion;
     }
@@ -49,25 +39,15 @@ public abstract class Aggregate : IAggregate
             Version = e.ModelVersion;
         }
     }
-    
-    public void Commit()
-    {
-        _pendingEvents.Clear();
-        _failureEvents.Clear();
-    }
 
     public void Clear()
     {
-        _pendingEvents.Clear();
-        _failureEvents.Clear();
+        pendingEvents.Clear();
     }
 
-    public bool Valid => ValidationResult.IsValid;
-    
-    public bool Invalid => Valid is false;
-    
-    public ValidationResult ValidationResult { get; protected set; } = new();
+    public bool Invalid => ValidationResult.IsValid is false;
 
+    public ValidationResult ValidationResult { get; protected set; } = new();
 
     protected abstract void Validate();
 }

@@ -1,12 +1,15 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Mvc;
+using Optsol.EventDriven.Components.MassTransit;
 using Sample.Flight.Contracts;
 
 namespace Sample.Bff.Api.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class FlightServiceController : ControllerBase
     {
-        private readonly ILogger<BookingServiceController> logger;
+        private readonly ILogger logger;
         private readonly ISendEndpointProvider sendEndpointProvider;
 
         public FlightServiceController(ILogger<BookingServiceController> logger, ISendEndpointProvider sendEndpointProvider)
@@ -20,7 +23,10 @@ namespace Sample.Bff.Api.Controllers
         {
             logger.LogInformation("Book Flight outside saga - Async");
 
-            var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:book-flight"));
+            //var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:book-flight"));
+            
+            // nome da fila ou exchange baseada no nome da classe do request
+            var endpoint = await sendEndpointProvider.GetSendEndpoint(request);
 
             await endpoint.Send(request);
 

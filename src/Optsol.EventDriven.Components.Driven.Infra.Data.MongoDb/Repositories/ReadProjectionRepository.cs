@@ -15,7 +15,6 @@ public abstract class ReadProjectionRepository<T> : IReadProjectionRepository<T>
         Set = context.GetCollection<T>(collectionName);
     }
 
-
     public virtual IEnumerable<T> GetAll()
     {
         return Set.AsQueryable().ToEnumerable();

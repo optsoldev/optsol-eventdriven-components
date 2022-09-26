@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using FluentValidation.Results;
 using Optsol.EventDriven.Components.Core.Domain.Entities;
+using Optsol.EventDriven.Components.Core.Domain.Entities.Events;
 
 namespace Sample.Flight.Core.Domain;
 
@@ -38,9 +40,9 @@ public class FlightBook : Aggregate
         {
             case FlightBookCreated created:
                 Apply(created);
-                break;
+                break;                
             case FlightUnbooked unbooked:
-                Apply(unbooked);
+                Apply(unbooked);            
                 break;
             default:
                 throw new NotImplementedException();
@@ -65,5 +67,22 @@ public sealed class FlightBookValidator : AbstractValidator<FlightBook>
     public FlightBookValidator()
     {
 
+    }
+}
+
+public class FlightBookSuccessEvent : SuccessEvent
+{
+    public FlightBookSuccessEvent(Guid Id, long Version) : base(Id, Version)
+    {
+        
+    }
+}
+
+public class FlightBookFailureEvent : FailedEvent
+{
+    public FlightBookFailureEvent(Guid Id, IEnumerable<ValidationFailure> ValidationFailures)
+    : base (Id, ValidationFailures)
+    {
+        
     }
 }

@@ -1,39 +1,23 @@
 using MongoDB.Driver;
-using Optsol.EventDriven.Components.Core.Domain.Entities;
 using Optsol.EventDriven.Components.Core.Domain.Repositories;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
 
 namespace Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Repositories;
 
-public abstract class WriteRepository<T> : IWriteRepository<T> where T : IAggregate
+public abstract class WriteRepository<T> : IWriteRepository<T> where T : new()
 {
-    private readonly MongoContext _context;
-
-    private readonly IMongoCollection<PersistentEvent<IDomainEvent>> _set;
+    protected readonly IMongoCollection<T> Set;
+    protected Context Context { get; }
+    
     protected WriteRepository(MongoContext context, string collectionName)
     {
-        _context = context;
-        _set = context.GetCollection<PersistentEvent<IDomainEvent>>(collectionName);
+        Context = context ?? throw new ArgumentNullException(nameof(context));
+        Set = context.GetCollection<T>(collectionName);
     }
 
-    public virtual void Commit(Guid correlationId, T model)
-    {
-        var events = model.PendingEvents.Select(e => new PersistentEvent<IDomainEvent>(
-            correlationId,
-            Guid.NewGuid(),
-            model.Id,
-            e.ModelVersion,
-            e.When,
-            e.GetType().AssemblyQualifiedName,
-            e));
-        
-        _context.AddTransaction(() => _set.InsertManyAsync(events));
-        _context.SaveChanges();
+    public virtual void Insert(T aggregate) => Context.AddTransaction(() => Set.InsertOneAsync(aggregate));
 
-    }
+    public virtual void InsertRange(List<T> aggregates) => Context.AddTransaction(() => Set.InsertManyAsync(aggregates));
 
-    public virtual void Rollback(T model)
-    {
-        model.Clear();
-    }
+    public virtual int SaveChanges() => Context.SaveChanges();
 }

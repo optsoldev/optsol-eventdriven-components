@@ -4,6 +4,7 @@ using Sample.Flight.Contracts;
 
 namespace Sample.Flight.Driving.Commands.Consumers
 {
+ 
     public class UnbookFlightConsumer : IConsumer<UnbookFlight>
     {
         private readonly IMediator _mediator;

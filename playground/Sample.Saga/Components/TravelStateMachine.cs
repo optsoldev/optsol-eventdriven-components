@@ -1,15 +1,17 @@
 ﻿using MassTransit;
 using MongoDB.Bson.Serialization.Attributes;
+using Optsol.EventDriven.Components.MassTransit;
 using Sample.Flight.Contracts;
 using Sample.Hotel.Contracts.Commands;
 using Sample.Hotel.Contracts.Events;
+using Sample.Saga.Contracts.Commands;
 using Sample.Saga.Contracts.Events;
 
 namespace Sample.Saga.Components
 {
     public partial class TravelStateMachine : MassTransitStateMachine<TravelState>
     {
-        public TravelStateMachine()
+        public TravelStateMachine(MessageBusUri uri)
         {
             Event(() => TravelBookingSubmitted, context => context.CorrelateById(m => m.Message.CorrelationId));
             Event(() => FlightBooked, context => context.CorrelateById(m => m.Message.CorrelationId));
@@ -29,50 +31,49 @@ namespace Sample.Saga.Components
                         context.Saga.CorrelationId = context.Message.CorrelationId;
                         context.Saga.HotelId = context.Message.HotelId;
                     })
-                    .SendAsync(new Uri("queue:book-flight"), 
+                    .ExecuteAsync(
                         context => context.Init<BookFlight>(new
                         {
                             context.Message.CorrelationId,
                             context.Message.From,
                             context.Message.To,
-                            context.Message.Departure,
-                            context.Message.TravelId
+                            context.Message.TravelId,
+                            UserId = default(Guid)
                         }))
                     .TransitionTo(FlightBookingRequested));
 
             During(FlightBookingRequested,
                 When(FlightBooked)
+                    .TransitionTo(HotelBookingRequested)
                     .Then(_ => Console.WriteLine("Flight Booked"))
                     .Then(context =>
                     {
                         context.Saga.FlightBookId = context.Message.ModelId;
                     })
-                    .SendAsync(new Uri("queue:book-hotel"), context => context.Init<BookHotel>(new
+                    .ExecuteAsync(context => context.Init<BookHotel>(new
                     {
-                        context.Saga.CorrelationId,
-                        context.Saga.HotelId,
-                        context.Message.TravelId
-                    }))
-                    .TransitionTo(HotelBookingRequested));
+                        CorrelationId = context.Saga.CorrelationId,
+                        HotelId = context.Saga.HotelId,
+                        TravelId = context.Message.TravelId
+                    })));
 
             During(HotelBookingRequested,
                 When(HotelBooked)
                     .Then(_ => Console.WriteLine("Hotel Booked"))
-                    .SendAsync(new Uri("queue:booking-notification"),
-                    context => context.Init<BookingNotification>(new BookingNotification()
+                    .ExecuteAsync(
+                    context => context.Init<BookingNotification>(new BookingNotification
                     {
                         CorrelationId = context.Message.CorrelationId
-                    }))
+                    }),ExchangeType.Exchange)
                     .TransitionTo(TravelBooked),
                 When(HotelBookedFailed)
                     .Then(_ => Console.WriteLine("Hotel Booked Failed"))
-                    .SendAsync(new Uri("queue:unbook-flight"), context => context.Init<UnbookFlight>(new
+                    .ExecuteAsync(context => context.Init<UnbookFlight>(new
                     {
                         context.Saga.CorrelationId,
-                        ModelId = context.Saga.FlightBookId,                        
+                        ModelId = context.Saga.FlightBookId,
                     }))
                     .Finalize());
-
 
             //Exemplo de CurrentState.
             //Exemplo de Projecao.
@@ -83,6 +84,7 @@ namespace Sample.Saga.Components
         public Event<FlightBooked> FlightBooked { get; set; }
         public Event<HotelBooked> HotelBooked { get; set; }
         public Event<HotelBookedFailed> HotelBookedFailed { get; set; }
+
 
         public State HotelBookingRequested { get; set; }
         public State FlightBookingRequested { get; set; }

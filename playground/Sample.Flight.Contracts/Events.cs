@@ -1,8 +1,7 @@
-﻿using Optsol.EventDriven.Components.Core.Contracts;
-
+﻿
 namespace Sample.Flight.Contracts;
 
-public record FlightBooked : ISagaContract
+public record FlightBooked
 {
     public Guid TravelId { get; set; }
 

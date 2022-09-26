@@ -10,19 +10,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit" Version="8.0.3" />
-    <PackageReference Include="MassTransit.MongoDb" Version="8.0.3" />
-    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.3" />
+    <PackageReference Include="MassTransit" Version="8.0.5" />
+    <PackageReference Include="MassTransit.MongoDb" Version="8.0.5" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.5" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.16.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
     <PackageReference Include="Serilog" Version="2.11.0" />
-	<PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
-	<PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+	<PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
+	<PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Optsol.EventDriven.Component.Driven.Infra.Notification.Hubs\Optsol.EventDriven.Component.Driven.Infra.Notification.Hubs.csproj" />
     <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Driven.Infra.Notification\Optsol.EventDriven.Components.Driven.Infra.Notification.csproj" />
+    <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Infra.NotificationHub\Optsol.EventDriven.Components.Infra.NotificationHub.csproj" />
     <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.MassTransit\Optsol.EventDriven.Components.MassTransit.csproj" />
     <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Settings\Optsol.EventDriven.Components.Settings.csproj" />
     <ProjectReference Include="..\Sample.Flight.Contracts\Sample.Flight.Contracts.csproj" />

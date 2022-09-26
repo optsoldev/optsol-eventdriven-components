@@ -1,6 +1,9 @@
+using System.Reflection;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Optsol.EventDriven.Components.MassTransit;
 using Sample.Bff.Api.Hubs;
+using Sample.Flight.Contracts;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +18,9 @@ builder.Host.UseSerilog((host, log) =>
 
     log.WriteTo.Console();
 });
+
+builder.Configuration
+    .AddUserSecrets(Assembly.GetExecutingAssembly(), true);
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -35,12 +41,12 @@ builder.Services.AddCors(options =>
 });
 
 //Colocar numa extension.
-builder.Services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
+builder.Services.TryAddSingleton(new KebabCaseEndpointNameFormatter("Teste", false));
 
 //Colocar numa extension.
-builder.Services.AddMassTransit(bus =>
+builder.Services.RegisterMassTransit(builder.Configuration, bus =>
 {
-    bus.UsingRabbitMq(builder.Configuration);
+    bus.AddRequestClient<RequestClientSampleQuery>();
 });
 
 var app = builder.Build();
