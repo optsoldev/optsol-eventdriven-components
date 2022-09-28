@@ -35,7 +35,7 @@ builder.Services.AddCors(options =>
     {
         policy.AllowAnyHeader()
             .AllowAnyMethod()
-            .WithOrigins("http://localhost:3000") // hard code pra rodar o sample
+            .WithOrigins("https://localhost:3000") // hard code pra rodar o sample
             .AllowCredentials();
     });
 });
@@ -60,9 +60,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.UseCors("ClientPermission");
+
+app.UseAuthorization();
 
 app.MapControllers();
 

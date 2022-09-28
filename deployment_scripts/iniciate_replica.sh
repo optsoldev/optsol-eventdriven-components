@@ -1,13 +1,13 @@
 #!/bin/bash
 
 echo "Starting replica set initialize"
-until mongo --host mongodb1 --eval "print(\"waited for connection\")"
+until mongosh --host mongodb1 --eval "print(\"waited for connection\")"
 do
     sleep 2
 done
 echo "Connection finished"
 echo "Creating replica set"
-mongo --host mongodb1 <<EOF
+mongosh --host mongodb1 <<EOF
 var cfg = {
     "_id": "rs0",
     "protocolVersion": 1,

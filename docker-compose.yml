@@ -66,7 +66,8 @@ services:
     entrypoint: [ "sh", "deployment_scripts/iniciate_replica.sh" ]
   rabbitmq:
     image: masstransit/rabbitmq
-    container_name: 'rabbitmq'
+    container_name: 'rabbitmq-event'
+    restart: on-failure
     ports:
       - 5672:5672
       - 15672:15672
@@ -75,10 +76,19 @@ services:
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
       - rabbitmq_go_net
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    volumes:
+      - cache:/data
 volumes:
   mongodata:
   mongoconfig:
-
+  cache:
+    driver: local
 
 networks:
   rabbitmq_go_net:

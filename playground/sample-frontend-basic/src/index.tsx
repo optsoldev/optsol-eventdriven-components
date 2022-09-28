@@ -4,16 +4,20 @@ import { SignalRProvider } from "./context/signalR";
 import "./index.css";
 import { NewApp } from "./NewApp";
 import reportWebVitals from "./reportWebVitals";
+import AuthService from "./services/keycloak.service";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-root.render(
-  <React.StrictMode>
-    <SignalRProvider>
-      <NewApp />
-    </SignalRProvider>
-  </React.StrictMode>
+
+AuthService.initKeycloak(() =>
+  root.render(
+    <React.StrictMode>
+      <SignalRProvider>
+        <NewApp />
+      </SignalRProvider>
+    </React.StrictMode>
+  )
 );
 
 // If you want to start measuring performance in your app, pass a function

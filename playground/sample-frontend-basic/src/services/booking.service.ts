@@ -1,15 +1,12 @@
-import { useContext } from "react";
 import { Requests } from "../api/requests";
-import { SignalRContext } from "../context/signalR";
+import { HubNamesEnum } from "../context/signalR";
 import { useApiRequest } from "../hooks/ApiRequest";
 
 export const useBookingService = () => {
-  const { getConnection } = useContext(SignalRContext);
-  const hubConnection = getConnection();
-
   const resp = useApiRequest<{ correlationId: string }>({
-    api: Requests.Booking.Create,
-    hubConnection,
+    nomeDoHub: HubNamesEnum.BookingHub,
+    eventoDeSucesso: Requests.Booking.Create.hubMethod,
+    eventoDeFalha: "",
   });
 
   const test = console.log;
@@ -18,8 +15,10 @@ export const useBookingService = () => {
     new Promise((resolve, reject) =>
       resp.start({
         data,
+        method: "POST",
+        url: Requests.Booking.Create.url,
         onCompleted: resolve,
-        onError: reject,
+        onFailed: reject,
       })
     );
 

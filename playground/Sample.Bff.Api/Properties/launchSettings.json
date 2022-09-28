@@ -1,35 +1,12 @@
 {
   "$schema": "https://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:41142",
-      "sslPort": 44361
-    }
-  },
   "profiles": {
-    "Sample.Bff.Api": {
+    "Bff.WebApi": {
       "commandName": "Project",
-      "launchBrowser": true,
-      "applicationUrl": "http://localhost:36384",
+      "applicationUrl": "http://localhost:5000/;https://localhost:7186",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
-    },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "Docker": {
-      "commandName": "Docker",
-      "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
-      "environmentVariables": {}
     }
   }
 }
