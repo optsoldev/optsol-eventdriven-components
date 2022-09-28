@@ -5,7 +5,7 @@ namespace Sample.Flight.Contracts;
 
 public class BookFlightFailedEvent : FailedEvent
 {
-    public BookFlightFailedEvent(Guid Id, IEnumerable<ValidationFailure> ValidationFailures) : base(Id,
-        ValidationFailures)
+    public BookFlightFailedEvent(Guid Id, IEnumerable<ValidationFailure> ValidationFailures, Guid UserId) : base(Id,
+        ValidationFailures, UserId)
     {}
 }

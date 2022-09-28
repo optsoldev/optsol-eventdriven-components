@@ -7,15 +7,11 @@ public class SuccessEvent : ISuccessEvent
     public Guid? UserId { get; set; }
 
     public SuccessEvent() {}
-    public SuccessEvent(Guid id, long version)
+
+    public SuccessEvent(Guid id, long version, Guid? userId = null)
     {
         Id = id;
         Version = version;
-    }
-
-    public SuccessEvent(Guid id, long version, Guid? userId)
-        : this(id, version)
-    {
         UserId = userId;
     }
 }

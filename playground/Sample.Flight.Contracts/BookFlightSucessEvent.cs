@@ -4,6 +4,6 @@ namespace Sample.Flight.Contracts;
 
 public class BookFlightSucessEvent : SuccessEvent
 {
-  public BookFlightSucessEvent(Guid Id, long Version) : base(Id, Version)
+  public BookFlightSucessEvent(Guid id, long  version, Guid userId) : base(id, version, userId)
   {}
 }
