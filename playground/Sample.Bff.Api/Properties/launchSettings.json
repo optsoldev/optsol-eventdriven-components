@@ -1,9 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "Bff.WebApi": {
+    "Sample.Bff.Api": {
       "commandName": "Project",
-      "applicationUrl": "http://localhost:5000/;https://localhost:7186",
+      "applicationUrl": "http://localhost:7185/;https://localhost:7186",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
