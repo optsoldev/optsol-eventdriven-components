@@ -33,7 +33,7 @@ namespace Sample.Bff.Api.Controllers
             return Accepted();
         }
         
-        [HttpPost]
+        [HttpPost("execute")]
         public async Task<IActionResult> BookFlight2Async(BookFlight request)
         {
             logger.LogInformation("Book Flight outside saga - Async");
