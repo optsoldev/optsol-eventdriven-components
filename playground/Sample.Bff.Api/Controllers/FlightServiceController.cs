@@ -9,10 +9,10 @@ namespace Sample.Bff.Api.Controllers
     [Route("[controller]")]
     public class FlightServiceController : ControllerBase
     {
-        private readonly ILogger logger;
+        private readonly ILogger<FlightServiceController> logger;
         private readonly ISendEndpointProvider sendEndpointProvider;
 
-        public FlightServiceController(ILogger<BookingServiceController> logger, ISendEndpointProvider sendEndpointProvider)
+        public FlightServiceController(ILogger<FlightServiceController> logger, ISendEndpointProvider sendEndpointProvider)
         {
             this.logger = logger;
             this.sendEndpointProvider = sendEndpointProvider;
@@ -29,6 +29,16 @@ namespace Sample.Bff.Api.Controllers
             var endpoint = await sendEndpointProvider.GetSendEndpoint(request);
 
             await endpoint.Send(request);
+
+            return Accepted();
+        }
+        
+        [HttpPost("execute")]
+        public async Task<IActionResult> BookFlight2Async(BookFlight request)
+        {
+            logger.LogInformation("Book Flight outside saga - Async");
+
+            await sendEndpointProvider.Execute(request);
 
             return Accepted();
         }
