@@ -21,7 +21,7 @@ public class RedisCacheService : IRedisCacheService
 
     public Task<T?> ReadAsync<T>(string key) where T : class
     {
-        var value = database.GetDatabase().StringGet(key);
+        var value = database.StringGet(key);
 
         if (value.HasValue)
             return Task.FromResult<T?>(value.ToString().To<T>());
