@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Optsol.EventDriven.Components.Infra.Cache.Redis.Configuration;
 using StackExchange.Redis;
 
@@ -9,7 +8,7 @@ public class RedisCacheConnection
 {
     private bool disposed = false;
 
-    private readonly ConnectionMultiplexer connectionMultiplexer;
+    private readonly Lazy<ConnectionMultiplexer> connectionMultiplexer;
 
     private readonly ILogger? logger;
 
@@ -21,14 +20,14 @@ public class RedisCacheConnection
         if (redisSettings is null)
             throw new ArgumentNullException(nameof(redisSettings));
 
-        connectionMultiplexer = ConnectionMultiplexer.Connect(redisSettings?.ConnectionString);
+        connectionMultiplexer = new Lazy<ConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisSettings?.ConnectionString));
     }
 
     public IDatabase GetDatabase()
     {
         logger?.LogInformation($"Método: {nameof(GetDatabase)}() Retorno: IDatabase");
 
-        return connectionMultiplexer.GetDatabase();
+        return connectionMultiplexer.Value.GetDatabase();
     }
 
     public void Dispose()
@@ -43,7 +42,7 @@ public class RedisCacheConnection
 
         if (!disposed && disposing)
         {
-            connectionMultiplexer.Dispose();
+            connectionMultiplexer.Value.Dispose();
         }
 
         disposed = true;
