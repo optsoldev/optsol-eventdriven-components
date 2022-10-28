@@ -16,11 +16,12 @@ public class RedisCacheService : IRedisCacheService
         this.logger?.LogInformation("Inicializando RedisCacheService");
 
         database = connection?.GetDatabase() ?? throw new ArgumentNullException(nameof(connection));
+
     }
 
     public Task<T?> ReadAsync<T>(string key) where T : class
     {
-        var value = database.StringGet(key);
+        var value = database.GetDatabase().StringGet(key);
 
         if (value.HasValue)
             return Task.FromResult<T?>(value.ToString().To<T>());
