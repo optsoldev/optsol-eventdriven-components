@@ -6,8 +6,6 @@ namespace Optsol.EventDriven.Components.Infra.Cache.Redis.Connections;
 
 public class RedisCacheConnection
 {
-    private bool disposed = false;
-
     private readonly Lazy<ConnectionMultiplexer> connectionMultiplexer;
 
     private readonly ILogger? logger;
@@ -28,23 +26,5 @@ public class RedisCacheConnection
         logger?.LogInformation($"Método: {nameof(GetDatabase)}() Retorno: IDatabase");
 
         return connectionMultiplexer.Value.GetDatabase();
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-        logger?.LogInformation($"Método: {nameof(Dispose)}()");
-
-        if (!disposed && disposing)
-        {
-            connectionMultiplexer.Value.Dispose();
-        }
-
-        disposed = true;
     }
 }

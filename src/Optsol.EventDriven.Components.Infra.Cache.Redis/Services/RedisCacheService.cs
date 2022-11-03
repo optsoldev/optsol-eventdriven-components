@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Optsol.EventDriven.Components.Infra.Cache.Redis.Connections;
 using StackExchange.Redis;
 
@@ -9,12 +8,13 @@ public class RedisCacheService : IRedisCacheService
 {
     protected readonly ILogger? logger;
     protected readonly IDatabase database;
+    private RedisCacheConnection connection;
 
     public RedisCacheService(RedisCacheConnection connection, ILoggerFactory logger)
     {
-        this.logger = logger.CreateLogger(nameof(Services.RedisCacheService));
+        this.logger = logger.CreateLogger(nameof(RedisCacheService));
         this.logger?.LogInformation("Inicializando RedisCacheService");
-
+        this.connection = connection;
         database = connection?.GetDatabase() ?? throw new ArgumentNullException(nameof(connection));
 
     }
@@ -24,9 +24,9 @@ public class RedisCacheService : IRedisCacheService
         var value = database.StringGet(key);
 
         if (value.HasValue)
-            return Task.FromResult<T?>(value.ToString().To<T>());
+            return Task.FromResult(value.ToString().To<T>());
         else
-            return Task.FromResult<T?>(default(T));
+            return Task.FromResult(default(T));
     }
 
     public Task SaveAsync<T>(KeyValuePair<string, T> data) where T : class
