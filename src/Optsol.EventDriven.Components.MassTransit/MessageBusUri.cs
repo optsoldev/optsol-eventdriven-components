@@ -24,6 +24,10 @@ public class MessageBusUri
     public Uri CreateUri(Type uriName, ExchangeType exchangeType = ExchangeType.Queue)
     {
         return new Uri(FormatAddress(uriName.Name, exchangeType));
+    }   
+    public Uri CreateUri(Type uriName, string prefix, ExchangeType exchangeType = ExchangeType.Queue)
+    {
+        return new Uri(FormatAddress(uriName.Name, prefix, exchangeType));
     }
     
     public Uri CreateUri(string uriName, ExchangeType exchangeType = ExchangeType.Queue)
@@ -42,7 +46,33 @@ public class MessageBusUri
         name = FormatName(name);
         return $"{exchangeType.ToString(settings?.MessageBusType)}:{name}";
     }
+    
+    /// <summary>
+    /// Format name and change exchange to topic if is using AzureServiceBus.
+    /// </summary>
+    /// <param name="name">string with the name of the uri to be formated</param>
+    /// <param name="exchangeType">ExchangeType</param>
+    /// <returns></returns>
+    private string FormatAddress(string name, string prefix, ExchangeType exchangeType)
+    {
+        name = FormatName(name, prefix);
+        return $"{exchangeType.ToString(settings?.MessageBusType)}:{name}";
+    }
 
+    /// <summary>
+    /// Format name removing I and ConsumerAddress from Interface name and add KebabCase.
+    /// </summary>
+    /// <param name="name">string to be formated</param>
+    /// <param name="prefix">string to be formated</param>
+    /// <returns>name formated.</returns>
+    public string FormatName(string name, string prefix)
+    {
+        name = string.IsNullOrWhiteSpace(prefix) ? name.ToKebabCase() : $"{prefix}{name}".ToKebabCase();
+
+        return name.Replace("-command","").Replace("-query", "").Replace("-event", "");
+        
+    }
+    
     /// <summary>
     /// Format name removing I and ConsumerAddress from Interface name and add KebabCase.
     /// </summary>
