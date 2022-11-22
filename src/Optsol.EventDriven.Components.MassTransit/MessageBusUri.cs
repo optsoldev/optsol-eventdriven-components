@@ -5,9 +5,9 @@ namespace Optsol.EventDriven.Components.MassTransit;
 public class MessageBusUri
 {
     private static MessageBusUri? messageBusUri;
-    
+
     private readonly MessageBusSettings? settings;
-    
+
     public MessageBusUri(MessageBusSettings settings)
     {
         this.settings = settings;
@@ -17,19 +17,20 @@ public class MessageBusUri
     public static MessageBusUri GetInstance()
     {
         ArgumentNullException.ThrowIfNull(messageBusUri, "MessageBusUri");
-        
+
         return messageBusUri;
     }
-    
+
     public Uri CreateUri(Type uriName, ExchangeType exchangeType = ExchangeType.Queue)
     {
         return new Uri(FormatAddress(uriName.Name, exchangeType));
-    }   
+    }
+
     public Uri CreateUri(Type uriName, string prefix, ExchangeType exchangeType = ExchangeType.Queue)
     {
         return new Uri(FormatAddress(uriName.Name, prefix, exchangeType));
     }
-    
+
     public Uri CreateUri(string uriName, ExchangeType exchangeType = ExchangeType.Queue)
     {
         return new Uri(FormatAddress(uriName, exchangeType));
@@ -46,7 +47,7 @@ public class MessageBusUri
         name = FormatName(name);
         return $"{exchangeType.ToString(settings?.MessageBusType)}:{name}";
     }
-    
+
     /// <summary>
     /// Format name and change exchange to topic if is using AzureServiceBus.
     /// </summary>
@@ -69,10 +70,9 @@ public class MessageBusUri
     {
         name = string.IsNullOrWhiteSpace(prefix) ? name.ToKebabCase() : $"{prefix}{name}".ToKebabCase();
 
-        return name.Replace("-command","").Replace("-query", "").Replace("-event", "");
-        
+        return name.Replace("-command", "").Replace("-query", "").Replace("-event", "");
     }
-    
+
     /// <summary>
     /// Format name removing I and ConsumerAddress from Interface name and add KebabCase.
     /// </summary>
@@ -80,9 +80,10 @@ public class MessageBusUri
     /// <returns>name formated.</returns>
     public string FormatName(string name)
     {
-        name = string.IsNullOrWhiteSpace(settings?.Prefix) ? name.ToKebabCase() : $"{settings.Prefix}{name}".ToKebabCase();
+        name = string.IsNullOrWhiteSpace(settings?.Prefix)
+            ? name.ToKebabCase()
+            : $"{settings.Prefix}{name}".ToKebabCase();
 
-        return name.Replace("-command","").Replace("-query", "").Replace("-event", "");
-        
+        return name.Replace("-command", "").Replace("-query", "").Replace("-event", "");
     }
 }
