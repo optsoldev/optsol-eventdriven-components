@@ -8,7 +8,6 @@ namespace Optsol.EventDriven.Components.MassTransit;
 
 public static partial class MassTransitExtensions
 {
-    
     public static IBusRegistrationConfigurator UsingMessageBus(this IBusRegistrationConfigurator bus,
         IConfiguration configuration,
         Action<IBusRegistrationContext, IServiceBusBusFactoryConfigurator>? actionAzureServiceBus = null,
@@ -19,14 +18,14 @@ public static partial class MassTransitExtensions
 
         if (settings is null)
             throw new ArgumentNullException(nameof(MessageBusSettings), "MessageBusSettings in AppSettings needed");
-       
+
         switch (settings.MessageBusType)
         {
             case MessageBusType.AzureServiceBus:
-                bus.UsingAzureServiceBus(configuration, new []{actionAzureServiceBus});
+                bus.UsingAzureServiceBus(configuration, new[] { actionAzureServiceBus });
                 break;
             case MessageBusType.RabbitMq:
-                bus.UsingRabbitMq(configuration, new []{actionRabbitMq});
+                bus.UsingRabbitMq(configuration, new[] { actionRabbitMq });
                 break;
             default:
                 throw new NotImplementedException($"Message Buss Type: {settings.MessageBusType} not implemented.");
@@ -43,7 +42,8 @@ public static partial class MassTransitExtensions
     /// <param name="actions">action for adding specific parameters like ReceiveEndpoints.</param>
     /// <returns>instance of <see cref="IBusRegistrationConfigurator"/></returns>
     private static IBusRegistrationConfigurator UsingAzureServiceBus(this IBusRegistrationConfigurator bus,
-        IConfiguration configuration, params Action<IBusRegistrationContext, IServiceBusBusFactoryConfigurator>[] actions)
+        IConfiguration configuration,
+        params Action<IBusRegistrationContext, IServiceBusBusFactoryConfigurator>[] actions)
     {
         var settings = new MessageBusSettings();
         configuration.Bind(nameof(MessageBusSettings), settings);
@@ -52,7 +52,8 @@ public static partial class MassTransitExtensions
             throw new ArgumentNullException(nameof(MessageBusSettings), "MessageBusSettings in AppSettings needed");
 
         if (settings?.AzureServiceBusSettings is null)
-            throw new ArgumentNullException(nameof(AzureServiceBusSettings), "AzureServiceBusSettings in MessageBusSettings needed");
+            throw new ArgumentNullException(nameof(AzureServiceBusSettings),
+                "AzureServiceBusSettings in MessageBusSettings needed");
 
         bus.UsingAzureServiceBus((context, configurator) =>
         {
@@ -98,7 +99,7 @@ public static partial class MassTransitExtensions
                 h.Username(settings.RabbitMqSettings.Username);
                 h.Password(settings.RabbitMqSettings.Password);
             });
-            
+
             configurator.ConfigureEndpoints(context);
 
             if (actions.Any())
@@ -133,20 +134,14 @@ public static partial class MassTransitExtensions
         where TConsumer : IConsumer
     {
         var actionsRabbitMq = new List<Action<IBusRegistrationContext, IRabbitMqBusFactoryConfigurator>>();
-        if(actionRabbitMq is not null) actionsRabbitMq.Add(actionRabbitMq);
-        
-        actionsRabbitMq.Add((_, cfg) =>
-        {
-            cfg.UseDelayedMessageScheduler();
-        });
+        if (actionRabbitMq is not null) actionsRabbitMq.Add(actionRabbitMq);
+
+        actionsRabbitMq.Add((_, cfg) => { cfg.UseDelayedMessageScheduler(); });
 
         var actionsAzureServiceBus = new List<Action<IBusRegistrationContext, IServiceBusBusFactoryConfigurator>>();
-        if(actionAzureServiceBus is not null) actionsAzureServiceBus.Add(actionAzureServiceBus);
+        if (actionAzureServiceBus is not null) actionsAzureServiceBus.Add(actionAzureServiceBus);
 
-        actionsAzureServiceBus.Add((_, cfg) =>
-        {
-            cfg.UseDelayedMessageScheduler();
-        });
+        actionsAzureServiceBus.Add((_, cfg) => { cfg.UseDelayedMessageScheduler(); });
 
         var messageBusSettings = new MessageBusSettings();
         configuration.Bind(nameof(MessageBusSettings), messageBusSettings);
@@ -155,11 +150,11 @@ public static partial class MassTransitExtensions
             throw new ArgumentNullException(nameof(MessageBusSettings), "MessageBusSettings in AppSettings needed");
 
         var kebab = new KebabCaseEndpointNameFormatter(messageBusSettings.Prefix, false);
-        
+
         services.TryAddSingleton(kebab);
 
         services.AddSingleton(new MessageBusUri(messageBusSettings));
-        
+
         services.AddMassTransit(bus =>
         {
             bus.AddDelayedMessageScheduler();
@@ -176,7 +171,8 @@ public static partial class MassTransitExtensions
                     bus.UsingRabbitMq(configuration, actionsRabbitMq.ToArray());
                     break;
                 default:
-                    throw new NotImplementedException($"Message Bus Type: {messageBusSettings.MessageBusType} not implemented.");
+                    throw new NotImplementedException(
+                        $"Message Bus Type: {messageBusSettings.MessageBusType} not implemented.");
             }
 
             configure?.Invoke(bus);
@@ -203,11 +199,11 @@ public static partial class MassTransitExtensions
         where TConsumer : IConsumer
     {
         var actionsRabbitMq = new List<Action<IBusRegistrationContext, IRabbitMqBusFactoryConfigurator>>();
-        if(actionRabbitMq is not null) actionsRabbitMq.Add(actionRabbitMq);
-        
+        if (actionRabbitMq is not null) actionsRabbitMq.Add(actionRabbitMq);
+
         var actionsAzureServiceBus = new List<Action<IBusRegistrationContext, IServiceBusBusFactoryConfigurator>>();
-        if(actionAzureServiceBus is not null) actionsAzureServiceBus.Add(actionAzureServiceBus);
-        
+        if (actionAzureServiceBus is not null) actionsAzureServiceBus.Add(actionAzureServiceBus);
+
         var messageBusSettings = new MessageBusSettings();
         configuration.Bind(nameof(MessageBusSettings), messageBusSettings);
 
@@ -215,11 +211,11 @@ public static partial class MassTransitExtensions
             throw new ArgumentNullException(nameof(MessageBusSettings), "MessageBusSettings in AppSettings needed");
 
         var kebab = new KebabCaseEndpointNameFormatter(messageBusSettings.Prefix, false);
-        
+
         services.TryAddSingleton(kebab);
 
         services.AddSingleton(new MessageBusUri(messageBusSettings));
-        
+
         services.AddMassTransit(bus =>
         {
             bus.SetEndpointNameFormatter(kebab);
@@ -235,7 +231,8 @@ public static partial class MassTransitExtensions
                     bus.UsingRabbitMq(configuration, actionsRabbitMq.ToArray());
                     break;
                 default:
-                    throw new NotImplementedException($"Message Bus Type: {messageBusSettings.MessageBusType} not implemented.");
+                    throw new NotImplementedException(
+                        $"Message Bus Type: {messageBusSettings.MessageBusType} not implemented.");
             }
 
             configure?.Invoke(bus);
@@ -243,7 +240,7 @@ public static partial class MassTransitExtensions
 
         return services;
     }
-    
+
     /// <summary>
     /// Extension method to add the use of MassTransit in project with use of Consumer mapped.    
     /// </summary>
@@ -260,11 +257,11 @@ public static partial class MassTransitExtensions
         Action<IBusRegistrationContext, IServiceBusBusFactoryConfigurator>? actionAzureServiceBus = null)
     {
         var actionsRabbitMq = new List<Action<IBusRegistrationContext, IRabbitMqBusFactoryConfigurator>>();
-        if(actionRabbitMq is not null) actionsRabbitMq.Add(actionRabbitMq);
-        
+        if (actionRabbitMq is not null) actionsRabbitMq.Add(actionRabbitMq);
+
         var actionsAzureServiceBus = new List<Action<IBusRegistrationContext, IServiceBusBusFactoryConfigurator>>();
-        if(actionAzureServiceBus is not null) actionsAzureServiceBus.Add(actionAzureServiceBus);
-        
+        if (actionAzureServiceBus is not null) actionsAzureServiceBus.Add(actionAzureServiceBus);
+
         var messageBusSettings = new MessageBusSettings();
         configuration.Bind(nameof(MessageBusSettings), messageBusSettings);
 
@@ -272,15 +269,15 @@ public static partial class MassTransitExtensions
             throw new ArgumentNullException(nameof(MessageBusSettings), "MessageBusSettings in AppSettings needed");
 
         var kebab = new KebabCaseEndpointNameFormatter(messageBusSettings.Prefix, false);
-        
+
         services.TryAddSingleton(kebab);
 
         services.AddSingleton(new MessageBusUri(messageBusSettings));
-        
+
         services.AddMassTransit(bus =>
         {
             bus.SetEndpointNameFormatter(kebab);
-            
+
             switch (messageBusSettings.MessageBusType)
             {
                 case MessageBusType.AzureServiceBus:
@@ -290,7 +287,8 @@ public static partial class MassTransitExtensions
                     bus.UsingRabbitMq(configuration, actionsRabbitMq.ToArray());
                     break;
                 default:
-                    throw new NotImplementedException($"Message Bus Type: {messageBusSettings.MessageBusType} not implemented.");
+                    throw new NotImplementedException(
+                        $"Message Bus Type: {messageBusSettings.MessageBusType} not implemented.");
             }
 
             configure?.Invoke(bus);
@@ -298,7 +296,7 @@ public static partial class MassTransitExtensions
 
         return services;
     }
-    
+
     /// <summary>
     /// AddConsumers using the IUriName as name definition.
     /// </summary>
@@ -317,7 +315,8 @@ public static partial class MassTransitExtensions
         bus.AddConsumers(consumers);
     }
 
-    public static ISagaRegistrationConfigurator<TSaga> MongoDbRepository<TSaga>(this ISagaRegistrationConfigurator<TSaga> configurator,
+    public static ISagaRegistrationConfigurator<TSaga> MongoDbRepository<TSaga>(
+        this ISagaRegistrationConfigurator<TSaga> configurator,
         IConfiguration configuration, string collectionName)
         where TSaga : class, ISagaVersion
     {
@@ -350,5 +349,48 @@ public static partial class MassTransitExtensions
     public static Task RespondSubTypeAsync<TMessage>(this ConsumeContext context, TMessage message)
     {
         return Task.FromResult(context.RespondAsync(message, message.GetType()));
+    }
+
+    /// <summary>
+    /// Extension method to Add destination address on AddRequestClient. 
+    /// </summary>
+    /// <param name="bus"></param>
+    /// <param name="settings"></param>
+    /// <param name="timeout"></param>
+    /// <typeparam name="T"></typeparam>
+    public static void AddCustomRequestClient<T>(this IBusRegistrationConfigurator bus,
+        MessageBusSettings? settings, RequestTimeout timeout = default)
+        where T : class
+    {
+        var type = typeof(T);
+        var attribute = type
+            .GetCustomAttributes(typeof(PrefixDestinationAddressAttribute), false)
+            .Select(s => s as PrefixDestinationAddressAttribute)
+            .FirstOrDefault();
+
+        if (attribute is null || string.IsNullOrWhiteSpace(attribute.Prefix))
+            bus.AddRequestClient<T>(timeout);
+        else
+        {
+            var server = "";
+
+            switch (settings?.MessageBusType)
+            {
+                case MessageBusType.AzureServiceBus:
+                    var start = settings?.AzureServiceBusSettings?.ConnectionString?.IndexOf("sb") ?? 0;
+                    var end = settings?.AzureServiceBusSettings?.ConnectionString?.IndexOf(";") ?? 0;
+
+                    server = settings?.AzureServiceBusSettings?.ConnectionString?.Substring(start, (end - start));
+                    break;
+                case MessageBusType.RabbitMq:
+                    server = $"rabbbit://{settings?.RabbitMqSettings?.Host}{settings?.RabbitMqSettings?.Vhost}";
+                    break;
+            }
+
+            var destinationAddress = MessageBusUri.GetInstance()
+                .CreateUri(type, $"{server}{attribute.Prefix}", exchangeType: ExchangeType.None);
+
+            bus.AddRequestClient<T>(destinationAddress, timeout);
+        }
     }
 }

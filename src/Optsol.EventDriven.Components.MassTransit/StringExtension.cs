@@ -35,6 +35,7 @@ public static class StringExtension
 
         return exchangeType switch
         {
+            ExchangeType.None => string.Empty,
             ExchangeType.Queue => "queue",
             _ => messageBusType switch
             {
@@ -53,6 +54,5 @@ public static class StringExtension
             return consumerName[..^consumer.Length];
 
         return consumerName;
-
     }
 }
