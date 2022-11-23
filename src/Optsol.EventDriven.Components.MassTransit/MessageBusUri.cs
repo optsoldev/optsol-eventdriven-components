@@ -45,7 +45,7 @@ public class MessageBusUri
     private string FormatAddress(string name, ExchangeType exchangeType)
     {
         name = FormatName(name);
-        return $"{exchangeType.ToString(settings?.MessageBusType)}:{name}";
+        return $"{exchangeType.ToString(settings?.MessageBusType)}{name}";
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ public class MessageBusUri
     private string FormatAddress(string name, string prefix, ExchangeType exchangeType)
     {
         name = FormatName(name, prefix);
-        return $"{exchangeType.ToString(settings?.MessageBusType)}:{name}";
+        return $"{exchangeType.ToString(settings?.MessageBusType)}{name}";
     }
 
     /// <summary>
