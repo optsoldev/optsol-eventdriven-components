@@ -36,11 +36,11 @@ public static class StringExtension
         return exchangeType switch
         {
             ExchangeType.None => string.Empty,
-            ExchangeType.Queue => "queue",
+            ExchangeType.Queue => "queue:",
             _ => messageBusType switch
             {
-                MessageBusType.AzureServiceBus => "topic",
-                _ => "exchange",
+                MessageBusType.AzureServiceBus => "topic:",
+                _ => "exchange:",
             },
         };
     }
