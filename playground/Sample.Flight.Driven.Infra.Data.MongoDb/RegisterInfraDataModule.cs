@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
+using Optsol.EventDriven.Components.Core.Domain.Events;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
 using Sample.Flight.Core.Domain;
@@ -64,9 +65,7 @@ namespace Sample.Flight.Driven.Infra.Data
             //Projections
             services.AddScoped<IFlightBookListReadRepository, FlightBookListReadRepository>();
             services.AddScoped<IFlightBookWriteProjectionRepository, FlightBookListWriteRepository>();
-            services.AddScoped(impl =>
-                new FlightBookProjectionRepositoryCollection(impl
-                    .GetServices<IFlightBookWriteProjectionRepository>().ToList()));
+            
             
             return services;
         }

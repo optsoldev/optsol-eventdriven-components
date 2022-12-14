@@ -13,38 +13,6 @@ namespace Optsol.EventDriven.Components.Unit.Tests;
 public class BaseCommandHandlerSpec
 {
     [Fact]
-    public void DeveAcionarCommitCasoEntidadeValida()
-    {
-        var entity = new TesteEntity(Enumerable.Empty<IDomainEvent>());
-        
-        var logger = new Mock<ILogger<BaseCommandHandler<TesteEntity>>>();
-
-        var mockRepo = new Mock<IWriteEventRepository<TesteEntity>>();
-
-        var handler = new TestCommandHandler(logger.Object, mockRepo.Object, Guid.NewGuid(), entity);
-        
-        mockRepo.Verify(v => v.Commit<SuccessEvent>(It.IsAny<Guid>(), It.IsAny<TesteEntity>()), Times.Once);
-    }
-    
-    [Fact]
-    public void DeveAcionarRollbackCasoEntidadeInvalida()
-    {
-        var entity = new TesteEntity(Enumerable.Empty<IDomainEvent>());
-        
-        entity.SetEntityInvalid();
-        
-        var logger = new Mock<ILogger<BaseCommandHandler<TesteEntity>>>();
-
-        var mockRepo = new Mock<IWriteEventRepository<TesteEntity>>();
-
-        var mockNotificator = new Mock<INotificator>();
-        
-        var handler = new TestCommandHandler(logger.Object, mockRepo.Object , Guid.NewGuid(), entity);
-        
-        mockRepo.Verify(v => v.Rollback<FailedEvent>( It.IsAny<TesteEntity>()), Times.Once);
-    }
-
-    [Fact]
     public void DeveCriarFailedEvent()
     {
         var entity = new TesteEntity(Enumerable.Empty<IDomainEvent>());
@@ -55,27 +23,7 @@ public class BaseCommandHandlerSpec
 
         failedEvent.Should().NotBeNull();
     }
-
-    public class TestCommandHandler : BaseCommandHandler<TesteEntity>
-    {
-        public TestCommandHandler(
-            ILogger<BaseCommandHandler<TesteEntity>> logger, 
-            IWriteEventRepository<TesteEntity> writeEventRepository,
-            Guid correlationId,
-            TesteEntity entity) 
-            : base(logger, writeEventRepository)
-        {
-            //pega entiddade
-            //faz o que tem que fazer
-            
-            SaveChanges<SuccessEvent, FailedEvent>(correlationId, entity).Wait();
-            
-            //return task.
-        }
-    }
     
-
-
     public class TestFailedEvent : FailedEvent
     {
         public TestFailedEvent(Guid Id, IEnumerable<ValidationFailure> ValidationFailures)
