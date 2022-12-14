@@ -2,6 +2,7 @@ using System.Security.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
+using Optsol.EventDriven.Components.Core.Domain.Events;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Contexts;
 
 namespace Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb;
@@ -29,6 +30,9 @@ public static class DependencyInjection
 
         services.AddScoped<IMongoClient>(impl => new MongoClient(impl.GetService<MongoClientSettings>()));
         services.AddScoped<MongoContext>();
+        services.AddScoped<IDomainEventHandlerRegister>(impl =>
+            new DomainEventHandlerRegister(impl
+                .GetServices<IDomainEventHandler>().ToList()));
         
         return services;
     }

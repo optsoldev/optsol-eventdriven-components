@@ -1,6 +1,5 @@
 ﻿using Optsol.EventDriven.Components.Core.Domain.Entities;
 using Optsol.EventDriven.Components.Driven.Infra.Data.MongoDb.Repositories;
-using System.Linq.Expressions;
 
 namespace Optsol.EventDriven.Components.Core.Domain.Repositories;
 

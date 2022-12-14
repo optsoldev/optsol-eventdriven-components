@@ -20,7 +20,7 @@ public class BookFlightCommandHandler : BaseCommandHandler<FlightBook>, IRequest
 
         var flightBook = FlightBook.Create(request.UserId, request.From, request.To);
 
-        await SaveChanges<BookFlightSucessEvent,BookFlightFailedEvent>(request.CorrelationId, flightBook);
+        await SaveChanges(request.CorrelationId, flightBook);
 
         return new Unit();
     }
