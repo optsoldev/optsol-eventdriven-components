@@ -157,7 +157,6 @@ public static partial class MassTransitExtensions
 
         services.AddMassTransit(bus =>
         {
-            bus.AddDelayedMessageScheduler();
             bus.SetEndpointNameFormatter(kebab);
 
             bus.AddConsumers<TConsumer>();
@@ -165,9 +164,11 @@ public static partial class MassTransitExtensions
             switch (messageBusSettings.MessageBusType)
             {
                 case MessageBusType.AzureServiceBus:
+                    bus.AddServiceBusMessageScheduler();
                     bus.UsingAzureServiceBus(configuration, actionsAzureServiceBus.ToArray());
                     break;
                 case MessageBusType.RabbitMq:
+                    bus.AddDelayedMessageScheduler();
                     bus.UsingRabbitMq(configuration, actionsRabbitMq.ToArray());
                     break;
                 default:
