@@ -22,10 +22,10 @@ public static partial class MassTransitExtensions
         switch (settings.MessageBusType)
         {
             case MessageBusType.AzureServiceBus:
-                bus.UsingAzureServiceBus(configuration, new[] { actionAzureServiceBus });
+                bus.UsingAzureServiceBus(configuration, false, actions: new[] { actionAzureServiceBus });
                 break;
             case MessageBusType.RabbitMq:
-                bus.UsingRabbitMq(configuration, new[] { actionRabbitMq });
+                bus.UsingRabbitMq(configuration, false, actions: new[] { actionRabbitMq });
                 break;
             default:
                 throw new NotImplementedException($"Message Buss Type: {settings.MessageBusType} not implemented.");
@@ -39,11 +39,12 @@ public static partial class MassTransitExtensions
     /// </summary>
     /// <param name="bus">instance of <see cref="IBusRegistrationConfigurator"/></param>
     /// <param name="configuration">instance of <see cref="IConfiguration"/></param>
+    /// <param name="useDelayedMessageScheduler"></param>
     /// <param name="actions">action for adding specific parameters like ReceiveEndpoints.</param>
     /// <returns>instance of <see cref="IBusRegistrationConfigurator"/></returns>
     private static IBusRegistrationConfigurator UsingAzureServiceBus(this IBusRegistrationConfigurator bus,
-        IConfiguration configuration,
-        params Action<IBusRegistrationContext, IServiceBusBusFactoryConfigurator>[] actions)
+        IConfiguration configuration, bool useDelayedMessageScheduler,
+        params Action<IBusRegistrationContext, IServiceBusBusFactoryConfigurator>[]? actions)
     {
         var settings = new MessageBusSettings();
         configuration.Bind(nameof(MessageBusSettings), settings);
@@ -57,17 +58,17 @@ public static partial class MassTransitExtensions
 
         bus.UsingAzureServiceBus((context, configurator) =>
         {
-            configurator.Host(settings.AzureServiceBusSettings.ConnectionString);
+            if (useDelayedMessageScheduler)
+                configurator.UseServiceBusMessageScheduler();
 
+            configurator.Host(settings.AzureServiceBusSettings.ConnectionString);
             configurator.ConfigureEndpoints(context);
 
-            if (actions.Any())
-            {
-                foreach (var action in actions)
-                {
-                    action?.Invoke(context, configurator);
-                }
-            }
+            if (!actions?.Any() ?? false)
+                return;
+
+            foreach (var action in actions)
+                action?.Invoke(context, configurator);
         });
 
         return bus;
@@ -78,10 +79,12 @@ public static partial class MassTransitExtensions
     /// </summary>
     /// <param name="bus">instance of <see cref="IBusRegistrationConfigurator"/></param>
     /// <param name="configuration">instance of <see cref="IConfiguration"/></param>
+    /// <param name="useDelayedMessageScheduler"></param>
     /// <param name="actions">actions for adding specific parameters like ReceiveEndpoints.</param>
     /// <returns>instance of <see cref="IBusRegistrationConfigurator"/></returns>
     private static IBusRegistrationConfigurator UsingRabbitMq(this IBusRegistrationConfigurator bus,
-        IConfiguration configuration, params Action<IBusRegistrationContext, IRabbitMqBusFactoryConfigurator>[] actions)
+        IConfiguration configuration, bool useDelayedMessageScheduler,
+        params Action<IBusRegistrationContext, IRabbitMqBusFactoryConfigurator>[]? actions)
     {
         var settings = new MessageBusSettings();
         configuration.Bind(nameof(MessageBusSettings), settings);
@@ -100,15 +103,16 @@ public static partial class MassTransitExtensions
                 h.Password(settings.RabbitMqSettings.Password);
             });
 
+            if (useDelayedMessageScheduler)
+                configurator.UseDelayedMessageScheduler();
+
             configurator.ConfigureEndpoints(context);
 
-            if (actions.Any())
-            {
-                foreach (var action in actions)
-                {
-                    action?.Invoke(context, configurator);
-                }
-            }
+            if (!(actions?.Any() ?? false)) 
+                return;
+
+            foreach (var action in actions)
+                action?.Invoke(context, configurator);
         });
 
         return bus;
@@ -165,11 +169,11 @@ public static partial class MassTransitExtensions
             {
                 case MessageBusType.AzureServiceBus:
                     bus.AddServiceBusMessageScheduler();
-                    bus.UsingAzureServiceBus(configuration, actionsAzureServiceBus.ToArray());
+                    bus.UsingAzureServiceBus(configuration, true, actionsAzureServiceBus.ToArray());
                     break;
                 case MessageBusType.RabbitMq:
                     bus.AddDelayedMessageScheduler();
-                    bus.UsingRabbitMq(configuration, actionsRabbitMq.ToArray());
+                    bus.UsingRabbitMq(configuration, true, actionsRabbitMq.ToArray());
                     break;
                 default:
                     throw new NotImplementedException(
@@ -226,10 +230,10 @@ public static partial class MassTransitExtensions
             switch (messageBusSettings.MessageBusType)
             {
                 case MessageBusType.AzureServiceBus:
-                    bus.UsingAzureServiceBus(configuration, actionsAzureServiceBus.ToArray());
+                    bus.UsingAzureServiceBus(configuration, useDelayedMessageScheduler: false, actionsAzureServiceBus.ToArray());
                     break;
                 case MessageBusType.RabbitMq:
-                    bus.UsingRabbitMq(configuration, actionsRabbitMq.ToArray());
+                    bus.UsingRabbitMq(configuration, useDelayedMessageScheduler: false, actionsRabbitMq.ToArray());
                     break;
                 default:
                     throw new NotImplementedException(
@@ -282,10 +286,10 @@ public static partial class MassTransitExtensions
             switch (messageBusSettings.MessageBusType)
             {
                 case MessageBusType.AzureServiceBus:
-                    bus.UsingAzureServiceBus(configuration, actionsAzureServiceBus.ToArray());
+                    bus.UsingAzureServiceBus(configuration, useDelayedMessageScheduler: false, actionsAzureServiceBus.ToArray());
                     break;
                 case MessageBusType.RabbitMq:
-                    bus.UsingRabbitMq(configuration, actionsRabbitMq.ToArray());
+                    bus.UsingRabbitMq(configuration, useDelayedMessageScheduler: false, actionsRabbitMq.ToArray());
                     break;
                 default:
                     throw new NotImplementedException(
