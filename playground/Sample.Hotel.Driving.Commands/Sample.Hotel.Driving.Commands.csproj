@@ -1,29 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
-
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>dotnet-Sample.Hotel.Driving.Commands-40BBDF73-D91C-4A4D-8312-4D9EBFCA27FB</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="MassTransit" Version="8.0.5" />
-		<PackageReference Include="MassTransit.RabbitMQ" Version="8.0.5" />
-		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
-		<PackageReference Include="Serilog" Version="2.11.0" />
-		<PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
-		<PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Driven.Infra.Notification\Optsol.EventDriven.Components.Driven.Infra.Notification.csproj" />
-	  <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Driving.Worker\Optsol.EventDriven.Components.Driving.Worker.csproj" />
-	  <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.MassTransit\Optsol.EventDriven.Components.MassTransit.csproj" />
-	  <ProjectReference Include="..\Sample.Hotel.Contracts\Sample.Hotel.Contracts.csproj" />
-	  <ProjectReference Include="..\Sample.Hotel.Core.Application\Sample.Hotel.Core.Application.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Driven.Infra.Notification\Optsol.EventDriven.Components.Driven.Infra.Notification.csproj" />
+    <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.Driving.Worker\Optsol.EventDriven.Components.Driving.Worker.csproj" />
+    <ProjectReference Include="..\..\src\Optsol.EventDriven.Components.MassTransit\Optsol.EventDriven.Components.MassTransit.csproj" />
+    <ProjectReference Include="..\Sample.Hotel.Contracts\Sample.Hotel.Contracts.csproj" />
+    <ProjectReference Include="..\Sample.Hotel.Core.Application\Sample.Hotel.Core.Application.csproj" />
+  </ItemGroup>
 </Project>

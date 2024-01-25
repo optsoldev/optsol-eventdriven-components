@@ -1,6 +1,5 @@
 using System.Reflection;
 using MassTransit;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Optsol.EventDriven.Components.Driven.Infra.Notification;
 using Optsol.EventDriven.Components.MassTransit;
@@ -29,7 +28,7 @@ IHost host = Host.CreateDefaultBuilder(args)
     {
         services.RegisterNotification();
 
-        services.AddMediatR(typeof(ApplicationMediatREntryPoint).Assembly);
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationMediatREntryPoint).Assembly));
 
         services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
 
