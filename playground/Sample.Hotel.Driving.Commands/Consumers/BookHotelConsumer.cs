@@ -44,10 +44,9 @@ public class BookHotelConsumer : IConsumer<BookHotel>
         ConcurrentMessageLimit = 4;
     }
 
-    protected override void ConfigureConsumer(IReceiveEndpointConfigurator endpointConfigurator,
-        IConsumerConfigurator<BookHotelConsumer> consumerConfigurator)
+    protected override void ConfigureConsumer(IReceiveEndpointConfigurator endpointConfigurator, IConsumerConfigurator<BookHotelConsumer> consumerConfigurator,
+        IRegistrationContext context)
     {
         endpointConfigurator.UseMessageRetry(r => r.Interval(5, 1000));
-        endpointConfigurator.UseInMemoryOutbox();
     }
 }

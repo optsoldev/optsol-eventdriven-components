@@ -30,8 +30,8 @@ IHost host = Host.CreateDefaultBuilder(args)
         
         services.RegisterNotification();
 
-        services.AddMediatR(typeof(ApplicationMediatREntryPoint).Assembly);
-
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationMediatREntryPoint).Assembly));
+        
         services.RegisterMassTransit<BookFlightConsumer>(configuration);
 
         services.AddHostedService<Worker>();
